@@ -90,6 +90,8 @@ public class UsrArticleController extends Controller {
 	}
 
 	private void actionDoWrite(Rq rq) {
+		int boardId = 1; //rq.getIntParam("boardId", 0);
+		int memberId = rq.getLoginedMemberId();
 		String title = rq.getParam("title", "");
 		String body = rq.getParam("body", "");
 		String redirectUri = rq.getParam("redirectUri", "../article/list");
@@ -104,7 +106,7 @@ public class UsrArticleController extends Controller {
 			return;
 		}
 
-		ResultData writeRd = articleService.write(title, body);
+		ResultData writeRd = articleService.write(boardId, memberId, title, body);
 		int id = (int) writeRd.getBody().get("id");
 
 		redirectUri = redirectUri.replace("[NEW_ID]", id + "");
