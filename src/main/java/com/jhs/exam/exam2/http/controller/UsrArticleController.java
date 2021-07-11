@@ -95,7 +95,7 @@ public class UsrArticleController extends Controller {
 		int itemsCountInAPage = 5;
 		int page = rq.getIntParam("page", 1);
 		
-		int totalItemsCount = articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword);
+		int totalItemsCount =  3333; //articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword);
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, page, searchKeywordTypeCode, searchKeyword);
 
 		rq.setAttr("totalItemsCount", totalItemsCount);

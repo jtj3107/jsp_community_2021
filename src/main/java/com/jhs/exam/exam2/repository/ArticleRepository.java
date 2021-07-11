@@ -36,6 +36,9 @@ public class ArticleRepository {
 			case "body":
 				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword);
 				break;
+			case "title,body":
+				sql.append("AND A.body LIKE CONCAT('%', ? '%') OR A.title LIKE CONCAT('%', ? '%')", searchKeyword, searchKeyword);
+				break;
 			case "title":
 			default:
 				sql.append("AND A.title LIKE CONCAT('%', ? '%')", searchKeyword);
@@ -97,6 +100,9 @@ public class ArticleRepository {
 			switch (searchKeywordTypeCode) {
 			case "body":
 				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword);
+				break;
+			case "title,body":
+				sql.append("AND A.body LIKE CONCAT('%', ? '%') OR A.title LIKE CONCAT('%', ? '%')", searchKeyword, searchKeyword);
 				break;
 			case "title":
 			default:

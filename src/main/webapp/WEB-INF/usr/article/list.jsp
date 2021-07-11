@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="pageTitle" value="게시물 리스트" />
 <%@ include file="../part/head.jspf"%>
@@ -18,7 +19,7 @@
 			
 			<div class="px-4 py-4">
 				<div class="badge badge-primary">전체 게시물 수</div>
-				${totalItemsCount}
+				<fmt:formatNumber type="number" maxFractionDigits="3" value="${totalItemsCount}"/>
 			</div>
 			<hr />
 
