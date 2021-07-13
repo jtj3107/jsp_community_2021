@@ -95,9 +95,22 @@ public class UsrArticleController extends Controller {
 		int itemsCountInAPage = 5;
 		int page = rq.getIntParam("page", 1);
 		
-		int totalItemsCount =  3333; //articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword);
+		int totalItemsCount = articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword);
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, page, searchKeywordTypeCode, searchKeyword);
 
+		int block_cnt = 5;
+		int block_num = (int)Math.ceil((double)page / block_cnt);
+		int block_start = ((block_num - 1) * block_cnt) + 1;
+		int block_end = block_start + block_cnt -1;
+		
+		int totalPage = (int)Math.ceil((double)totalItemsCount / itemsCountInAPage);
+		if(block_end > totalPage) {
+			block_end = totalPage;
+		}
+		
+		rq.setAttr("block_start", block_start);
+		rq.setAttr("block_end", block_end);
+		rq.setAttr("totalPage", totalPage);
 		rq.setAttr("totalItemsCount", totalItemsCount);
 		rq.setAttr("articles", articles);
 		rq.jsp("usr/article/list");

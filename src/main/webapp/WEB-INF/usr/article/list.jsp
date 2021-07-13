@@ -89,6 +89,23 @@
 					</div>
 					<hr />
 				</c:forEach>
+				<div class="page-menu text-center">
+					<c:set var="pre" value="${param.page -1}" />
+					<c:set var="next" value="${param.page +1}" />	
+					
+					<a href="?page=1">[처음]</a>
+					<c:if test="${param.page > 1}">
+					<a href="?page=${pre}">◀ 이전</a>
+					</c:if>	
+				    <c:forEach var="i" begin="${block_start}" end="${block_end}" step="1">
+				  		<c:set var="aClassStr" value="${i == param.page ? 'text-red-500 font-bold' : '' }"/>
+						<a class="${aClassStr}" href="?page=${i}"> ${i} </a>	
+				    </c:forEach>
+				    <c:if test="${param.page < totalPage}">
+					<a href="?page=${next}">다음 ▶</a>
+					</c:if>
+				    <a href="?page=${totalPage}">[마지막]</a>
+				</div>
 			</div>
 		</div>
 	</div>
