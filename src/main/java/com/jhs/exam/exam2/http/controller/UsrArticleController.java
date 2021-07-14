@@ -90,26 +90,20 @@ public class UsrArticleController extends Controller {
 	}
 
 	private void actionShowList(Rq rq) {
+		int boardId = rq.getIntParam("boardId", 0);
+		
 		String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "title");
 		String searchKeyword = rq.getParam("searchKeyword", "");
 		int itemsCountInAPage = 5;
 		int page = rq.getIntParam("page", 1);
 		
-		int totalItemsCount = articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword);
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, page, searchKeywordTypeCode, searchKeyword);
-
-		int block_cnt = 5;
-		int block_num = (int)Math.ceil((double)page / block_cnt);
-		int block_start = ((block_num - 1) * block_cnt) + 1;
-		int block_end = block_start + block_cnt -1;
+		int totalItemsCount = articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword, boardId);
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, page, searchKeywordTypeCode, searchKeyword, boardId);
 		
 		int totalPage = (int)Math.ceil((double)totalItemsCount / itemsCountInAPage);
-		if(block_end > totalPage) {
-			block_end = totalPage;
-		}
 		
-		rq.setAttr("block_start", block_start);
-		rq.setAttr("block_end", block_end);
+		rq.setAttr("boardId", boardId);
+		rq.setAttr("page", page);
 		rq.setAttr("totalPage", totalPage);
 		rq.setAttr("totalItemsCount", totalItemsCount);
 		rq.setAttr("articles", articles);

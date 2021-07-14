@@ -22,13 +22,18 @@ public class ArticleRepository {
 		return id;
 	}
 
-	public List<Article> getForPrintArticles(int limitPage, int limitTake, String searchKeywordTypeCode, String searchKeyword) {
+	public List<Article> getForPrintArticles(int limitPage, int limitTake, String searchKeywordTypeCode, String searchKeyword, int boardId) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT A.*");
 		sql.append(", IFNULL(M.nickname, '삭제된 회원') AS extra__writerName");
 		sql.append("FROM article AS A");
 		sql.append("LEFT JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
+		
+		if(boardId != 0) {
+			sql.append("INNER JOIN board AS B");
+			sql.append("ON A.boardId = ?", boardId);
+		}
 		sql.append("WHERE 1");
 		
 		if(searchKeyword != null && searchKeyword.length() > 0) {
@@ -46,7 +51,6 @@ public class ArticleRepository {
 				
 			}
 		}
-		sql.append("ORDER BY id DESC");
 		sql.append("limit ?, ?", limitPage, limitTake);
 		
 		return MysqlUtil.selectRows(sql, Article.class);
@@ -90,10 +94,14 @@ public class ArticleRepository {
 		return MysqlUtil.update(sql);
 	}
 
-	public int getArticlesCount(String searchKeywordTypeCode, String searchKeyword) {
+	public int getArticlesCount(String searchKeywordTypeCode, String searchKeyword, int boardId) {
 		SecSql sql = new SecSql();
-		sql.append("SELECT COUNT(*) AS cnt");
+		sql.append("SELECT COUNT(DISTINCT A.id) AS cnt");
 		sql.append("FROM article AS A");
+		if(boardId != 0) {
+			sql.append("INNER JOIN board");
+			sql.append("ON A.boardId = ?", boardId);
+		}
 		sql.append("WHERE 1");
 		
 		if(searchKeyword != null && searchKeyword.length() > 0) {

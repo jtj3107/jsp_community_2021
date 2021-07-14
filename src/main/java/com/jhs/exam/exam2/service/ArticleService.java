@@ -18,11 +18,11 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다.", id), "id", id);
 	}
 
-	public List<Article> getForPrintArticles(Member actor, int itemsCountInAPage, int page, String searchKeywordTypeCode, String searchKeyword) {
+	public List<Article> getForPrintArticles(Member actor, int itemsCountInAPage, int page, String searchKeywordTypeCode, String searchKeyword, int boardId) {
 		int limitPage = (page - 1) * itemsCountInAPage;
 		int limitTake = itemsCountInAPage;
 		
-		List<Article> articles = articleRepository.getForPrintArticles(limitPage, limitTake, searchKeywordTypeCode, searchKeyword);
+		List<Article> articles = articleRepository.getForPrintArticles(limitPage, limitTake, searchKeywordTypeCode, searchKeyword, boardId);
 		
 		for(Article article : articles) {
 			updateForPrintData(actor, article);
@@ -85,8 +85,8 @@ public class ArticleService {
 		return ResultData.from("S-1", "삭제 가능합니다.");
 	}
 
-	public int getArticlesCount(String searchKeywordTypeCode, String searchKeyword) {
-		return articleRepository.getArticlesCount(searchKeywordTypeCode, searchKeyword);
+	public int getArticlesCount(String searchKeywordTypeCode, String searchKeyword, int boardId) {
+		return articleRepository.getArticlesCount(searchKeywordTypeCode, searchKeyword, boardId);
 	}
 
 }

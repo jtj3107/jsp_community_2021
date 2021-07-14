@@ -23,10 +23,12 @@
 			</div>
 			<hr />
 
+			
 			<div class="px-4">
+				
 				<c:forEach items="${articles}" var="article">
-					<c:set var="detailUri" value="../article/detail?id=${article.id}" />
-
+					<c:set var="detailUri" value="../article/detail?id=${article.id}" />			
+					
 					<div class="py-4">
 						<div class="grid gap-3" style="grid-template-columns: 100px 1fr;">
 							<a href="${detailUri}">
@@ -49,6 +51,11 @@
 								<span class="badge badge-accent">작성자</span>
 								<span>${article.extra__writerName}</span>
 							</a>
+							
+							<a href="${detailUri}" class="cursor-pointer hover:underline">
+								<span class="badge badge-accent">게시판번호</span>
+								<span>${article.boardId}</span>
+							</a>
 
 							<a href="${detailUri}" class="hover:underline">
 								<span class="badge">등록날짜</span>
@@ -60,7 +67,6 @@
 								<span class="text-gray-600 text-light">${article.updateDate}</span>
 							</a>
 						</div>
-
 						<a href="${detailUri}"
 							class="block mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
 							<span class="badge badge-outline">본문</span>
@@ -73,6 +79,7 @@
 							<div class="line-clamp-3">${article.bodySummaryForPrint}</div>
 						</a>
 					</div>	
+					
 					<div class="btns mt-3">
 					<c:if test="${article.extra__actorCanModify}">
 						<a href="../article/modify?id=${article.id}" class="btn btn-link">
@@ -89,22 +96,38 @@
 					</div>
 					<hr />
 				</c:forEach>
-				<div class="page-menu text-center">
-					<c:set var="pre" value="${param.page -1}" />
-					<c:set var="next" value="${param.page +1}" />	
+				<div>
+				검색
+				</div>
+				
+				<div class="pages mt-4 mb-4 text-center">
+					<c:set var="pageMenuArmSize" value="4" />
+					<c:set var="startPage"
+						value="${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1}" />
+					<c:set var="endPage"
+						value="${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}" />
 					
-					<a href="?page=1">[처음]</a>
-					<c:if test="${param.page > 1}">
-					<a href="?page=${pre}">◀ 이전</a>
+					<c:set var="uriBase" value="?boardId=${boardId}" />
+					<c:set var="uriBase"
+						value="${uriBase}&searchKeywordType=${param.searchKeywordType}" />
+					<c:set var="uriBase"
+						value="${uriBase}&searchKeyword=${param.searchKeyword}" />
+					
+					<c:set var="pre" value="${page -1}" />
+					<c:set var="next" value="${page +1}" />	
+					
+					<a href="${uriBase}&page=1">[처음]</a>
+					<c:if test="${page > 1}">
+					<a href="${uriBase}&page=${pre}">◀ 이전</a>
 					</c:if>	
-				    <c:forEach var="i" begin="${block_start}" end="${block_end}" step="1">
-				  		<c:set var="aClassStr" value="${i == param.page ? 'text-red-500 font-bold' : '' }"/>
-						<a class="${aClassStr}" href="?page=${i}"> ${i} </a>	
+				    <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+				  		<c:set var="aClassStr" value="px-2 inline-block border border-gray-200 rounded text-lg hover:bg-gray-2"/>
+						<a class="${aClassStr} ${i == page ? 'text-red-500 font-bold' : '' }" href="?boardId=${boardId}&page=${i}"> ${i} </a>	
 				    </c:forEach>
-				    <c:if test="${param.page < totalPage}">
-					<a href="?page=${next}">다음 ▶</a>
+				    <c:if test="${page < totalPage}">
+					<a href="${uriBase}&page=${next}">다음 ▶</a>
 					</c:if>
-				    <a href="?page=${totalPage}">[마지막]</a>
+				    <a href="${uriBase}&page=${totalPage}">[마지막]</a>
 				</div>
 			</div>
 		</div>
