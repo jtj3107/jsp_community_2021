@@ -96,9 +96,24 @@
 					</div>
 					<hr />
 				</c:forEach>
-				<div>
-				검색
-				</div>
+				<form action="../article/list?">	
+					<div class="form-control mt-4">
+					  <input name="searchKeyword" type="text" placeholder="검색어" class="input input-secondary input-bordered w-80">
+					</div> 
+				  <div>
+				    <select class="select select-bordered w-full max-w-xs mt-2" name="searchKeywordTypeCode">
+				      <option value="title,body">제목,내용</option>
+				      <option value="title" selected>제목</option>
+				      <option value="body">내용</option>
+				    </select>
+				    <script>
+				      document.querySelector('form select[name="searchKeywordTypeCode"]').value = 'title';
+				    </script>
+				  </div>
+				  <div>
+				    <input  class="btn btn-link" type="submit" value="검색">
+				  </div>
+				</form>
 				
 				<div class="pages mt-4 mb-4 text-center">
 					<c:set var="pageMenuArmSize" value="4" />
@@ -122,7 +137,7 @@
 					</c:if>	
 				    <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
 				  		<c:set var="aClassStr" value="px-2 inline-block border border-gray-200 rounded text-lg hover:bg-gray-2"/>
-						<a class="${aClassStr} ${i == page ? 'text-red-500 font-bold' : '' }" href="?boardId=${boardId}&page=${i}"> ${i} </a>	
+						<a class="${aClassStr} ${i == page ? 'text-red-500 font-bold' : '' }" href="${uriBase}&page=${i}"> ${i} </a>	
 				    </c:forEach>
 				    <c:if test="${page < totalPage}">
 					<a href="${uriBase}&page=${next}">다음 ▶</a>
