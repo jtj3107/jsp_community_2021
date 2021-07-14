@@ -115,7 +115,7 @@
 				  </div>
 				</form>
 				
-				<div class="pages mt-4 mb-4 text-center">
+				<div class="pages mt-4 mb-4 flex justify-center pb-4">
 					<c:set var="pageMenuArmSize" value="4" />
 					<c:set var="startPage"
 						value="${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1}" />
@@ -131,18 +131,28 @@
 					<c:set var="pre" value="${page -1}" />
 					<c:set var="next" value="${page +1}" />	
 					
-					<a href="${uriBase}&page=1">[처음]</a>
-					<c:if test="${page > 1}">
-					<a href="${uriBase}&page=${pre}">◀ 이전</a>
-					</c:if>	
-				    <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
-				  		<c:set var="aClassStr" value="px-2 inline-block border border-gray-200 rounded text-lg hover:bg-gray-2"/>
-						<a class="${aClassStr} ${i == page ? 'text-red-500 font-bold' : '' }" href="${uriBase}&page=${i}"> ${i} </a>	
-				    </c:forEach>
-				    <c:if test="${page < totalPage}">
-					<a href="${uriBase}&page=${next}">다음 ▶</a>
-					</c:if>
-				    <a href="${uriBase}&page=${totalPage}">[마지막]</a>
+					<div class="btn-group">
+						<a class="btn" href="${uriBase}&page=1">[처음]</a>
+						<c:if test="${page > 1}">
+						<a class="btn" href="${uriBase}&page=${pre}">◀ 이전</a>
+						</c:if>	
+						<c:if test="${page > pageMenuArmSize - 1}">
+						<button class="btn btn-disabled">...</button> 
+						</c:if>	
+
+					    <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+					  		<c:set var="aClassStr" value="${i == page ? 'btn btn-active' : '' }"/>
+							<a class="${aClassStr} btn" href="${uriBase}&page=${i}"> ${i} </a>	
+					    </c:forEach>
+					    
+					    <c:if test="${page < totalPage - pageMenuArmSize}">
+						<button class="btn btn-disabled">...</button> 
+						</c:if>	
+					    <c:if test="${page < totalPage}">
+						<a class="btn" href="${uriBase}&page=${next}">다음 ▶</a>
+						</c:if>
+					    <a class="btn" href="${uriBase}&page=${totalPage}">[마지막]</a>
+					</div>
 				</div>
 			</div>
 		</div>

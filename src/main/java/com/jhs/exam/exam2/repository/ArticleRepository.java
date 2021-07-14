@@ -51,6 +51,7 @@ public class ArticleRepository {
 				
 			}
 		}
+		sql.append("ORDER BY A.id DESC");
 		sql.append("limit ?, ?", limitPage, limitTake);
 		
 		return MysqlUtil.selectRows(sql, Article.class);
