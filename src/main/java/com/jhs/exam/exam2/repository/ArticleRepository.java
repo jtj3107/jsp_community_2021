@@ -26,14 +26,13 @@ public class ArticleRepository {
 		SecSql sql = new SecSql();
 		sql.append("SELECT A.*");
 		sql.append(", IFNULL(M.nickname, '삭제된 회원') AS extra__writerName");
+		sql.append(", B.name AS extra_boardName");
 		sql.append("FROM article AS A");
 		sql.append("LEFT JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
+		sql.append("INNER JOIN board AS B");
+		sql.append("ON A.boardId = B.id");
 		
-		if(boardId != 0) {
-			sql.append("INNER JOIN board AS B");
-			sql.append("ON A.boardId = ?", boardId);
-		}
 		sql.append("WHERE 1");
 		
 		if(searchKeyword != null && searchKeyword.length() > 0) {
@@ -51,6 +50,11 @@ public class ArticleRepository {
 				
 			}
 		}
+		
+		if(boardId != 0) {
+			sql.append("AND A.boardID = ?", boardId);
+		}
+		
 		sql.append("ORDER BY A.id DESC");
 		sql.append("limit ?, ?", limitPage, limitTake);
 		
@@ -97,12 +101,8 @@ public class ArticleRepository {
 
 	public int getArticlesCount(String searchKeywordTypeCode, String searchKeyword, int boardId) {
 		SecSql sql = new SecSql();
-		sql.append("SELECT COUNT(DISTINCT A.id) AS cnt");
+		sql.append("SELECT COUNT(*) AS cnt");
 		sql.append("FROM article AS A");
-		if(boardId != 0) {
-			sql.append("INNER JOIN board");
-			sql.append("ON A.boardId = ?", boardId);
-		}
 		sql.append("WHERE 1");
 		
 		if(searchKeyword != null && searchKeyword.length() > 0) {
@@ -121,6 +121,10 @@ public class ArticleRepository {
 			}
 		}
 		
+		if(boardId != 0) {
+			sql.append("AND A.boardID = ?", boardId);
+		}
+
 		return MysqlUtil.selectRowIntValue(sql);
 		
 	}

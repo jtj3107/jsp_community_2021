@@ -48,14 +48,14 @@
 							</a>
 
 							<a href="${detailUri}" class="cursor-pointer hover:underline">
+								<span class="badge badge-accent">게시판 이름</span>
+								<span>${article.extra_boardName}</span>
+							</a>
+					
+							<a href="${detailUri}" class="cursor-pointer hover:underline">
 								<span class="badge badge-accent">작성자</span>
 								<span>${article.extra__writerName}</span>
-							</a>
-							
-							<a href="${detailUri}" class="cursor-pointer hover:underline">
-								<span class="badge badge-accent">게시판번호</span>
-								<span>${article.boardId}</span>
-							</a>
+							</a>		
 
 							<a href="${detailUri}" class="hover:underline">
 								<span class="badge">등록날짜</span>
@@ -96,7 +96,10 @@
 					</div>
 					<hr />
 				</c:forEach>
-				<form action="../article/list?">	
+				<form action="">	
+					<div>
+					  <input type="hidden" name="boardId" value="${boardId}">
+					</div>
 					<div class="form-control mt-4">
 					  <input name="searchKeyword" type="text" placeholder="검색어" class="input input-secondary input-bordered w-80">
 					</div> 

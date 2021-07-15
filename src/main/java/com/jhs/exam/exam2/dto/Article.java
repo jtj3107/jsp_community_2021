@@ -16,6 +16,7 @@ public class Article {
 	private String body;
 	
 	private String extra__writerName;
+	private String extra_boardName;
 	private Boolean extra__actorCanModify;
 	private Boolean extra__actorCanDelete;
 	
