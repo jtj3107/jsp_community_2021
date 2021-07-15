@@ -41,7 +41,11 @@ public class ArticleRepository {
 				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword);
 				break;
 			case "title,body":
-				sql.append("AND A.body LIKE CONCAT('%', ? '%') OR A.title LIKE CONCAT('%', ? '%')", searchKeyword, searchKeyword);
+				sql.append("AND (");
+				sql.append("A.body LIKE CONCAT('%', ? '%')", searchKeyword);
+				sql.append("OR");
+				sql.append("A.title LIKE CONCAT('%', ? '%')", searchKeyword);
+				sql.append(")");
 				break;
 			case "title":
 			default:
@@ -111,7 +115,11 @@ public class ArticleRepository {
 				sql.append("AND A.body LIKE CONCAT('%', ? '%')", searchKeyword);
 				break;
 			case "title,body":
-				sql.append("AND A.body LIKE CONCAT('%', ? '%') OR A.title LIKE CONCAT('%', ? '%')", searchKeyword, searchKeyword);
+				sql.append("AND (");
+				sql.append("A.body LIKE CONCAT('%', ? '%')", searchKeyword);
+				sql.append("OR");
+				sql.append("A.title LIKE CONCAT('%', ? '%')", searchKeyword);
+				sql.append(")");
 				break;
 			case "title":
 			default:

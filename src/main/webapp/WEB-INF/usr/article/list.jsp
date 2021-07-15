@@ -139,7 +139,7 @@
 						<c:if test="${page > 1}">
 						<a class="btn" href="${uriBase}&page=${pre}">◀ 이전</a>
 						</c:if>	
-						<c:if test="${page > pageMenuArmSize - 1}">
+						<c:if test="${page > pageMenuArmSize + 1}">
 						<button class="btn btn-disabled">...</button> 
 						</c:if>	
 
