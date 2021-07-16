@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <c:set var="pageTitle" value="게시물 리스트" />
 <%@ include file="../part/head.jspf"%>
@@ -16,39 +17,41 @@
 				<span>게시물 리스트</span>
 			</div>
 
-			<div class="px-4 py-4">
-				<div class="badge badge-primary">
-					<c:if test="${param.searchKeyword == null}">
-						전체 게시물 수
+			<div class="flex">
+				<div class="p-4">
+					<c:if test="${param.searchKeyword == null }">
+					<div class="badge badge-primary">전체게시물 개수</div>
 					</c:if>
-					<c:if test="${param.searchKeyword != null}">
+					<c:if test="${param.searchKeyword != null }">
+					<div class="badge badge-primary">
 						검색어 `${param.searchKeyword}` 전체 게시물 수
+					</div>
 					</c:if>
+					<fmt:formatNumber type="number" maxFractionDigits="3" value="${totalItemsCount}" />
+										
 				</div>
-				<fmt:formatNumber type="number" maxFractionDigits="3" value="${totalItemsCount}" />
-			</div>
-			<hr />
 
-			<div class="px-4 py-4">
-				<div class="badge badge-primary">검색</div>
+				<div class="flex-grow"></div>
+
+
 				<form action="">
 					<input type="hidden" name="boardId" value="${boardId}">
-					<div class="form-control">
-						<label class="label">
-							<span class="label-text">검색타입</span>
-						</label>
+					<div class="form-control my-4">
 						<div>
-							<select name="searchKeywordTypeCode" class="select select-bordered w-full max-w-md">
+							<select name="searchKeywordTypeCode" class="select select-bordered select-primary w-full max-w-xs">
 								<option value="title,body">제목,내용</option>
 								<option value="title">제목</option>
 								<option value="body">내용</option>
 							</select>
 						</div>
-						<label class="label">
-							<span class="label-text">검색어</span>
-						</label>
+
+						<script type="text/javascript">
+							//$('select[name="searchKeywordTypeCode"]').val('body').prop('selected', true);
+							document.querySelector('form select[name="searchKeywordTypeCode"]').value = 'body';
+						</script>
 						<div>
-							<input class="input input-bordered w-full max-w-md" maxlength="100" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요." value="${param.searchKeyword}" />
+							<input class="input input-bordered w-full max-w-xs mt-1" maxlength="100" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요."
+								value="${param.searchKeyword}" />
 						</div>
 					</div>
 
@@ -56,7 +59,9 @@
 						<button type="submit" class="btn btn-link">검색</button>
 					</div>
 				</form>
+
 			</div>
+			<hr />
 
 			<div class="px-4">
 
