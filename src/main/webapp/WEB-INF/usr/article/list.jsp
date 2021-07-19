@@ -42,9 +42,9 @@
 							</select>
 						</div>
 
-						<script type="text/javascript">
-							if ('${param.searchKeywordTypeCode}'.trim().length > 0) {
-								$('.section-article-write select[name="searchKeywordTypeCode"]').val('${param.searchKeywordTypeCode}');
+						<script>
+							if (rqParams.searchKeywordTypeCode.trim().length > 0) {
+								$('.section-article-write select[name="searchKeywordTypeCode"]').val(rqParams.searchKeywordTypeCode);
 							}
 						</script>
 						<div>
