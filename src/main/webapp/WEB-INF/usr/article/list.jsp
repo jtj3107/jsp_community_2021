@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <c:set var="pageTitle" value="게시물 리스트" />
 <%@ include file="../part/head.jspf"%>
@@ -20,15 +19,13 @@
 			<div class="flex">
 				<div class="p-4">
 					<c:if test="${param.searchKeyword == null }">
-					<div class="badge badge-primary">전체게시물 개수</div>
+						<div class="badge badge-primary">전체게시물 개수</div>
 					</c:if>
 					<c:if test="${param.searchKeyword != null }">
-					<div class="badge badge-primary">
-						검색어 `${param.searchKeyword}` 전체 게시물 수
-					</div>
+						<div class="badge badge-primary">검색어 `${param.searchKeyword}` 전체 게시물 수</div>
 					</c:if>
 					<fmt:formatNumber type="number" maxFractionDigits="3" value="${totalItemsCount}" />
-										
+
 				</div>
 
 				<div class="flex-grow"></div>
@@ -46,8 +43,9 @@
 						</div>
 
 						<script type="text/javascript">
-							//$('select[name="searchKeywordTypeCode"]').val('body').prop('selected', true);
-							document.querySelector('form select[name="searchKeywordTypeCode"]').value = 'body';
+							if ('${param.searchKeywordTypeCode}'.trim().length > 0) {
+								$('.section-article-write select[name="searchKeywordTypeCode"]').val('${param.searchKeywordTypeCode}');
+							}
 						</script>
 						<div>
 							<input class="input input-bordered w-full max-w-xs mt-1" maxlength="100" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요."
@@ -81,28 +79,19 @@
 
 						<div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
 							<a href="${detailUri}" class="hover:underline">
-								<span class="badge badge-primary">번호</span>
-								<span>${article.id}</span>
+								<span class="badge badge-primary">번호</span> <span>${article.id}</span>
 							</a>
-
 							<a href="${detailUri}" class="cursor-pointer hover:underline">
-								<span class="badge badge-accent">게시판 이름</span>
-								<span>${article.extra_boardName}</span>
+								<span class="badge badge-accent">게시판 이름</span> <span>${article.extra_boardName}</span>
 							</a>
-
 							<a href="${detailUri}" class="cursor-pointer hover:underline">
-								<span class="badge badge-accent">작성자</span>
-								<span>${article.extra__writerName}</span>
+								<span class="badge badge-accent">작성자</span> <span>${article.extra__writerName}</span>
 							</a>
-
 							<a href="${detailUri}" class="hover:underline">
-								<span class="badge">등록날짜</span>
-								<span class="text-gray-600 text-light">${article.regDate}</span>
+								<span class="badge">등록날짜</span> <span class="text-gray-600 text-light">${article.regDate}</span>
 							</a>
-
 							<a href="${detailUri}" class="hover:underline">
-								<span class="badge">수정날짜</span>
-								<span class="text-gray-600 text-light">${article.updateDate}</span>
+								<span class="badge">수정날짜</span> <span class="text-gray-600 text-light">${article.updateDate}</span>
 							</a>
 						</div>
 						<a href="${detailUri}" class="block mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
@@ -119,18 +108,14 @@
 					<div class="btns mt-3">
 						<c:if test="${article.extra__actorCanModify}">
 							<a href="../article/modify?id=${article.id}" class="btn btn-link">
-								<span>
-									<i class="fas fa-edit"></i>
-								</span>
-								<span>수정</span>
+								<span> <i class="fas fa-edit"></i>
+								</span> <span>수정</span>
 							</a>
 						</c:if>
 						<c:if test="${article.extra__actorCanDelete}">
 							<a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" href="../article/doDelete?id=${article.id}" class="btn btn-link">
-								<span>
-									<i class="fas fa-trash-alt"></i>
-								</span>
-								<span>삭제</span>
+								<span> <i class="fas fa-trash-alt"></i>
+								</span> <span>삭제</span>
 							</a>
 						</c:if>
 					</div>
