@@ -43,9 +43,7 @@
 						</div>
 
 						<script>
-							if (rqParams.searchKeywordTypeCode.trim().length > 0) {
-								$('.section-article-write select[name="searchKeywordTypeCode"]').val(rqParams.searchKeywordTypeCode);
-							}
+							$('.section-article-write select[name="searchKeywordTypeCode"]').val(rqBaseTypeAttrMapJsonStr.searchKeywordTypeCode);
 						</script>
 						<div>
 							<input class="input input-bordered w-full max-w-xs mt-1" maxlength="100" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요."
