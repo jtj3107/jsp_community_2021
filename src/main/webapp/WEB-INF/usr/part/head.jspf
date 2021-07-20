@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${pageTitle}|JSPBOARD</title>
-
+<title>${pageTitle} | JSP BOARD</title>
+s
 <!-- 모바일에서 디자인이 축소되지 않게 하기 위한 코드 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -34,7 +34,8 @@ const rqParams = ${rq.paramMapJsonStr};
 <%="</script>"%>
 
 <body>
-	<div class="h-10"></div>
+	<div class="site-wrap min-h-screen flex flex-col">
+	<div class="h-10 flex-shrink-0 mb-4"></div>
 	<header class="top-bar h-10 fixed z-50 inset-0 font-bold bg-white border-b">
 		<div class="h-full container mx-auto flex">
 			<a href="../../" class="top-bar__logo flex items-center px-4 hover:underline hover:text-red-500">
@@ -113,3 +114,4 @@ const rqParams = ${rq.paramMapJsonStr};
 			</nav>
 		</div>
 	</header>
+	<main class="flex-grow flex flex-col">
