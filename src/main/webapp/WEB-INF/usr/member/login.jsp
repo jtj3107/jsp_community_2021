@@ -5,7 +5,7 @@
 <%@ include file="../part/head.jspf"%>
 
 <section class="section section-member-login flex-grow flex justify-center items-center">
-	<div class="w-full max-w-md px-2">
+	<div class="w-full max-w-md card-wrap">
 		<div class="card bordered shadow-lg">
 			<div class="card-title">
 				<span>
@@ -14,7 +14,7 @@
 				<span>로그인</span>
 			</div>
 
-			<div class="px-2 py-4">
+			<div class="px-4 py-4">
 				<script>
 					let MemberLogin__submitDone = false;
 					function MemberLogin__submit(form) {
