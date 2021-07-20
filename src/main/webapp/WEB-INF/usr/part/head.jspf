@@ -34,7 +34,8 @@ const rqParams = ${rq.paramMapJsonStr};
 <%="</script>"%>
 
 <body>
-	<header class="top-bar h-10 font-bold">
+	<div class="h-10"></div>
+	<header class="top-bar h-10 fixed z-50 inset-0 font-bold bg-white border-b">
 		<div class="h-full container mx-auto flex">
 			<a href="../../" class="top-bar__logo flex items-center px-4 hover:underline hover:text-red-500">
 				<span>
