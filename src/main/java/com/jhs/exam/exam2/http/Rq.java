@@ -239,7 +239,7 @@ public class Rq {
 		return attrs;
 	}
 
-	public String getBaseTypeAttrMapJsonStr() {
+	public String getBaseTypeAttrs() {
 		return Ut.toJson(getBaseTypeAttrMap(), "");
 	}
 	

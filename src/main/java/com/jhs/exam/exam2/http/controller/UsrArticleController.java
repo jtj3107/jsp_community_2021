@@ -92,7 +92,7 @@ public class UsrArticleController extends Controller {
 	private void actionShowList(Rq rq) {
 		int boardId = rq.getIntParam("boardId", 0);
 		
-		String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "title");
+		String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "title,body");
 		String searchKeyword = rq.getParam("searchKeyword", "");
 		int itemsCountInAPage = 5;
 		int page = rq.getIntParam("page", 1);

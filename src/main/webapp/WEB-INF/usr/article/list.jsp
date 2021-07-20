@@ -18,14 +18,26 @@
 
 			<div class="flex">
 				<div class="p-4">
-					<c:if test="${param.searchKeyword == null }">
-						<div class="badge badge-primary">전체게시물 개수</div>
+					<c:if test="${param.searchKeyword != null && param.searchKeyword != '' }">
+						<div class="badge badge-primary">
+							검색어 타입
+						</div>
+						<span>${param.searchKeywordTypeCode}</span>
+						
+						<br />
+						
+						<div class="badge badge-primary">
+							검색어
+						</div>
+						<span>${param.searchKeyword}</span>
+						
+						<br />
 					</c:if>
-					<c:if test="${param.searchKeyword != null }">
-						<div class="badge badge-primary">검색어 `${param.searchKeyword}` 전체 게시물 수</div>
-					</c:if>
-					<fmt:formatNumber type="number" maxFractionDigits="3" value="${totalItemsCount}" />
-
+					
+					<div class="badge badge-primary">
+						전체게시물 개수
+					</div>
+					<span>${totalItemsCount}</span>
 				</div>
 
 				<div class="flex-grow"></div>
@@ -43,8 +55,8 @@
 						</div>
 
 						<script>
-							$('.section-article-write select[name="searchKeywordTypeCode"]').val(rqBaseTypeAttrMapJsonStr.searchKeywordTypeCode);
-						</script>
+							$('.section-article-write select[name="searchKeywordTypeCode"]').val(rqBaseTypeAttrs.searchKeywordTypeCode);
+						</script>																 
 						<div>
 							<input class="input input-bordered w-full max-w-xs mt-1" maxlength="100" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요."
 								value="${param.searchKeyword}" />
