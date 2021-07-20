@@ -22,16 +22,16 @@
 							return;
 						}
 
-						if (form.title.value.length == 0) {
-							alert('제목을 입력해주세요.');
-							form.title.focus();
+						if (form.loginId.value.length == 0) {
+							alert('아이디를 입력해주세요.');
+							form.loginId.focus();
 
 							return;
 						}
 
-						if (form.body.value.length == 0) {
-							alert('내용을 입력해주세요.');
-							form.body.focus();
+						if (form.loginPw.value.length == 0) {
+							alert('비밀번호 입력해주세요.');
+							form.loginPw.focus();
 
 							return;
 						}

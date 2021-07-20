@@ -112,7 +112,7 @@ public class UsrArticleController extends Controller {
 	}
 
 	private void actionDoWrite(Rq rq) {
-		int boardId = 1; //rq.getIntParam("boardId", 0);
+		int boardId = rq.getIntParam("boardId", 0);
 		int memberId = rq.getLoginedMemberId();
 		String title = rq.getParam("title", "");
 		String body = rq.getParam("body", "");
@@ -125,6 +125,11 @@ public class UsrArticleController extends Controller {
 
 		if (body.length() == 0) {
 			rq.historyBack("body를 입력해주세요.");
+			return;
+		}
+		
+		if (boardId == 0) {
+			rq.historyBack("게시판을 선택 해주세요.");
 			return;
 		}
 

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageTitle" value="게시물 작성" />
@@ -13,7 +12,7 @@
 				<a href="javascript:history.back();" class="cursor-pointer">
 					<i class="fas fa-chevron-left"></i>
 				</a>
-				<span>게시물 상세페이지</span>
+				<span>게시물 작성</span>
 			</div>
 
 			<div class="px-4 py-4">
@@ -37,22 +36,34 @@
 
 							return;
 						}
+						
+						if (form.boardId.value == 0) {
+							alert('게시판을 선택해주세요.');
+							form.boardId.focus();
 
+							return;
+						}
+												
 						form.submit();
 						ArticleWrite__submitDone = true;
 					}
 				</script>
-				<form action="../article/doWrite" method="POST"
-					onsubmit="ArticleWrite__submit(this); return false;">
-					<input type="hidden" name="redirectUri"
-						value="../article/detail?id=[NEW_ID]" />
+				<form action="../article/doWrite" method="POST" onsubmit="ArticleWrite__submit(this); return false;">
+					<input type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
+
+					<div class="form-control">
+						<select name="boardId" class="select select-bordered select-primary w-full max-w-xs">
+							<option disabled selected>게시판을 선택해주세요.</option>
+							<option value="1">공지</option>
+							<option value="2">자유</option>
+						</select>
+					</div>
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">제목</span>
 						</label>
 						<div>
-							<input class="input input-bordered w-full" maxlength="100"
-								name="title" type="text" placeholder="제목을 입력해주세요." />
+							<input class="input input-bordered w-full" maxlength="100" name="title" type="text" placeholder="제목을 입력해주세요." />
 						</div>
 					</div>
 
@@ -60,8 +71,7 @@
 						<label class="label">
 							<span class="label-text">내용</span>
 						</label>
-						<textarea maxlength="2000" class="textarea textarea-bordered h-60"
-							placeholder="내용을 입력해주세요." name="body"></textarea>
+						<textarea maxlength="2000" class="textarea textarea-bordered h-60" placeholder="내용을 입력해주세요." name="body"></textarea>
 					</div>
 
 					<div class="btns">

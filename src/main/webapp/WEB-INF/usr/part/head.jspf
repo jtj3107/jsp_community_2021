@@ -85,7 +85,7 @@ const rqParams = ${rq.paramMapJsonStr};
 							</a>
 						</li>
 						<li>
-							<a href="usr/member/join" class="h-full flex items-center px-4 hover:underline hover:text-red-500">
+							<a href="../member/join" class="h-full flex items-center px-4 hover:underline hover:text-red-500">
 								<span>
 									<i class="fas fa-user-plus"></i>
 								</span>

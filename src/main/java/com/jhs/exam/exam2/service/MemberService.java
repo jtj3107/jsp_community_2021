@@ -4,6 +4,7 @@ import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.repository.MemberRepository;
+import com.jhs.exam.exam2.util.Ut;
 
 public class MemberService {
 	private MemberRepository memberRepository = Container.memberRepository;
@@ -20,6 +21,13 @@ public class MemberService {
 		}
 
 		return ResultData.from("S-1", "환영합니다.", "member", member);
+	}
+
+	public ResultData join(String loginId, String loginPw, String name, String nickname, String email,
+			String cellphoneNo) {
+		memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
+		
+		return ResultData.from("S-1", Ut.f("회원가입이 완료되었습니다."));
 	}
 
 }
