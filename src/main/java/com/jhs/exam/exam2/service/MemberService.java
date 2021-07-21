@@ -33,6 +33,8 @@ public class MemberService {
 		for(Member member : members) {
 			if(member.getLoginId().equals(loginId)) {
 				return ResultData.from("F-1", Ut.f("이미 사용중인 아이디 입니다."));
+			} else if (member.getName().equals(name) && member.getEmail().equals(email)) {
+				return ResultData.from("F-2", Ut.f("이미 가입된 회원입니다."));
 			}
 		}
 		
