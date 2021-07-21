@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:useBean id="today" class="java.util.Date" />
+<fmt:formatDate value="${today}" pattern="yyyyMMdd" var="nowDate"/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/css/ik_intro.css"><c:param name="dt" value="${nowDate}"/></c:url>"/>
 
 <!DOCTYPE html>
 <html>
@@ -19,10 +23,10 @@
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
 <link href="https://cdn.jsdelivr.net/npm/daisyui@1.4.0/dist/full.css" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/font.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/font.css" href="/css/ik intro.css?dt=20210721"/>
 </head>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/common.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/common.css" href="/css/ik intro.css?dt=20210721" />
 <script src="${pageContext.request.contextPath}/resource/common.js" defer="defer"></script>
 </head>
 

@@ -141,7 +141,7 @@
 					<hr />
 				</c:forEach>
 
-				<div class="page-menu mt-4 mb-4">
+				<div class="page-menu hidden md:flex">
 					<c:set var="pageMenuArmSize" value="4" />
 					<c:set var="startPage" value="${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1}" />
 					<c:set var="endPage" value="${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}" />
@@ -174,6 +174,36 @@
 							<a class="btn" href="${uriBase}&page=${next}">다음 ▶</a>
 						</c:if>
 						<a class="btn" href="${uriBase}&page=${totalPage}">[마지막]</a>
+					</div>
+				</div>
+				
+				<div class="page-menu flex md:hidden">
+					<c:set var="pageMenuArmSize" value="2" />
+					<c:set var="startPage" value="${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1}" />
+					<c:set var="endPage" value="${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}" />
+
+					<c:set var="uriBase" value="?boardId=${boardId}" />
+					<c:set var="uriBase" value="${uriBase}&searchKeywordType=${param.searchKeywordType}" />
+					<c:set var="uriBase" value="${uriBase}&searchKeyword=${param.searchKeyword}" />
+
+					<c:set var="pre" value="${page -1}" />
+					<c:set var="next" value="${page +1}" />
+
+					<div class="btn-group">
+						<a class="btn btn btn-xs" href="${uriBase}&page=1">[처음]</a>
+						<c:if test="${page > pageMenuArmSize + 1}">
+							<button class="btn btn btn-xs btn-disabled">...</button>
+						</c:if>
+
+						<c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
+							<c:set var="aClassStr" value="${i == page ? 'btn btn-active' : '' }" />
+							<a class="${aClassStr} btn btn btn-xs" href="${uriBase}&page=${i}"> ${i} </a>
+						</c:forEach>
+
+						<c:if test="${page < totalPage - pageMenuArmSize}">
+							<button class="btn btn btn-xs btn-disabled">...</button>
+						</c:if>
+						<a class="btn btn btn-xs" href="${uriBase}&page=${totalPage}">[마지막]</a>
 					</div>
 				</div>
 			</div>
