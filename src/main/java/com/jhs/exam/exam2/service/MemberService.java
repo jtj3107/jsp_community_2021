@@ -1,8 +1,11 @@
 package com.jhs.exam.exam2.service;
 
+import java.util.List;
+
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.dto.ResultData;
+import com.jhs.exam.exam2.repository.ArticleRepository;
 import com.jhs.exam.exam2.repository.MemberRepository;
 import com.jhs.exam.exam2.util.Ut;
 
@@ -25,9 +28,21 @@ public class MemberService {
 
 	public ResultData join(String loginId, String loginPw, String name, String nickname, String email,
 			String cellphoneNo) {
-		memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
+		List<Member> members = memberRepository.getForPrintMembers();
 		
+		for(Member member : members) {
+			if(member.getLoginId().equals(loginId)) {
+				return ResultData.from("F-1", Ut.f("이미 사용중인 아이디 입니다."));
+			}
+		}
+		
+		memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
+
 		return ResultData.from("S-1", Ut.f("회원가입이 완료되었습니다."));
+	}
+
+	public List<Member> getForPrintMembers() {
+		return memberRepository.getForPrintMembers();
 	}
 
 }

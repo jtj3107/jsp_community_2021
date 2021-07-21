@@ -1,5 +1,7 @@
 package com.jhs.exam.exam2.http.controller;
 
+import java.util.List;
+
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.dto.ResultData;
@@ -75,6 +77,7 @@ public class UsrMemberController extends Controller {
 
 		if (joinRd.isFail()) {
 			rq.historyBack(joinRd.getMsg());
+			return;
 		}
 		
 		String redirectUri = rq.getParam("redirectUri", "../article/list");

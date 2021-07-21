@@ -1,5 +1,8 @@
 package com.jhs.exam.exam2.repository;
 
+import java.util.List;
+
+import com.jhs.exam.exam2.dto.Article;
 import com.jhs.exam.exam2.dto.Member;
 import com.jhs.mysqliutil.MysqlUtil;
 import com.jhs.mysqliutil.SecSql;
@@ -28,6 +31,14 @@ public class MemberRepository {
 		sql.append(", cellphoneNo = ?", cellphoneNo);
 		
 		MysqlUtil.insert(sql);
+	}
+
+	public static List<Member> getForPrintMembers() {
+		SecSql sql = new SecSql();
+		sql.append("SELECT *");
+		sql.append("FROM `member`");
+		
+		return MysqlUtil.selectRows(sql, Member.class);
 	}
 
 }
