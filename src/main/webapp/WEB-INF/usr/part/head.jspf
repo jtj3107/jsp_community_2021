@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${pageTitle}| JSP BOARD</title> s
+<title>${pageTitle}|JSP BOARD</title>
+s
 <!-- 모바일에서 디자인이 축소되지 않게 하기 위한 코드 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,6 +24,7 @@
 </head>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resource/common.css" />
+<script src="${pageContext.request.contextPath}/resource/common.js" defer="defer"></script>
 </head>
 
 <%="<script>"%>
@@ -35,79 +37,192 @@ const rqParams = ${rq.paramMapJsonStr};
 <body>
 	<div class="site-wrap min-h-screen flex flex-col">
 		<div class="h-12 flex-shrink-0 mb-4"></div>
-		<header class="mobile-top-bar fixed z-50 inset-0 h-10 font-bold bg-white shadow md:hidden">
+		<header class="mobile-top-bar fixed z-40 inset-0 h-10 font-bold bg-white shadow md:hidden">
 			<div class="h-full flex">
 				<a href="../../" class="logo flex items-center px-4 hover:underline hover:text-red-500">
-					<span> 
+					<span>
 						<i class="far fa-lemon"></i>
-					</span> 
-					<span class="flex"> 
-						&nbsp;Lemon 
 					</span>
+					<span class="flex"> &nbsp;Lemon </span>
 				</a>
-				
+
 				<div class="flex-grow"></div>
-				
+
 				<a class="btn-show-mobile-side-bar flex items-center px-4 hover:text-red-500">
 					<span>
 						<i class="fas fa-bars"></i>
 					</span>
 				</a>
-			</div>	
+			</div>
 		</header>
-		<header class="top-bar h-10 fixed z-50 inset-0 font-bold bg-white shadow hidden md:block">
+
+		<div class="mobile-side-bar fixed z-50 inset-0 bg-red-500 flex flex-col">
+			<header class="flex">
+				<a>로고</a>
+				<div class="flex-grow"></div>
+				<a class="btn-close-mobile-side-bar">닫기</a>
+			</header>
+			<section class="body overflow-y-auto">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis, iure dolores eos
+				consequatur, assumenda esse incidunt neque quos sapiente eaque aliquid, ipsa ipsum provident numquam dolorem! Veritatis perspiciatis
+				repudiandae veniam! Est repellendus molestiae exercitationem delectus ipsa quasi ipsam aut aspernatur. Quam, labore unde id, ea esse
+				expedita alias excepturi hic minima dicta tempora, vitae eum blanditiis porro ducimus? Harum, quia? Cupiditate illum animi, nemo
+				incidunt natus autem error aliquid et deserunt distinctio labore vero doloribus eligendi perferendis ut exercitationem suscipit
+				inventore minus quas veritatis numquam eos nobis voluptatibus. Rem, ad. Ipsa, quaerat et consequuntur ratione ea soluta sed dolores
+				harum cum tempora. Labore, suscipit rem accusamus magni quod cupiditate, maiores laboriosam, repudiandae repellat quaerat similique
+				atque! Minus expedita maiores alias? Beatae est, tempore voluptatum accusantium rerum qui vero vel possimus laudantium laborum
+				praesentium, minima, odio dolore obcaecati fugit nisi. Fugit autem doloremque officiis deserunt placeat animi nemo, magnam ad
+				distinctio? Dignissimos obcaecati nihil odit soluta ipsa, labore ab fugit. Asperiores ab, facilis officiis nostrum repellendus quibusdam
+				quidem consequatur tempore vitae labore molestiae aliquid ducimus soluta natus nobis? Voluptas, ipsa labore. Accusantium iusto atque
+				quibusdam eius officia est? A praesentium temporibus soluta at sequi beatae aspernatur ipsum mollitia. Consequatur ullam in veritatis,
+				magni minus optio unde libero ducimus. Aliquid, eligendi officia! Quas voluptatum inventore ut repellat quasi? Consectetur ab excepturi
+				eos deleniti aliquam commodi exercitationem, sequi eveniet officia pariatur iure quos rerum inventore blanditiis repellendus beatae quo
+				consequatur asperiores, libero unde! Aliquam in illum repudiandae ea atque et doloribus? Harum iusto cum tempore eveniet, similique
+				ipsum et? Praesentium sunt error, recusandae repellendus minima eius quibusdam odit, veniam harum dolorem, voluptatum debitis. Dolor
+				molestias tempore minima, quibusdam maiores cum maxime amet alias perferendis laborum perspiciatis quos vitae quisquam culpa modi fuga
+				iusto! Est, ipsum neque! Cum laudantium, dolorem quo labore dicta maiores. Pariatur commodi laudantium accusantium tempora voluptate
+				quia earum adipisci tenetur consectetur fugit dicta, similique maiores hic, neque inventore mollitia, molestiae in ea at? Qui sunt
+				molestias inventore quod rem consequatur. Adipisci, fugiat ducimus quasi tenetur deleniti consectetur commodi soluta explicabo esse
+				temporibus reprehenderit incidunt odit suscipit provident, tempore error aliquid ex magnam? Minima suscipit sapiente expedita, fugiat
+				vel esse modi. Consequatur totam modi nihil adipisci magni enim iure tenetur nisi, sapiente molestias hic. Aliquam quasi saepe veniam
+				esse vitae ratione distinctio ipsam labore, incidunt iusto sit fugit ducimus nostrum! Nam? Esse et id sed iusto voluptas, fugiat
+				adipisci beatae sapiente at perspiciatis, rerum natus aliquid! Labore, nam. Nihil ut nostrum, minima iste enim quaerat. Consequuntur
+				illum ullam totam architecto quisquam. Eaque beatae nihil maxime, quis veritatis eius nam minima sapiente animi doloribus itaque,
+				aperiam praesentium provident ut tenetur consequatur quod fugit, dolor sit ea illum incidunt hic. Quaerat, consectetur eos.
+				Necessitatibus dicta provident ratione nulla dolore molestiae nihil non, incidunt illum laboriosam inventore quibusdam facere labore
+				quos cum quisquam ad? Sed odio et provident harum deleniti debitis voluptates eius error. Fugiat quos provident necessitatibus numquam
+				ad tempore ratione ex officia sed harum. Rem, consequuntur minima modi tenetur magnam ea beatae facere labore nemo minus vero dicta id
+				ex dolorem error? Maiores non autem dolorem molestiae necessitatibus id, praesentium placeat ab, eos dolore, soluta blanditiis inventore
+				explicabo rerum similique incidunt. Laudantium eos distinctio necessitatibus, ipsa recusandae alias maxime blanditiis maiores explicabo.
+				Ex ut dicta nesciunt necessitatibus fugiat magni illum veritatis tempora ullam aspernatur aliquam voluptate, velit vel laboriosam nihil
+				sint et harum molestias nisi at hic officia eum debitis. Maiores, corrupti. Ipsam voluptate accusamus ut dolores pariatur ex aliquam
+				possimus, quia aperiam tenetur iste, in voluptatem laborum quae culpa quisquam, repellat quaerat aliquid nemo? Hic fugiat, neque ipsum
+				numquam culpa architecto! Debitis iure atque officiis exercitationem error accusamus recusandae eveniet, iusto laudantium cum, quos
+				saepe enim, deserunt sapiente qui! Earum quis explicabo officiis facilis consectetur ratione totam dignissimos amet a non! Delectus,
+				cumque. Ratione nihil fugiat quod perferendis doloremque sit ad consequuntur optio suscipit. Non accusantium, aliquam earum quos vitae,
+				cum blanditiis ipsam sunt dolorem temporibus totam recusandae nostrum laborum minima. Illum tempore ex quod, reprehenderit provident
+				cumque, omnis culpa qui voluptatem illo sunt at quibusdam ab labore saepe placeat eius perferendis laboriosam. Est iste quo facilis eos
+				iure odit accusamus. Voluptatibus alias excepturi iusto? Quo dicta explicabo eligendi odio alias ducimus sed enim ipsum sint, voluptas
+				cum accusantium cumque. Provident necessitatibus culpa inventore, doloremque at totam praesentium. Sed, aperiam magnam. Accusamus
+				doloribus vero voluptate molestias expedita explicabo sed aspernatur voluptatem aperiam, est sequi maiores placeat eum assumenda totam
+				alias nisi laudantium molestiae, distinctio laborum, eveniet commodi suscipit blanditiis? Est, assumenda! Asperiores obcaecati maiores
+				voluptatem eos architecto non nulla, dolores itaque quo facere dignissimos reiciendis placeat fugit nobis tempora. Ea asperiores
+				voluptate rem accusantium expedita aspernatur qui consequuntur vel assumenda maxime! Nostrum nulla eum vero perspiciatis quae vitae
+				rerum et laudantium ut harum facilis dicta voluptas architecto id ipsa qui adipisci similique iure recusandae possimus, voluptatum fugit
+				repudiandae consectetur error. Eveniet? Praesentium quae quaerat, eum molestiae impedit nesciunt, dicta debitis iure labore, beatae
+				similique voluptate dolores provident voluptatum tempora dolore? Distinctio quos veritatis cumque quo, possimus et cum! Ea, maxime
+				officiis? Sequi amet deserunt minus nulla, accusantium vel eligendi consequuntur delectus doloribus. Ex, corporis velit. Et ut incidunt
+				accusantium soluta neque ipsum ullam? Beatae et veniam non accusantium fugiat sequi magni. Totam nam officia, recusandae incidunt
+				numquam, dolore obcaecati iusto rerum laudantium, distinctio voluptatibus! Amet laborum dicta, sequi consequatur iste, possimus
+				distinctio aut similique dolores quod, excepturi illo vel id laboriosam! Possimus corporis iure, quisquam a quasi vel repellat autem nam
+				assumenda impedit expedita voluptates. Sit voluptatum rem ullam temporibus debitis repellat, assumenda voluptate amet et numquam harum
+				minima maxime architecto. Tempore amet eligendi, a eos alias aperiam nam perferendis minima asperiores doloribus non dolorum quia et ex
+				architecto, explicabo tenetur quisquam, illo officiis sed. Qui placeat eligendi voluptate quaerat praesentium! Ea aliquam non possimus
+				mollitia labore harum qui, temporibus quo. Provident vitae blanditiis aliquam culpa molestias ea ab modi doloremque earum placeat
+				commodi, accusantium eveniet consequuntur veniam quisquam eius error. Quibusdam possimus quo natus repellendus suscipit fuga, debitis
+				rem provident eaque sint numquam incidunt alias reiciendis, voluptatem, fugiat enim. Sit debitis aspernatur hic impedit magnam ipsum
+				harum nemo ratione eaque! Voluptatum praesentium in dolores ducimus minus modi ad, sequi porro asperiores, nesciunt natus, molestias ab
+				rem molestiae accusantium. Porro quibusdam minima velit accusantium harum ipsam architecto quos voluptatem voluptas. Quis. Cum
+				cupiditate a maiores repellendus et adipisci quia rerum, provident quas reiciendis eligendi velit alias, itaque obcaecati dignissimos
+				quo possimus facere autem iusto hic impedit! Doloremque nesciunt earum soluta animi? Ut error voluptatem delectus voluptate inventore
+				consequuntur mollitia modi soluta dolores dignissimos odio dolore hic earum aliquam voluptatum, animi quibusdam magni illum a in veniam
+				omnis. Doloremque nostrum aut expedita. Saepe explicabo nam suscipit quos placeat porro dignissimos vel vitae consequatur minus, officia
+				odit ad inventore aut quis fugiat! Explicabo architecto in asperiores fugit qui sequi quisquam officia voluptatibus minima. Saepe quam,
+				eum ab cupiditate laudantium officia sunt dolores omnis porro at laborum corporis quod aliquam numquam. Rem molestias perferendis
+				veritatis aut tempore tempora, quibusdam facilis, aliquam, nostrum fugit animi? Adipisci aliquid sint quis quaerat consectetur iste
+				repellat, eius earum laboriosam, nam distinctio inventore maxime asperiores nisi rem voluptates quae tenetur quisquam necessitatibus
+				commodi numquam sunt fugiat. Repellendus, omnis corrupti. Blanditiis aut optio voluptatum, consequatur obcaecati explicabo eum incidunt
+				dicta amet iusto quam ab est. Veniam quos itaque, quasi, nam dolor quis, numquam expedita ducimus iste ab porro perferendis nobis?
+				Libero eveniet tempore sequi modi explicabo aperiam inventore. Libero, quae, neque debitis sunt et porro labore soluta id asperiores qui
+				molestias aperiam excepturi. Necessitatibus tempore nam animi, aliquam tenetur minima! Laboriosam accusamus iure itaque aspernatur
+				blanditiis tempore nobis non dignissimos! Iste facilis libero deserunt accusantium sequi corporis nulla reprehenderit, labore ipsam
+				delectus excepturi ea perspiciatis. Veniam pariatur laudantium illum fugit! Labore sapiente, maxime dolor maiores dolore, iure neque
+				provident recusandae harum nesciunt hic dignissimos modi reiciendis praesentium est aperiam odio, quia voluptatum exercitationem.
+				Delectus inventore earum in, fuga harum suscipit! Itaque in incidunt laboriosam, magni quibusdam nobis at? Excepturi officiis corrupti
+				cum qui, vero ut nulla, voluptate autem impedit quos obcaecati saepe quod illum. Expedita iure cupiditate deleniti iusto placeat?
+				Quisquam impedit voluptate earum incidunt tempora, iure optio facilis dicta at nostrum. Blanditiis saepe odit, molestias dicta eaque
+				cumque quidem porro placeat et recusandae, voluptates error reprehenderit velit voluptatum perferendis. Accusantium doloribus debitis
+				perspiciatis cupiditate veniam hic labore consectetur illo laborum similique fugiat dolorum quae quam qui ducimus velit libero enim
+				odit, deleniti quo placeat, voluptas totam aperiam rerum. Nostrum. Dolor rem exercitationem nesciunt, accusamus, quisquam nobis a,
+				laborum quos possimus repellendus nam. Corporis, voluptatibus dicta? Autem nemo debitis doloremque quibusdam nulla eum omnis quisquam
+				laboriosam laudantium? Voluptatem, explicabo tempore. Provident, culpa quasi? Fugit, ullam quas dolore accusamus adipisci voluptatum
+				eaque architecto quia quod quis assumenda quaerat vero numquam illum ratione ea suscipit, repudiandae est reprehenderit quos
+				perspiciatis expedita laborum! Perspiciatis tenetur ratione earum incidunt ex possimus hic impedit fuga non, labore facilis ullam quod
+				reprehenderit quam distinctio vel recusandae animi illum repellat rem reiciendis! Culpa, reprehenderit ullam! Expedita, amet.</section>
+		</div>
+
+		<header class="top-bar h-10 fixed z-40 inset-0 font-bold bg-white shadow hidden md:block">
 			<div class="h-full container mx-auto flex">
 				<a href="../../" class="logo flex items-center px-4 hover:underline hover:text-red-500">
-					<span> 
-						<i class="far fa-lemon">
-					</i>
-					</span> 
-					<span class="flex"> 
-						&nbsp;Lemon 
+					<span>
+						<i class="far fa-lemon"> </i>
 					</span>
+					<span class="flex"> &nbsp;Lemon </span>
 				</a>
 
 				<div class="flex-grow"></div>
 
 				<nav class="top-bar__menu-box-1">
 					<ul class="flex h-full -mr-2">
-						<li><a href="../../" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
-								<span> 
-									<i class="fas fa-home">
-								</i>
-								</span> 
-								<span class="hidden sm:block">
-									&nbsp;HOME
+						<li>
+							<a href="../../" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+								<span>
+									<i class="fas fa-home"> </i>
 								</span>
-							</a></li>
-						<li><a href="../article/list?boardId=1" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
-								<span> <i class="fas fa-flag"></i>
-								</span> <span class="hidden sm:block">&nbsp;NOTICE LIST</span>
-							</a></li>
-						<li><a href="../article/list?boardId=2" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
-								<span> <i class="fab fa-free-code-camp"></i>
-								</span> <span class="hidden sm:block">&nbsp;FREE LIST</span>
-							</a></li>
+								<span class="hidden sm:block"> &nbsp;HOME </span>
+							</a>
+						</li>
+						<li>
+							<a href="../article/list?boardId=1" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+								<span>
+									<i class="fas fa-flag"></i>
+								</span>
+								<span class="hidden sm:block">&nbsp;NOTICE LIST</span>
+							</a>
+						</li>
+						<li>
+							<a href="../article/list?boardId=2" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+								<span>
+									<i class="fab fa-free-code-camp"></i>
+								</span>
+								<span class="hidden sm:block">&nbsp;FREE LIST</span>
+							</a>
+						</li>
 						<c:if test="${rq.notLogined}">
-							<li><a href="../member/login?afterLoginUri=${rq.encodedAfterLoginUri}"
+							<li>
+								<a href="../member/login?afterLoginUri=${rq.encodedAfterLoginUri}"
 									class="h-full flex items-center px-6 hover:underline hover:text-red-500">
-									<span> <i class="fas fa-sign-in-alt"></i>
-									</span> <span class="hidden sm:block">&nbsp;LOGIN</span>
-								</a></li>
-							<li><a href="../member/join" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
-									<span> <i class="fas fa-user-plus"></i>
-									</span> <span class="hidden sm:block">&nbsp;JOIN</span>
-								</a></li>
+									<span>
+										<i class="fas fa-sign-in-alt"></i>
+									</span>
+									<span class="hidden sm:block">&nbsp;LOGIN</span>
+								</a>
+							</li>
+							<li>
+								<a href="../member/join" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+									<span>
+										<i class="fas fa-user-plus"></i>
+									</span>
+									<span class="hidden sm:block">&nbsp;JOIN</span>
+								</a>
+							</li>
 						</c:if>
 						<c:if test="${rq.logined}">
-							<li><a href="../member/doLogout" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
-									<span> <i class="fas fa-sign-out-alt"></i>
-									</span> <span class="hidden sm:block">&nbsp;LOGOUT</span>
-								</a></li>
-							<li><a href="#" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
-									<span> <i class="fas fa-user"></i>
-									</span> <span class="hidden sm:block">&nbsp;MY PAGE</span>
-								</a></li>
+							<li>
+								<a href="../member/doLogout" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+									<span>
+										<i class="fas fa-sign-out-alt"></i>
+									</span>
+									<span class="hidden sm:block">&nbsp;LOGOUT</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+									<span>
+										<i class="fas fa-user"></i>
+									</span>
+									<span class="hidden sm:block">&nbsp;MY PAGE</span>
+								</a>
+							</li>
 						</c:if>
 					</ul>
 				</nav>

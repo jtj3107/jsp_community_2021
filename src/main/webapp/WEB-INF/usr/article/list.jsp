@@ -141,7 +141,7 @@
 					<hr />
 				</c:forEach>
 
-				<div class="pages mt-4 mb-4 flex justify-center pb-4">
+				<div class="page-menu mt-4 mb-4">
 					<c:set var="pageMenuArmSize" value="4" />
 					<c:set var="startPage" value="${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1}" />
 					<c:set var="endPage" value="${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}" />

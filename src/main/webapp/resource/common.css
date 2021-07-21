@@ -1,8 +1,42 @@
 @charset "UTF-8";
 
+/* 라이브러리 */
+.line-clamp-3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.row-span-7 {
+  grid-row: span 7 / span 7;
+}
+
+.row-span-8 {
+  grid-row: span 8 / span 8;
+}
+
+@media ( max-width: 640px ) {
+  .sm\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+}
+
+/* 커스텀 */
 :root {
   --card-title_height:40px;
   --card-title_left-btn-cell-width:50px;
+}
+
+body {
+	color:#666;
+}
+
+.page-menu {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
 }
 
 .card-title {
@@ -28,28 +62,6 @@
   margin-top: var(--card-title_height);
 }
 
-.line-clamp-3 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-}
-
-.row-span-7 {
-  grid-row: span 7 / span 7;
-}
-
-.row-span-8 {
-  grid-row: span 8 / span 8;
-}
-
-@media ( max-width: 640px ) {
-  .sm\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-}
-
 @media (max-width: 480px) {
   .card-wrap.max-w-md {
     max-width:none;
@@ -64,6 +76,17 @@
 .btns {
   margin-top:10px;	
 }
+
+/* 모바일 사이드바 시작 */
+.mobile-side-bar {
+ 	transform:translateY(-100%);
+ 	transition: transfrom 0.3s;
+}
+
+.mobile-side-bar.active {
+	transform:translateY(0);
+}
+/* 모바일 사이드바 끝 */
 
 @media (max-width: 360px) {
   .logo-text-mini {
