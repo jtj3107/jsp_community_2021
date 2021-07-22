@@ -16,58 +16,25 @@
 				<span>게시물 리스트</span>
 			</div>
 
-			<div class="flex">
-				<div class="p-4">
-					<c:if test="${param.searchKeyword != null && param.searchKeyword != '' }">
-						<div class="badge badge-primary">검색어 타입</div>
-						<span>${param.searchKeywordTypeCode}</span>
+			<div class="px-4 py-4">
+				<c:if test="${param.searchKeyword != null && param.searchKeyword != '' }">
+					<div class="badge badge-primary">검색어 타입</div>
+					<span>${param.searchKeywordTypeCode}</span>
 
-						<br />
+					<br />
 
-						<div class="badge badge-primary">검색어</div>
-						<span>${param.searchKeyword}</span>
+					<div class="badge badge-primary">검색어</div>
+					<span>${param.searchKeyword}</span>
 
-						<br />
-					</c:if>
+					<br />
+				</c:if>
 
-					<div class="badge badge-primary">전체게시물 개수</div>
-					<span>${totalItemsCount}</span>
+				<div class="badge badge-primary">전체게시물 개수</div>
+				<span>${totalItemsCount}</span>
 
-					<div class="btns px-4 py-4">
-						<a class="btn btn-link" href="../article/write?boardId=${boardId}">글쓰기</a>
-					</div>
+				<div class="btns px-4 py-4">
+					<a class="btn btn-link" href="../article/write?boardId=${boardId}">글쓰기</a>
 				</div>
-
-				<div class="flex-grow"></div>
-
-
-				<form action="">
-					<input type="hidden" name="boardId" value="${boardId}">
-					<div class="form-control my-4">
-						<div>
-							<select name="searchKeywordTypeCode" class="select select-bordered select-primary w-full max-w-xs">
-								<option value="title,body">제목,내용</option>
-								<option value="title">제목</option>
-								<option value="body">내용</option>
-							</select>
-						</div>
-
-						<script>
-							$(
-									'.section-article-write select[name="searchKeywordTypeCode"]')
-									.val(rqBaseTypeAttrs.searchKeywordTypeCode);
-						</script>
-						<div>
-							<input class="input input-bordered w-full max-w-xs mt-1" maxlength="100" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요."
-								value="${param.searchKeyword}" />
-						</div>
-					</div>
-
-					<div class="btns">
-						<button type="submit" class="btn btn-link">검색</button>
-					</div>
-				</form>
-
 			</div>
 			<hr />
 
@@ -176,7 +143,7 @@
 						<a class="btn" href="${uriBase}&page=${totalPage}">[마지막]</a>
 					</div>
 				</div>
-				
+
 				<div class="page-menu flex md:hidden">
 					<c:set var="pageMenuArmSize" value="2" />
 					<c:set var="startPage" value="${page - pageMenuArmSize >= 1  ? page - pageMenuArmSize : 1}" />
