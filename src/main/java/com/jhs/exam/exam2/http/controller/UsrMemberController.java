@@ -92,7 +92,7 @@ public class UsrMemberController extends Controller {
 
 	private void actionDoLogout(Rq rq) {
 		rq.removeSessionAttr("loginedMemberJson");
-		rq.replace(null, "../article/list");
+		rq.replace(null, "../../");
 	}
 
 	private void actionDoLogin(Rq rq) {
