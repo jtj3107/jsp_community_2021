@@ -21,6 +21,14 @@
 					function ArticleWrite__submit(form) {
 						if (ArticleWrite__submitDone) {
 							return;
+						
+						}
+						
+						if (form.boardId.value == 0) {
+							alert('게시판을 선택해주세요.');
+							form.boardId.focus();
+
+							return;
 						}
 
 						if (form.title.value.length == 0) {
@@ -37,13 +45,6 @@
 							return;
 						}
 						
-						if (form.boardId.value == 0) {
-							alert('게시판을 선택해주세요.');
-							form.boardId.focus();
-
-							return;
-						}
-												
 						form.submit();
 						ArticleWrite__submitDone = true;
 					}
@@ -52,8 +53,8 @@
 					<input type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
 
 					<div class="form-control">
-						<select name="boardId" class="select select-bordered select-primary w-full max-w-xs">
-							<option disabled selected>게시판을 선택해주세요.</option>
+						<select name="boardId" class="select select-bordered select-primary w-full max-w-md">
+							<option value="0" disabled selected>게시판을 선택해주세요.</option>
 							<option value="1">공지</option>
 							<option value="2">자유</option>
 						</select>
