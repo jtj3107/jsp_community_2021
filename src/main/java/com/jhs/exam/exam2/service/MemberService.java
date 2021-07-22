@@ -47,4 +47,16 @@ public class MemberService {
 		return memberRepository.getForPrintMembers();
 	}
 
+	public ResultData getLoginId(String name, String email) {
+		Member member = memberRepository.getMemberByNameAndEmail(name, email);
+
+		String Loginid = member.getLoginId();
+		
+		if (member == null) {
+			return ResultData.from("F-1", "존재하지 않는 회원 입니다.");
+		}
+
+		return ResultData.from("S-1", Ut.f("해당 회원의 아이디는" + Loginid + "입니다"), "Loginid", Loginid);
+	}
+
 }

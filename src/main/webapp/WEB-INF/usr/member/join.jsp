@@ -150,6 +150,7 @@
 						</label>
 						<div>
 							<input class="input input-bordered w-full" maxlength="100" name="loginId" type="text" placeholder="사용하실 로그인아이디를 입력해주세요." />
+						 <!-- <div class="btn-show-idCheck btn btn-sm btn-outline btn-primary mt-4">중복체크</div> -->	 
 						</div>
 					</div>
 

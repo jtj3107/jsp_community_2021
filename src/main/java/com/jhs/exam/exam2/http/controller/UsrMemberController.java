@@ -30,10 +30,35 @@ public class UsrMemberController extends Controller {
 		case "doJoin":
 			actionDoJoin(rq);
 			break;
+		case "doReduplication":
+			actionDoReduplication(rq);
+			break;
 		default:
 			rq.println("존재하지 않는 페이지 입니다.");
 			break;
 		}
+	}
+	
+	private void actionDoReduplication(Rq rq) {
+		String name = rq.getParam("name", "");
+		String email = rq.getParam("email", "");
+		
+		if (name.length() == 0) {
+			rq.historyBack("이름을 입력해주세요.");
+			return;
+		}
+
+		if (email.length() == 0) {
+			rq.historyBack("email를 입력해주세요.");
+			return;
+		}
+
+		ResultData loginId = memberService.getLoginId(name, email);
+		
+		String redirectUri = rq.getParam("redirectUri", "../member/login");
+		
+		rq.replace(loginId.getMsg(), redirectUri);
+		
 	}
 
 	private void actionDoJoin(Rq rq) {
@@ -48,6 +73,8 @@ public class UsrMemberController extends Controller {
 			rq.historyBack("loginId를 입력해주세요.");
 			return;
 		}
+		
+		rq.print(loginId);
 
 		if (loginPw.length() == 0) {
 			rq.historyBack("loginPw를 입력해주세요.");

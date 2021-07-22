@@ -62,7 +62,30 @@ function SearchBar__hide() {
 }
 /* 검색바 끝 */
 
+/* 아이디찾기 시작 */
+function TopBar__init() {  
+  $('.btn-show-findId-bar').click(function() {
+    FindId__show();
+  });
+}
+
+function FindId__init() {
+  $('.btn-hied-findId-bar').click(function() {
+    FindId__hide();
+  });
+}
+
+function FindId__show() {
+  $('.findId-bar').addClass('active');
+}
+
+function FindId__hide() {
+  $('.findId-bar').removeClass('active');
+}
+
 MobileTopBar__init();
 MobileSideBar__init();
 TopBar__init();
 SearchBar__init();
+TopBar__init();
+FindId__init();
