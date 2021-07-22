@@ -4,13 +4,16 @@ import java.util.List;
 
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.dto.Article;
+import com.jhs.exam.exam2.dto.Board;
 import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.service.ArticleService;
+import com.jhs.exam.exam2.service.BoardService;
 import com.jhs.exam.exam2.util.Ut;
 
 public class UsrArticleController extends Controller {
 	private ArticleService articleService = Container.articleService;
+	private BoardService boardService = Container.boardService;
 
 	@Override
 	public void performAction(Rq rq) {
@@ -101,6 +104,10 @@ public class UsrArticleController extends Controller {
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, page, searchKeywordTypeCode, searchKeyword, boardId);
 		
 		int totalPage = (int)Math.ceil((double)totalItemsCount / itemsCountInAPage);
+		
+		Board board = boardService.getBoardById(boardId);
+		
+		rq.setAttr("board", board);
 		
 		rq.setAttr("searchKeywordTypeCode", searchKeywordTypeCode);
 		rq.setAttr("boardId", boardId);
