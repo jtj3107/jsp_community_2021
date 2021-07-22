@@ -125,6 +125,11 @@ public class UsrArticleController extends Controller {
 		String body = rq.getParam("body", "");
 		String redirectUri = rq.getParam("redirectUri", "../article/list");
 
+		if (boardId == 0) {
+			rq.historyBack("boadrId을 입력 해주세요.");
+			return;
+		}
+		
 		if (title.length() == 0) {
 			rq.historyBack("title을 입력해주세요.");
 			return;
@@ -132,11 +137,6 @@ public class UsrArticleController extends Controller {
 
 		if (body.length() == 0) {
 			rq.historyBack("body를 입력해주세요.");
-			return;
-		}
-		
-		if (boardId == 0) {
-			rq.historyBack("게시판을 선택 해주세요.");
 			return;
 		}
 
