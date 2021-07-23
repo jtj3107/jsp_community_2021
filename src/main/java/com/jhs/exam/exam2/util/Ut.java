@@ -126,4 +126,10 @@ public class Ut {
 
 		return sb.toString();
 	}
+
+	public static int sendMail(String gmailId, String gmailPw, String from, String fromName, String to, String title,
+			String body) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

@@ -2,10 +2,10 @@ package com.jhs.exam.exam2.service;
 
 import java.util.List;
 
+import com.jhs.exam.exam2.app.App;
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.dto.ResultData;
-import com.jhs.exam.exam2.repository.ArticleRepository;
 import com.jhs.exam.exam2.repository.MemberRepository;
 import com.jhs.exam.exam2.util.Ut;
 
@@ -75,7 +75,13 @@ public class MemberService {
 
 	public ResultData sendTempLoginPwToEmail(Member actor) {
 		// 메일 제목과 내용 만들기
+		String siteName = App.getSiteName();
+		String title = "[" + siteName + "] 임시 패스워드 발송";
 		String tempPassword = Ut.getTempPassword(6);
+		String body = "<h1>임시 패스워드 : " + tempPassword + "<h1>"; 
+		
+		// 메일 발송
+		// int sendRs = emailService.send(actor.getEmail(), title, body);
 		
 		setTempPassword(actor, tempPassword);
 		

@@ -17,4 +17,8 @@ public class App {
 		// 공용 객체 세팅
 		Container.init();
 	}
+
+	public static String getSiteName() {
+		return "JSP Community";
+	}
 }
