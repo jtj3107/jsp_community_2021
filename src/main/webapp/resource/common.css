@@ -72,10 +72,6 @@ body {
     padding-left:0;
     padding-right:0;
   }
-  
-  main > section:first-of-type > .card-wrap {
-  	margin-top: -15px;
-  }
 
   .card-wrap > .card {
     overflow: visible;
@@ -145,34 +141,3 @@ body {
 }
 
 /* 검색바 끝 */
-
-/* 아이디찾기 시작 */
-.findId-bar {
-  visibility:hidden;
-  opacity:0;
-  background-color:rgba(0,0,0,0.7);
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:100;
-}
-
-.findId-bar.active {
-  visibility:visible;
-  opacity:1;
-}
-
-.findId-bar > form {
-  width:100%;
-  max-width:600px;
-  background-color:white;
-  padding:20px;
-  border-radius:10px;
-  border:2px solid black;
-}
-/* 아이디찾기 끝 */

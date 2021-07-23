@@ -30,8 +30,11 @@ public class UsrMemberController extends Controller {
 		case "doJoin":
 			actionDoJoin(rq);
 			break;
-		case "doReduplication":
-			actionDoReduplication(rq);
+		case "findLoginId":
+			actionShowFindLoginId(rq);
+			break;
+		case "doFindLoginId":
+			actionDoFindLoginId(rq);
 			break;
 		default:
 			rq.println("존재하지 않는 페이지 입니다.");
@@ -39,26 +42,33 @@ public class UsrMemberController extends Controller {
 		}
 	}
 	
-	private void actionDoReduplication(Rq rq) {
+	private void actionDoFindLoginId(Rq rq) {
 		String name = rq.getParam("name", "");
 		String email = rq.getParam("email", "");
 		
 		if (name.length() == 0) {
-			rq.historyBack("이름을 입력해주세요.");
+			rq.historyBack("name를 입력해주세요.");
 			return;
 		}
-
+		
 		if (email.length() == 0) {
 			rq.historyBack("email를 입력해주세요.");
 			return;
 		}
+		
+		ResultData loginIdRd = memberService.getMemberByNameAndEmail(name, email);
 
-		ResultData loginId = memberService.getLoginId(name, email);
+		if (loginIdRd.isFail()) {
+			rq.historyBack(loginIdRd.getMsg());
+			return;
+		}
 		
-		String redirectUri = rq.getParam("redirectUri", "../member/login");
+		rq.replace(loginIdRd.getMsg(), "../member/login");
 		
-		rq.replace(loginId.getMsg(), redirectUri);
-		
+	}
+
+	private void actionShowFindLoginId(Rq rq) {
+		rq.jsp("usr/member/findLoginId");
 	}
 
 	private void actionDoJoin(Rq rq) {
@@ -73,8 +83,6 @@ public class UsrMemberController extends Controller {
 			rq.historyBack("loginId를 입력해주세요.");
 			return;
 		}
-		
-		rq.print(loginId);
 
 		if (loginPw.length() == 0) {
 			rq.historyBack("loginPw를 입력해주세요.");

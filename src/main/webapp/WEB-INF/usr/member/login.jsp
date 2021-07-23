@@ -63,38 +63,9 @@
 
 					<div class="btns">
 						<button type="submit" class="btn btn-link">로그인</button>
-						<button type="button" class="btn btn-link btn-show-findId-bar">아이디 찾기</button>
+						<a class="btn btn-link" href="../member/findLoginId">아이디 찾기</a>
 					</div>
 				</form>
-				<div class="findId-bar">
-					<form action="../member/doReduplication">
-						<div>
-							<div class="badge">아이디 찾기</div>
-						</div>
-						<label class="label">
-							<span class="label-text">이름</span>
-						</label>
-						<div class="form-control">
-							<div>
-								<input class="input input-bordered w-full" maxlength="100" name="name" type="text" placeholder="이름을 입력해주세요" />
-							</div>
-						</div>
-
-						<div class="form-control mt-2">
-							<label class="label">
-								<span class="label-text">이메일</span>
-							</label>
-							<div>
-								<input class="input input-bordered w-full" maxlength="100" name="email" type="email" placeholder="이메일을 입력해주세요" />
-							</div>
-						</div>
-
-						<div class="btns">
-							<button type="submit" class="btn btn-link">아이디 찾기</button>
-							<button type="button" class="btn btn-link btn-hied-findId-bar">닫기</button>
-						</div>
-					</form>
-				</div>
 			</div>
 		</div>
 	</div>

@@ -40,7 +40,7 @@ public class MemberRepository {
 		
 		return MysqlUtil.selectRows(sql, Member.class);
 	}
-
+	
 	public Member getMemberByNameAndEmail(String name, String email) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT M.*");
@@ -48,7 +48,7 @@ public class MemberRepository {
 		sql.append("WHERE M.name = ?", name);
 		sql.append("AND");
 		sql.append("email = ?", email);
-		
+
 		return MysqlUtil.selectRow(sql, Member.class);
 	}
 

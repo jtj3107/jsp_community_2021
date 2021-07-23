@@ -9,7 +9,7 @@ public class NeedLoginInterceptor extends Interceptor {
 		switch (rq.getActionPath()) {
 		case "/usr/article/list":
 		case "/usr/article/detail":
-		case "/usr/home/mai	n":
+		case "/usr/home/main":
 		case "/usr/member/login":
 		case "/usr/member/doLogout":
 		case "/usr/member/doLogin":
@@ -19,7 +19,6 @@ public class NeedLoginInterceptor extends Interceptor {
 		case "/usr/member/doFindLoginId":
 		case "/usr/member/findLoginPw":
 		case "/usr/member/doFindLoginPw":
-		case "/usr/member/doReduplication":	
 			return true;
 		}
 		
