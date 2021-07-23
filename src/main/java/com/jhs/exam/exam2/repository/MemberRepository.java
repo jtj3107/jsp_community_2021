@@ -52,4 +52,15 @@ public class MemberRepository {
 		return MysqlUtil.selectRow(sql, Member.class);
 	}
 
+	public Member getMemberByLoginIdAndEmail(String loginId, String email) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT M.*");
+		sql.append("FROM member AS M");
+		sql.append("WHERE M.loginId = ?", loginId);
+		sql.append("AND");
+		sql.append("email = ?", email);
+
+		return MysqlUtil.selectRow(sql, Member.class);
+	}
+
 }

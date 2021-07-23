@@ -49,14 +49,30 @@ public class MemberService {
 	
 	public ResultData getMemberByNameAndEmail(String name, String email) {
 		Member member = memberRepository.getMemberByNameAndEmail(name, email);
+			
+		if(member == null) {
+			return ResultData.from("F-1", "존재하지 않는 회원입니다.");
+		}
 		
 		String loginId = member.getLoginId();
+		
+		return ResultData.from("S-1", Ut.f("해당 회원의 아이디는 [" + loginId + "] 입니다"), "loginId", loginId);
+	}
+
+	public ResultData getMemberByLoginIdAndEmail(String loginId, String email) {
+		Member member = memberRepository.getMemberByLoginIdAndEmail(loginId, email);
 		
 		if(member == null) {
 			return ResultData.from("F-1", "존재하지 않는 회원입니다.");
 		}
 		
-		return ResultData.from("S-1", Ut.f("해당 회원의 아이디는 [" + loginId + "] 입니다"), "loginId", loginId);
+		if(member.getEmail().equals(email) == false) {
+			return ResultData.from("F-2", "가입하신 이메일이 아닙니다.");
+		}
+		
+		String loginPw = member.getLoginPw();
+		
+		return ResultData.from("S-1", Ut.f("해당 회원의 비밀번호는 [" + loginPw + "] 입니다"), "loginPw", loginPw);
 	}
 
 }

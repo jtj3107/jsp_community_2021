@@ -36,12 +36,47 @@ public class UsrMemberController extends Controller {
 		case "doFindLoginId":
 			actionDoFindLoginId(rq);
 			break;
+		case "findLoginPw":
+			actionShowFindLoginPw(rq);
+			break;
+		case "doFindLoginPw":
+			actionDoFindLoginPw(rq);
+			break;
 		default:
 			rq.println("존재하지 않는 페이지 입니다.");
 			break;
 		}
 	}
 	
+	private void actionDoFindLoginPw(Rq rq) {
+		String loginId = rq.getParam("loginId", "");
+		String email = rq.getParam("email", "");
+		
+		if (loginId.length() == 0) {
+			rq.historyBack("loginId를 입력해주세요.");
+			return;
+		}
+		
+		if (email.length() == 0) {
+			rq.historyBack("email를 입력해주세요.");
+			return;
+		}
+		
+		ResultData member = memberService.getMemberByLoginIdAndEmail(loginId, email);
+
+		if (member.isFail()) {
+			rq.historyBack(member.getMsg());
+			return;
+		}
+		
+		rq.replace(member.getMsg(), "../member/login");
+		
+	}
+
+	private void actionShowFindLoginPw(Rq rq) {
+		rq.jsp("usr/member/findLoginPw");
+	}
+
 	private void actionDoFindLoginId(Rq rq) {
 		String name = rq.getParam("name", "");
 		String email = rq.getParam("email", "");
