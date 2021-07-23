@@ -62,14 +62,23 @@ public class UsrMemberController extends Controller {
 			return;
 		}
 		
-		ResultData member = memberService.getMemberByLoginIdAndEmail(loginId, email);
+		ResultData memberRd = memberService.getMemberByLoginIdAndEmail(loginId, email);
 
-		if (member.isFail()) {
-			rq.historyBack(member.getMsg());
+		if (memberRd.isFail()) {
+			rq.historyBack(memberRd.getMsg());
 			return;
 		}
 		
-		rq.replace(member.getMsg(), "../member/login");
+		Member member = (Member)memberRd.getBody().get("member");
+		
+		ResultData sendeTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
+		
+		if(sendeTempLoginPwToEmailRs.isFail()) {
+			rq.historyBack(sendeTempLoginPwToEmailRs.getMsg());
+			return;
+		}
+		
+		rq.replace(sendeTempLoginPwToEmailRs.getMsg(), "../member/login");
 		
 	}
 
@@ -183,6 +192,7 @@ public class UsrMemberController extends Controller {
 
 		if (loginRd.isFail()) {
 			rq.historyBack(loginRd.getMsg());
+			return;
 		}
 
 		Member member = (Member) loginRd.getBody().get("member");

@@ -70,9 +70,20 @@ public class MemberService {
 			return ResultData.from("F-2", "가입하신 이메일이 아닙니다.");
 		}
 		
-		String loginPw = member.getLoginPw();
+		return ResultData.from("S-1", Ut.f("확인 되었습니다."), "member", member);
+	}
+
+	public ResultData sendTempLoginPwToEmail(Member actor) {
+		// 메일 제목과 내용 만들기
+		String tempPassword = Ut.getTempPassword(6);
 		
-		return ResultData.from("S-1", Ut.f("해당 회원의 비밀번호는 [" + loginPw + "] 입니다"), "loginPw", loginPw);
+		setTempPassword(actor, tempPassword);
+		
+		return ResultData.from("S-1", Ut.f("해당 회원의 새로운 비밀번호는 [" + tempPassword + "] 입니다"), "tempPassword", tempPassword);
+	}
+
+	private void setTempPassword(Member actor, String tempPassword) {
+		memberRepository.setTempPassword(actor, tempPassword);
 	}
 
 }

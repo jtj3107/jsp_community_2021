@@ -63,4 +63,13 @@ public class MemberRepository {
 		return MysqlUtil.selectRow(sql, Member.class);
 	}
 
+	public void setTempPassword(Member actor, String tempPassword) {
+		SecSql sql = new SecSql();
+		sql.append("UPDATE member AS M");
+		sql.append("SET loginPw = ?", tempPassword);
+		sql.append("WHERE M.id= ?", actor.getId());
+		
+		MysqlUtil.update(sql);
+	}
+
 }
