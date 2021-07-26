@@ -9,6 +9,7 @@ import com.jhs.mysqliutil.SecSql;
 
 public class ArticleRepository {
 	public int write(int boardId, int memberId, String title, String body) {
+		// 게시물을 해당 변수에 맞게 DB에 저장후 해당 게시물 번호를 리턴
 		SecSql sql = new SecSql();
 		sql.append("INSERT INTO article");
 		sql.append("SET regDate = NOW()");
@@ -79,6 +80,7 @@ public class ArticleRepository {
 	}
 
 	public int delete(int id) {
+		// 해당 id의 게시물을 DB에서 삭제
 		SecSql sql = new SecSql();
 		sql.append("DELETE FROM article");
 		sql.append("WHERE id = ?", id);
@@ -105,11 +107,12 @@ public class ArticleRepository {
 	}
 
 	public int getArticlesCount(String searchKeywordTypeCode, String searchKeyword, int boardId) {
+		// 해당 변수를 이용하여 해당되는 게시물 갯수를 DB에서 받아와 리턴
 		SecSql sql = new SecSql();
 		sql.append("SELECT COUNT(*) AS cnt");
 		sql.append("FROM article AS A");
 		sql.append("WHERE 1");
-		
+		// searchKeyword이 null이 거나 없을 경우 동작X
 		if(searchKeyword != null && searchKeyword.length() > 0) {
 			switch (searchKeywordTypeCode) {
 			case "body":
@@ -129,7 +132,7 @@ public class ArticleRepository {
 				
 			}
 		}
-		
+		// 게시판 번호가 0일시 동작X
 		if(boardId != 0) {
 			sql.append("AND A.boardID = ?", boardId);
 		}
