@@ -21,4 +21,9 @@ public class App {
 	public static String getSiteName() {
 		return "JSP Community";
 	}
+
+	public static String getLoginUri() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

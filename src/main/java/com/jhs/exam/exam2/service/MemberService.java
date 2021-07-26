@@ -11,6 +11,7 @@ import com.jhs.exam.exam2.util.Ut;
 
 public class MemberService {
 	private MemberRepository memberRepository = Container.memberRepository;
+	private EmailService emailService = Container.emailService;
 
 	public ResultData login(String loginId, String loginPw) {
 		Member member = memberRepository.getMemberByLoginId(loginId);
@@ -76,16 +77,22 @@ public class MemberService {
 	public ResultData sendTempLoginPwToEmail(Member actor) {
 		// 메일 제목과 내용 만들기
 		String siteName = App.getSiteName();
+		//String siteLoginUrl = App.getLoginUri();
 		String title = "[" + siteName + "] 임시 패스워드 발송";
 		String tempPassword = Ut.getTempPassword(6);
 		String body = "<h1>임시 패스워드 : " + tempPassword + "<h1>"; 
-		
+		body += "<a href=\"" + "http://localhost:8084/jsp_community_2021/usr/member/login" + "\" target=\"_blank\">로그인 하러가기</a>";
+	
 		// 메일 발송
-		// int sendRs = emailService.send(actor.getEmail(), title, body);
+		int sendRs = Ut.sendMail("jtj3926@gmail.com", "khnvjxnxfqxotpnv", "no-reply@lemon-cm.com", "레몬 커뮤니티 알림", actor.getEmail(), title, body);
+		
+		if( sendRs != 1) {
+			return ResultData.from("F-1", "메일 발송에 실패하였습니다.");
+		}
 		
 		setTempPassword(actor, tempPassword);
 		
-		return ResultData.from("S-1", Ut.f("해당 회원의 새로운 비밀번호는 [" + tempPassword + "] 입니다"), "tempPassword", tempPassword);
+		return ResultData.from("S-1", Ut.f("해당 회원의 새로운 비밀번호를" + actor.getEmail() + "로 발송하였습니다."));
 	}
 
 	private void setTempPassword(Member actor, String tempPassword) {

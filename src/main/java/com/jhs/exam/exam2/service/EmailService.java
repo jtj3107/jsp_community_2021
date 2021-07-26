@@ -7,7 +7,7 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class emailService {
+public class EmailService {
 	private String gmailId;
 	private String gmailPw;
 	private String from;

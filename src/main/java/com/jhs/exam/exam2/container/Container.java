@@ -11,6 +11,7 @@ import com.jhs.exam.exam2.repository.BoardRepository;
 import com.jhs.exam.exam2.repository.MemberRepository;
 import com.jhs.exam.exam2.service.ArticleService;
 import com.jhs.exam.exam2.service.BoardService;
+import com.jhs.exam.exam2.service.EmailService;
 import com.jhs.exam.exam2.service.MemberService;
 
 public class Container {
@@ -30,6 +31,7 @@ public class Container {
 	
 	public static BoardRepository boardRepository;
 	public static BoardService boardService;
+	public static EmailService emailService;
 	
 	public static void init() {
 		memberRepository = new MemberRepository();
@@ -47,6 +49,8 @@ public class Container {
 		usrMemberController = new UsrMemberController();
 		usrArticleController = new UsrArticleController();
 		usrHomeController = new UsrHomeController();
+		
+		emailService = new EmailService();
 		
 	}
 }
