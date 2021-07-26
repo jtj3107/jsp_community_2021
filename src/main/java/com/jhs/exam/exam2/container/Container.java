@@ -14,6 +14,7 @@ import com.jhs.exam.exam2.service.BoardService;
 import com.jhs.exam.exam2.service.EmailService;
 import com.jhs.exam.exam2.service.MemberService;
 
+// 웹사이트 실행이 모든 객체 한번 실행(필요시 마다 따로 만들어 따로 실행하는것이 아닌 한번에 실행하여 사용)
 public class Container {
 	public static BeforeActionInterceptor beforeActionInterceptor;
 	public static NeedLoginInterceptor needLoginInterceptor;

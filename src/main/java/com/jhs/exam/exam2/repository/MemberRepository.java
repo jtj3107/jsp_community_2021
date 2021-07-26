@@ -53,6 +53,7 @@ public class MemberRepository {
 	}
 
 	public Member getMemberByLoginIdAndEmail(String loginId, String email) {
+		// 해당 로그인아이디와 이메일에 맞는 멤버 DB에서 찾아 리턴
 		SecSql sql = new SecSql();
 		sql.append("SELECT M.*");
 		sql.append("FROM member AS M");
@@ -64,6 +65,7 @@ public class MemberRepository {
 	}
 
 	public void setTempPassword(Member actor, String tempPassword) {
+		// 해당 멤버 DB에서 비밀번호 변경
 		SecSql sql = new SecSql();
 		sql.append("UPDATE member AS M");
 		sql.append("SET loginPw = ?", tempPassword);

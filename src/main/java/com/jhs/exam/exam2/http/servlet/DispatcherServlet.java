@@ -13,22 +13,27 @@ import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.http.controller.Controller;
 import com.jhs.mysqliutil.MysqlUtil;
 
+// /usr로 시작하는 모든 요청
 @WebServlet("/usr/*")
 public class DispatcherServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		Rq rq = new Rq(req, resp);
 
+		// 설정된 길이보다 짧으면 리턴
 		if (rq.isInvalid()) {
 			rq.print("올바른 요청이 아닙니다.");
 			return;
 		}
 
+		// 인터셉터에서 false리턴 할경우 리턴
 		if (runInterceptors(rq) == false) {
 			return;
 		}
 
+		// 해당 함수에 맞지 않아 null을 반환 했을시 올바른 요청이 아닙니다 출력
 		Controller controller = getControllerByRq(rq);
 		
+		// null이 아닐경우 해당 컨트롤러 performAction 실행
 		if (controller != null) {
 			controller.performAction(rq);
 
@@ -40,14 +45,13 @@ public class DispatcherServlet extends HttpServlet {
 		
 	}
 	
-
-		
-
-	
-
+	// ControllerTypeName이 usr이고 해당 ControllerName로 나누어 컨트롤로 실행
 	private Controller getControllerByRq(Rq rq) {
+		// uri에 ControllerTypeName 불러와
 		switch (rq.getControllerTypeName()) {
+		// usr가 맞는지 확인
 		case "usr":
+			// uri에 ControllerName 불러와 아래 case에 해당하는 하는지 확인후 해당 컨트롤러실행
 			switch (rq.getControllerName()) {
 			case "article":
 				return Container.usrArticleController;
@@ -60,6 +64,7 @@ public class DispatcherServlet extends HttpServlet {
 			break;
 		}
 		
+		// 없을시 null 리턴
 		return null;
 	}
 
@@ -70,14 +75,17 @@ public class DispatcherServlet extends HttpServlet {
 
 	private boolean runInterceptors(Rq rq) {
 
+		// 로그인 했을시 세션을 저장(바로 사용할 수 있게 로그인여부 로그인아이디 로그인멤버 json 형식으로 굳힘)
 		if (Container.beforeActionInterceptor.runBeforeAction(rq) == false) {
 			return false;
 		}
-
+		
+		// 이동하는곳이 로그인 유무 걸러주는 인터셉터(로그인 필요한곳 이동시 로그인 안하면 false리턴)
 		if (Container.needLoginInterceptor.runBeforeAction(rq) == false) {
 			return false;
 		}
 
+		// 이동하는곳이 로그아웃 유무 걸러주는 인터셉터(로그인후 이동시 로그인 되어있으면 false리턴)
 		if (Container.needLogoutInterceptor.runBeforeAction(rq) == false) {
 			return false;
 		}

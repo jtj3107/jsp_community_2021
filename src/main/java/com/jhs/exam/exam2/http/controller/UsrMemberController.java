@@ -10,11 +10,14 @@ import com.jhs.exam.exam2.service.MemberService;
 import com.jhs.exam.exam2.util.Ut;
 
 public class UsrMemberController extends Controller {
+	// memberService 사용하기 위해 Container에서 memberService객체 불러오기
 	private MemberService memberService = Container.memberService;
 
 	@Override
 	public void performAction(Rq rq) {
+		// uri에 ActionMethodName이 아래 case에 해당하는지 확인
 		switch (rq.getActionMethodName()) {
+		// 해당 함수 실행
 		case "login":
 			actionShowLogin(rq);
 			break;
@@ -42,16 +45,20 @@ public class UsrMemberController extends Controller {
 		case "doFindLoginPw":
 			actionDoFindLoginPw(rq);
 			break;
+		// 없을시 메세지 출력후 break;
 		default:
 			rq.println("존재하지 않는 페이지 입니다.");
 			break;
 		}
 	}
 	
+	// 비밀번호 찾기 jsp에서 이동
 	private void actionDoFindLoginPw(Rq rq) {
+		// 해당 jsp에서 로그인아이디, 이메일 받아오기
 		String loginId = rq.getParam("loginId", "");
 		String email = rq.getParam("email", "");
 		
+		// 비정상적인 방법으로 작성없이 접근시 리턴
 		if (loginId.length() == 0) {
 			rq.historyBack("loginId를 입력해주세요.");
 			return;
@@ -62,22 +69,28 @@ public class UsrMemberController extends Controller {
 			return;
 		}
 		
+		// 받아온 로그인아이디, 이메일 이용해 해당 멤버값 얻어오는 함수
 		ResultData memberRd = memberService.getMemberByLoginIdAndEmail(loginId, email);
 
+		// 해당 값이 F-로 시작하면 오류 메세지 출력후 리턴
 		if (memberRd.isFail()) {
 			rq.historyBack(memberRd.getMsg());
 			return;
 		}
 		
+		// F-로 시작하지 않는 memberRd에서 저정한 member값 찾아 저장
 		Member member = (Member)memberRd.getBody().get("member");
 		
+		// 해당 member로 임시비밀번호 생성후 이메일 보내는 함수
 		ResultData sendeTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
 		
+		// 메일발송 실패시 오류 메세지 출력후 리턴
 		if(sendeTempLoginPwToEmailRs.isFail()) {
 			rq.historyBack(sendeTempLoginPwToEmailRs.getMsg());
 			return;
 		}
 		
+		// 성공메세지 출력후 로그인페이지로 이동
 		rq.replace(sendeTempLoginPwToEmailRs.getMsg(), "../member/login");
 		
 	}
