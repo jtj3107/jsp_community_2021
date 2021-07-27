@@ -8,6 +8,7 @@ import com.jhs.exam.exam2.app.App;
 
 @WebListener
 public class InitListener implements ServletContextListener {
+	// 웹이 시작할때 한번 실행
     @Override
     public void contextInitialized(ServletContextEvent sce) {
     	App.init();
