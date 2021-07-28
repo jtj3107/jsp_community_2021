@@ -19,7 +19,7 @@ public class MemberRepository {
 		return MysqlUtil.selectRow(sql, Member.class);
 	}
 
-	public void join(String loginId, String loginPw, String name, String nickname, String email, String cellphoneNo) {
+	public int join(String loginId, String loginPw, String name, String nickname, String email, String cellphoneNo) {
 		SecSql sql = new SecSql();
 		// 입력받은 변수를 이용 새로운 member를 DB에서 생성
 		sql.append("INSERT INTO `member`");
@@ -32,7 +32,7 @@ public class MemberRepository {
 		sql.append(", email = ?", email);
 		sql.append(", cellphoneNo = ?", cellphoneNo);
 		
-		MysqlUtil.insert(sql);
+		return MysqlUtil.insert(sql);
 	}
 
 	public static List<Member> getForPrintMembers() {
@@ -50,8 +50,8 @@ public class MemberRepository {
 		sql.append("SELECT M.*");
 		sql.append("FROM member AS M");
 		sql.append("WHERE M.name = ?", name);
-		sql.append("AND");
-		sql.append("email = ?", email);
+		sql.append("AND M.email = ?", email);
+		sql.append("LIMIT 1");
 
 		return MysqlUtil.selectRow(sql, Member.class);
 	}

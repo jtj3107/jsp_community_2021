@@ -186,7 +186,7 @@ public class UsrMemberController extends Controller {
 		}
 		
 		// 회원가입 jsp에서 redirectUri값 찾아 존재하면 redirectUri 저장 아니면 ../article/list값 저장
-		String redirectUri = rq.getParam("redirectUri", "../article/list");
+		String redirectUri = rq.getParam("redirectUri", "../member/login");
 		
 		// 성공 메세지 출력후 저장된 페이지로 이동하는 함수
 		rq.replace(joinRd.getMsg(), redirectUri);

@@ -15,7 +15,7 @@ public class MemberService {
 
 	public ResultData login(String loginId, String loginPw) {
 		// 로그인아이디로 member가 존재하는지 확인하는 함수
-		Member member = memberRepository.getMemberByLoginId(loginId);
+		Member member = getMemberByLoginId(loginId);
 
 		// 해당 member가 존재 하지 않을시 F-1저장후 리턴
 		if (member == null) {
@@ -49,12 +49,10 @@ public class MemberService {
 			return ResultData.from("F-2", Ut.f("`%s`님은 이메일 주소 `%s`로 이미 회원가입하셨습니다.", name, email));
 		}
 		
+		int id = memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
+		
 		// S-1, 완료 메세지 저장후 리턴
-		return ResultData.from("S-1", Ut.f("회원가입이 완료되었습니다."));
-	}
-
-	private Member getMemberByLoginId(String loginId) {
-		return memberRepository.getMemberByLoginId(loginId);
+		return ResultData.from("S-1", Ut.f("회원가입이 완료되었습니다."), "id", id);
 	}
 
 	public List<Member> getForPrintMembers() {
@@ -126,6 +124,10 @@ public class MemberService {
 	private void setTempPassword(Member actor, String tempPassword) {
 		// DB에 접근하여 해당 멤버 비밀번호 변경하는 함수
 		memberRepository.setTempPassword(actor, tempPassword);
+	}
+	
+	private Member getMemberByLoginId(String loginId) {
+		return memberRepository.getMemberByLoginId(loginId);
 	}
 	
 	private Member getMemberByNameAndEmail(String name, String email) {
