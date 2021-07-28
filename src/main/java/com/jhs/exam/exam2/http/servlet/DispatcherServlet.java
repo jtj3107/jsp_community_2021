@@ -59,6 +59,8 @@ public class DispatcherServlet extends HttpServlet {
 				return Container.usrMemberController;
 			case "home":
 				return Container.usrHomeController;
+			case "like":
+				return Container.usrLikeController;
 			}
 
 			break;
