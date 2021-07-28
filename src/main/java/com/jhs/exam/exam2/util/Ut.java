@@ -19,6 +19,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -93,6 +94,19 @@ public class Ut {
 
 		try {
 			return om.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			return defaultValue;
+		}
+	}
+	
+	public static String toPrettyJson(Object obj, String defaultValue) {
+		ObjectMapper om = new ObjectMapper();
+		om.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
+
+		try {
+			return om
+					.writerWithDefaultPrettyPrinter()
+					.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 			return defaultValue;
 		}
