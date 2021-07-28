@@ -14,9 +14,13 @@ function MobileTopBar__init() {
 
 /* 모바일 사이드바 시작 */
 function MobileSideBar__init() {
-  $('.mobile-side-bar .btn-close-mobile-side-bar').click(function() {
+  $('.mobile-side-bar, .mobile-side-bar .btn-close-mobile-side-bar').click(function() {
     MobileSideBar__hide();
   })
+  
+  $('.mobile-side-bar__content').click(function(e) {
+		e.stopPropagation();
+	});
   
   $('.mobile-side-bar .btn-show-search-bar').click(function() {
     SearchBar__show();
