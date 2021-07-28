@@ -33,25 +33,28 @@ public class MemberService {
 
 	public ResultData join(String loginId, String loginPw, String name, String nickname, String email,
 			String cellphoneNo) {
-		// members를 구하는 함수
-		List<Member> members = getForPrintMembers();
-		
-		// for문을 통해 members에 있는 로그인아이디와 입력받은 로그인아이디를 비교하여
-		for(Member member : members) {
-			if(member.getLoginId().equals(loginId)) {
-				// 로그인아이디가 이미 존재하면 F-1 리턴
-				return ResultData.from("F-1", Ut.f("이미 사용중인 아이디 입니다."));
-			} else if (member.getName().equals(name) && member.getEmail().equals(email)) {
-				// 각각 멤버의 이름과 이메일로 가입된 회원이 있을시 F-2 리턴
-				return ResultData.from("F-2", Ut.f("이미 가입된 회원입니다."));
-			}
+		// 가입할 로그인 아이디를 받아 member 추적
+		Member oldMember = getMemberByLoginId(loginId);
+
+		// 찾은 member가 존재 할시 아이디가 중복 이므로 F-1, 오류메세지 저장후 리턴
+		if( oldMember != null) {
+			return ResultData.from("F-1", Ut.f("`%s` 로그인 아이디는 이미 사용중 입니다.", loginId));
 		}
 		
-		// 위 if 해당되지 않으면 회원가입 함수 실행
-		memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
-
+		// 가입자의 이름과 이메일을 받아 member 추적
+		oldMember = getMemberByNameAndEmail(name, email);
+		
+		// 가입자의 이름과 이메일로 member가 존재하면 동일 인물로 판단하여 F-2,오류메세지 저장후 리턴
+		if(oldMember != null) {
+			return ResultData.from("F-2", Ut.f("`%s`님은 이메일 주소 `%s`로 이미 회원가입하셨습니다.", name, email));
+		}
+		
 		// S-1, 완료 메세지 저장후 리턴
 		return ResultData.from("S-1", Ut.f("회원가입이 완료되었습니다."));
+	}
+
+	private Member getMemberByLoginId(String loginId) {
+		return memberRepository.getMemberByLoginId(loginId);
 	}
 
 	public List<Member> getForPrintMembers() {
@@ -60,17 +63,18 @@ public class MemberService {
 	}
 	
 	// 해당 멤버를 찾아 메세지와 함께 리턴하는 함수
-	public ResultData getMemberByNameAndEmail(String name, String email) {
+	public ResultData getloginId(String name, String email) {
 		// 컨트롤러에서 받은 name과 email로 해당 member 구하는 함수
-		Member member = memberRepository.getMemberByNameAndEmail(name, email);
-			
+		
+		Member oldMember = getMemberByNameAndEmail(name, email);
+		
 		// 해당 member가 존재하지 않으면 F-1저장후 리턴
-		if(member == null) {
+		if(oldMember == null) {
 			return ResultData.from("F-1", "존재하지 않는 회원입니다.");
 		}
 		
 		// 멤버의 로그인 아이디
-		String loginId = member.getLoginId();
+		String loginId = oldMember.getLoginId();
 		
 		// S-1과 해당 member의 로그인아이디를 출력하는 메세지와 로그인 아이디 저장후 리턴
 		return ResultData.from("S-1", Ut.f("해당 회원의 아이디는 [" + loginId + "] 입니다"), "loginId", loginId);
@@ -122,6 +126,10 @@ public class MemberService {
 	private void setTempPassword(Member actor, String tempPassword) {
 		// DB에 접근하여 해당 멤버 비밀번호 변경하는 함수
 		memberRepository.setTempPassword(actor, tempPassword);
+	}
+	
+	private Member getMemberByNameAndEmail(String name, String email) {
+		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
 
 }

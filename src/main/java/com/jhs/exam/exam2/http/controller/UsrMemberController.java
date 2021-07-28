@@ -118,7 +118,7 @@ public class UsrMemberController extends Controller {
 		}
 		
 		// 저장한 name, email로 해당 멤버 구한뒤 loginIdRd에 저장
-		ResultData loginIdRd = memberService.getMemberByNameAndEmail(name, email);
+		ResultData loginIdRd = memberService.getloginId(name, email);
 
 		// loginIdRd이 F-로 시작시 오류 메세지 출력후 리턴
 		if (loginIdRd.isFail()) {
