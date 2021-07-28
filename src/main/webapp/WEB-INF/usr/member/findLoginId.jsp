@@ -10,15 +10,17 @@
 	<div class="w-full max-w-md card-wrap">
 		<div class="card bordered shadow-lg">
 			<div class="card-title">
-				<span> <i class="fas fa-sign-in-alt"></i>
-				</span> <span>로그인 아이디 찾기</span>
+				<span>
+					<i class="fas fa-search"></i>
+				</span>
+				<span>로그인 아이디 찾기</span>
 			</div>
 
 			<div class="find-login-id-form-box form-box px-4 py-4">
 				<script>
-					let DoFindLoginIdForm__submited = false;
-					function DoFindLoginIdForm__submit(form) {
-						if (DoFindLoginIdForm__submited) {
+					let MemberFindLoginId__submitDone = false;
+					function MemberFindLoginId__submit(form) {
+						if (MemberFindLoginId__submitDone) {
 							alert('처리중 입니다.');
 							return;
 						}
@@ -41,17 +43,11 @@
 							return;
 						}
 
-						form.loginPwReal.value = sha256(form.loginPw.value);
-
-						form.loginPw.value = "";
-
 						form.submit();
-						DoFindLoginIdForm__submited = true;
+						MemberFindLoginId__submitDone = true;
 					}
 				</script>
-				<form action="../member/doFindLoginId" method="POST" onsubmit="DoFindLoginIdForm__submit(this); return false;">
-					<input type="hidden" name="loginPwReal" />
-
+				<form action="../member/doFindLoginId" method="POST" onsubmit="MemberFindLoginId__submit(this); return false;">
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">이름</span>
@@ -71,8 +67,10 @@
 					</div>
 
 					<div class="btns">
-						<button type="submit" class="btn btn-link">로그인아이디 찾기</button>
-						<button class="btn btn-link" type="button" onclick="history.back();">뒤로가기</button>
+						<button type="submit" class="btn btn-link">아이디 찾기</button>
+						<a href="../member/findLoginPw" class="btn btn-link">비밀번호 찾기</a>
+						<a href="../member/login" class="btn btn-link">로그인</a>
+						<a href="../member/join" class="btn btn-link">회원가입</a>
 					</div>
 				</form>
 			</div>

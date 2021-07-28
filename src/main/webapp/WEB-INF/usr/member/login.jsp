@@ -48,7 +48,7 @@
 							<span class="label-text">로그인아이디</span>
 						</label>
 						<div>
-							<input class="input input-bordered w-full" maxlength="100" name="loginId" type="text" placeholder="로그인아이디를 입력해주세요." />
+							<input class="input input-bordered w-full" maxlength="100" name="loginId" type="text" placeholder="로그인아이디를 입력해주세요." value="${param.loginId}" />
 						</div>
 					</div>
 

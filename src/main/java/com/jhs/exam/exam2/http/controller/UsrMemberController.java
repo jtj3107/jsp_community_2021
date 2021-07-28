@@ -117,17 +117,20 @@ public class UsrMemberController extends Controller {
 			return;
 		}
 		
-		// 저장한 name, email로 해당 멤버 구한뒤 loginIdRd에 저장
-		ResultData loginIdRd = memberService.getloginId(name, email);
+		// 기존에 만들었던 이름과 이메일로 member구하는 함수 사용
+		Member oldMember = memberService.getMemberByNameAndEmail(name, email);
 
-		// loginIdRd이 F-로 시작시 오류 메세지 출력후 리턴
-		if (loginIdRd.isFail()) {
-			rq.historyBack(loginIdRd.getMsg());
+		// oldMember 없을시 오류 메세지 출력후 리턴
+		if (oldMember == null) {
+			rq.historyBack("일치화는 회원이 존재하지 않습니다.");
 			return;
 		}
 		
-		// loginIdRd이 S-로 시작시 로그인아이디 출력후 로그인페이지로 이동
-		rq.replace(loginIdRd.getMsg(), "../member/login");
+		// 이동 주소 로그인 페이지에 해당 멤버 로그인 아이디 포함해서 세팅
+		String redlaceUri = "../member/login?loginId=" + oldMember.getLoginId();
+		
+		// 해당 member 아이디를 보여주고 세팅된 주소로 이동
+		rq.replace(Ut.f("해당 회원의 로그인아이디는 `%s` 입니다.", oldMember.getLoginId()), redlaceUri);
 		
 	}
 

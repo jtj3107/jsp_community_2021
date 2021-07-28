@@ -59,24 +59,6 @@ public class MemberService {
 		// members를 구하는 함수
 		return memberRepository.getForPrintMembers();
 	}
-	
-	// 해당 멤버를 찾아 메세지와 함께 리턴하는 함수
-	public ResultData getloginId(String name, String email) {
-		// 컨트롤러에서 받은 name과 email로 해당 member 구하는 함수
-		
-		Member oldMember = getMemberByNameAndEmail(name, email);
-		
-		// 해당 member가 존재하지 않으면 F-1저장후 리턴
-		if(oldMember == null) {
-			return ResultData.from("F-1", "존재하지 않는 회원입니다.");
-		}
-		
-		// 멤버의 로그인 아이디
-		String loginId = oldMember.getLoginId();
-		
-		// S-1과 해당 member의 로그인아이디를 출력하는 메세지와 로그인 아이디 저장후 리턴
-		return ResultData.from("S-1", Ut.f("해당 회원의 아이디는 [" + loginId + "] 입니다"), "loginId", loginId);
-	}
 
 	public ResultData getMemberByLoginIdAndEmail(String loginId, String email) {
 		// 컨트롤러에서 받아온 로그인아이디, 이메일로 해당 멤버 구한뒤 저장
@@ -130,7 +112,7 @@ public class MemberService {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
 	
-	private Member getMemberByNameAndEmail(String name, String email) {
+	public Member getMemberByNameAndEmail(String name, String email) {
 		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
 
