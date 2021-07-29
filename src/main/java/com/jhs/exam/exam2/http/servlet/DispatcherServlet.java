@@ -97,6 +97,10 @@ abstract public class DispatcherServlet extends HttpServlet {
 		if (Container.needLogoutInterceptor.runBeforeAction(rq) == false) {
 			return false;
 		}
+		
+		if (Container.needAdminInterceptor.runBeforeAction(rq) == false) {
+			return false;
+		}
 
 		return true;
 	}

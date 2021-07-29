@@ -36,7 +36,7 @@ const rqParams = ${rq.paramMapJsonStr};
 
 <body>
 	<div class="search-bar">
-		<form action="../article/list" class="grid grid-cols-2" style="column-gap:10px;" >
+		<form action="../article/list" class="grid grid-cols-2" style="column-gap: 10px;">
 			<div class="col-span-2">
 				<div class="badge">게시물 검색</div>
 			</div>
@@ -90,10 +90,10 @@ const rqParams = ${rq.paramMapJsonStr};
 		</form>
 	</div>
 	<div class="site-wrap min-h-screen flex flex-col">
-		<div class="h-14 md:h-16 flex-shrink-0"></div>
-		<header class="mobile-top-bar fixed z-40 inset-0 h-10 font-bold bg-white shadow md:hidden">
+		<div class="h-14 lg:h-16 flex-shrink-0"></div>
+		<header class="mobile-top-bar fixed z-40 inset-0 h-10 font-bold bg-white shadow lg:hidden">
 			<div class="h-full flex">
-				<a href="../../" class="logo flex items-center px-4 hover:underline hover:text-red-500">
+				<a href="../../" class="logo flex items-center pl-4 hover:underline hover:text-red-500">
 					<span>
 						<i class="far fa-lemon"></i>
 					</span>
@@ -114,6 +114,22 @@ const rqParams = ${rq.paramMapJsonStr};
 					</span>
 				</a>
 
+				<c:if test="${rq.logined}">
+					<a href="#" class="flex items-center px-4 hover:text-red-500">
+						<span>
+							<i class="fas fa-user"></i>
+						</span>
+						<span class="max-w-xs w-10 sm:w-auto truncate">&nbsp;${rq.loginedMember.nickname}</span>
+					</a>
+				</c:if>
+				<c:if test="${rq.notLogined}">
+					<a href="../member/login?afterLoginUri=${rq.encodedAfterLoginUri}" class=" flex items-center px-4 hover:text-red-500">
+						<span>
+							<i class="fas fa-sign-in-alt"></i>
+						</span>
+					</a>
+				</c:if>
+
 				<a class="btn-show-mobile-side-bar flex items-center px-4 hover:text-red-500">
 					<span>
 						<i class="fas fa-bars"></i>
@@ -122,7 +138,7 @@ const rqParams = ${rq.paramMapJsonStr};
 			</div>
 		</header>
 
-		<%@ include file="mobileSideBar.jspf" %>
+		<%@ include file="mobileSideBar.jspf"%>
 
 		<header class="top-bar fixed z-40 inset-0 h-12 font-bold bg-white shadow hidden md:block">
 			<div class="h-full container mx-auto flex">
@@ -137,6 +153,17 @@ const rqParams = ${rq.paramMapJsonStr};
 
 				<nav class="top-bar__menu-box-1">
 					<ul class="flex h-full -mr-2">
+						<c:if test="${rq.admin}">
+							<li>
+								<a href="../../adm/home/main" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+									<span>
+										<i class="fas fa-tachometer-alt"></i>
+									</span>
+									<span class="hidden lg:block">&nbsp;ADMIN</span>
+								</a>
+							</li>
+						</c:if>
+
 						<li>
 							<a href="../../" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
 								<span>
@@ -151,7 +178,7 @@ const rqParams = ${rq.paramMapJsonStr};
 								<span>
 									<i class="fas fa-flag"></i>
 								</span>
-								<span class="hidden md:block">&nbsp;NOTICE</span>
+								<span class="hidden lg:block">&nbsp;NOTICE</span>
 							</a>
 						</li>
 						<li>
@@ -159,7 +186,7 @@ const rqParams = ${rq.paramMapJsonStr};
 								<span>
 									<i class="fab fa-free-code-camp"></i>
 								</span>
-								<span class="hidden md:block">&nbsp;FREE</span>
+								<span class="hidden lg:block">&nbsp;FREE</span>
 							</a>
 						</li>
 						<c:if test="${rq.notLogined}">
@@ -187,15 +214,7 @@ const rqParams = ${rq.paramMapJsonStr};
 									<span>
 										<i class="fas fa-sign-out-alt"></i>
 									</span>
-									<span class="hidden lg:block">&nbsp;LOGOUT</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
-									<span>
-										<i class="fas fa-user"></i>
-									</span>
-									<span class="hidden lg:block">&nbsp;MY PAGE</span>
+									<span class="hidden xl:block">&nbsp;LOGOUT</span>
 								</a>
 							</li>
 						</c:if>
@@ -204,14 +223,24 @@ const rqParams = ${rq.paramMapJsonStr};
 								<span>
 									<i class="fas fa-pen"></i>
 								</span>
-								<span class="hidden lg:block">&nbsp;WRITE</span>
+								<span class="hidden xl:block">&nbsp;WRITE</span>
 							</a>
 						</li>
+						<c:if test="${rq.logined}">
+							<li>
+								<a href="#" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+									<span>
+										<i class="fas fa-user"></i>
+									</span>
+									<span>&nbsp;${rq.loginedMember.nickname}</span>
+								</a>
+							</li>
+						</c:if>
 						<li>
 							<a class="h-full flex items-center px-6 btn-show-search-bar relative">
 								<span>
 									<input readonly="readonly" type="text" class="input input-sm input-bordered w-24 lg:w-32" placeholder="Search.." />
-								</span>						
+								</span>
 								<span class="absolute top-0 bottom-0 right-0 flex items-center mr-8 cursor-pointer hover:text-red-500">
 									<i class="fas fa-search"></i>
 								</span>

@@ -116,4 +116,8 @@ public class MemberService {
 		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
 
+	public boolean isAdmin(Member member) {
+		return member.getAuthLevel() >= 7;
+	}
+
 }
