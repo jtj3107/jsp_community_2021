@@ -1,13 +1,14 @@
 package com.jhs.exam.exam2.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jhs.exam.exam2.container.ContainerComponent;
 import com.jhs.exam.exam2.util.Ut;
 
 import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class EmailService {
+public class EmailService implements ContainerComponent{
 	public void init() {
 
 	}
