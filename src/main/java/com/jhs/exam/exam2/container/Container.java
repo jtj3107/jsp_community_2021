@@ -41,7 +41,7 @@ public class Container {
 	
 	public static EmailService emailService;
 	
-	public static Controller admHomeController;
+	public static AdmHomeController admHomeController;
 	
 	public static void init() {
 		memberRepository = new MemberRepository();
