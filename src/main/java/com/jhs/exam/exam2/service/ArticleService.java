@@ -10,8 +10,12 @@ import com.jhs.exam.exam2.repository.ArticleRepository;
 import com.jhs.exam.exam2.util.Ut;
 
 public class ArticleService {
-	private ArticleRepository articleRepository = Container.articleRepository;
+	private ArticleRepository articleRepository;
 
+	public void init() {
+		articleRepository = Container.articleRepository;
+	}
+	
 	public ResultData write(int boardId, int memberId, String title, String body) {
 		// 받아온 변수를 이용해 게시물 작성하는 함수 후에 해당 게시물번호를 리턴
 		int id = articleRepository.write(boardId, memberId, title, body);

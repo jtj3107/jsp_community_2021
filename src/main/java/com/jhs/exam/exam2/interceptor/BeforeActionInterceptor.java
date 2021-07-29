@@ -9,8 +9,8 @@ import com.jhs.exam.exam2.util.Ut;
 public class BeforeActionInterceptor extends Interceptor {
 
 	private MemberService memberService;
-	
-	public BeforeActionInterceptor() {
+
+	public void init() {
 		memberService = Container.memberService;
 	}
 
@@ -24,7 +24,7 @@ public class BeforeActionInterceptor extends Interceptor {
 			rq.setLoginedMemberId(rq.getLoginedMember().getId());
 			rq.setAdmin(memberService.isAdmin(rq.getLoginedMember()));
 		}
-		
+
 		rq.setAttr("rq", rq);
 
 		return true;

@@ -1,9 +1,12 @@
 package com.jhs.exam.exam2.http.controller;
 
 import com.jhs.exam.exam2.http.Rq;
-import com.jhs.exam.exam2.util.Ut;
 
 public class UsrLikeController extends Controller {
+	public void init() {
+
+	}
+
 	@Override
 	public void performAction(Rq rq) {
 		switch (rq.getActionMethodName()) {
@@ -23,7 +26,7 @@ public class UsrLikeController extends Controller {
 		String relTypeCode = rq.getParam("relTypeCode", "");
 		int relId = rq.getIntParam("relId", 0);
 		String redirectUrl = rq.getParam("redirectUrl", "../article/detail?id=" + relId);
-		
+
 		rq.print(relTypeCode);
 		rq.print(relId + "");
 		rq.print(redirectUrl);

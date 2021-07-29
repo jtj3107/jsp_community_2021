@@ -2,12 +2,14 @@ package com.jhs.exam.exam2.repository;
 
 import java.util.List;
 
-import com.jhs.exam.exam2.dto.Article;
 import com.jhs.exam.exam2.dto.Member;
 import com.jhs.mysqliutil.MysqlUtil;
 import com.jhs.mysqliutil.SecSql;
 
 public class MemberRepository {
+	public void init() {
+
+	}
 
 	public Member getMemberByLoginId(String loginId) {
 		// 로그인아이디로 해당 member가 DB에 존재하는지 확인
@@ -15,7 +17,7 @@ public class MemberRepository {
 		sql.append("SELECT M.*");
 		sql.append("FROM member AS M");
 		sql.append("WHERE M.loginId = ?", loginId);
-		
+
 		return MysqlUtil.selectRow(sql, Member.class);
 	}
 
@@ -31,7 +33,7 @@ public class MemberRepository {
 		sql.append(", nickname = ?", nickname);
 		sql.append(", email = ?", email);
 		sql.append(", cellphoneNo = ?", cellphoneNo);
-		
+
 		return MysqlUtil.insert(sql);
 	}
 
@@ -40,10 +42,10 @@ public class MemberRepository {
 		SecSql sql = new SecSql();
 		sql.append("SELECT *");
 		sql.append("FROM `member`");
-		
+
 		return MysqlUtil.selectRows(sql, Member.class);
 	}
-	
+
 	public Member getMemberByNameAndEmail(String name, String email) {
 		// 해당 name과 email을 이용해 해당member를 찾아 리턴
 		SecSql sql = new SecSql();
@@ -74,7 +76,7 @@ public class MemberRepository {
 		sql.append("UPDATE member AS M");
 		sql.append("SET loginPw = ?", tempPassword);
 		sql.append("WHERE M.id= ?", actor.getId());
-		
+
 		MysqlUtil.update(sql);
 	}
 
