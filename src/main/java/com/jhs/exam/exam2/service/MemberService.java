@@ -95,7 +95,7 @@ public class MemberService implements ContainerComponent{
 				+ "\" target=\"_blank\">로그인 하러가기</a>";
 
 		// 메일 발송(보내는 매개, 매개 비밀번호, 보내는사람, 사이트이름, 해당 멤버의 이메일, 제목, 내용)
-		int sendRs = Ut.sendMail("jtj3926@gmail.com", "khnvjxnxfqxotpnv", "no-reply@lemon-cm.com", "레몬 커뮤니티 알림",
+		int sendRs = Ut.sendMail(App.getSmtpGmailId(), App.getSmtpGmailPw(), "no-reply@lemon-cm.com", "레몬 커뮤니티 알림",
 				actor.getEmail(), title, body);
 
 		// sendRs이 1이면 발송 성공 1이 아니면 발송실패
