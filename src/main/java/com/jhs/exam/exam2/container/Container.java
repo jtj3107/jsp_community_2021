@@ -1,5 +1,6 @@
 package com.jhs.exam.exam2.container;
 
+import com.jhs.exam.exam2.http.controller.AdmHomeController;
 import com.jhs.exam.exam2.http.controller.Controller;
 import com.jhs.exam.exam2.http.controller.UsrArticleController;
 import com.jhs.exam.exam2.http.controller.UsrHomeController;
@@ -38,6 +39,8 @@ public class Container {
 	
 	public static EmailService emailService;
 	
+	public static Controller admHomeController;
+	
 	public static void init() {
 		memberRepository = new MemberRepository();
 		boardRepository = new BoardRepository();		
@@ -57,6 +60,8 @@ public class Container {
 		usrLikeController = new UsrLikeController();
 		
 		emailService = new EmailService();
+		
+		admHomeController = new AdmHomeController();
 		
 	}
 }

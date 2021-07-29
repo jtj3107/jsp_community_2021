@@ -13,9 +13,7 @@ import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.http.controller.Controller;
 import com.jhs.mysqliutil.MysqlUtil;
 
-// /usr로 시작하는 모든 요청
-@WebServlet("/usr/*")
-public class DispatcherServlet extends HttpServlet {
+abstract public class DispatcherServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		Rq rq = new Rq(req, resp);
 
@@ -61,6 +59,14 @@ public class DispatcherServlet extends HttpServlet {
 				return Container.usrHomeController;
 			case "like":
 				return Container.usrLikeController;
+			}
+
+			break;
+		case "adm":
+			// uri에 ControllerName 불러와 아래 case에 해당하는 하는지 확인후 해당 컨트롤러실행
+			switch (rq.getControllerName()) {
+			case "home":
+				return Container.admHomeController;
 			}
 
 			break;
