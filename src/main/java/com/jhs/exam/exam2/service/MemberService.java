@@ -28,7 +28,7 @@ public class MemberService implements ContainerComponent{
 		}
 
 		// 해당 member는 존재 하나 member의 비밀번호와 입력한 비밀번호가 틀릴시 F-2저장후 리턴
-		if (member.getLoginPw().equals(loginPw) == false) {
+		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
 			return ResultData.from("F-2", "비밀번호가 일치하지 않습니다.");
 		}
 
@@ -54,7 +54,7 @@ public class MemberService implements ContainerComponent{
 			return ResultData.from("F-2", Ut.f("`%s`님은 이메일 주소 `%s`로 이미 회원가입하셨습니다.", name, email));
 		}
 
-		int id = memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
+		int id = memberRepository.join(loginId, Ut.sha256(loginPw), name, nickname, email, cellphoneNo);
 
 		// S-1, 완료 메세지 저장후 리턴
 		return ResultData.from("S-1", Ut.f("회원가입이 완료되었습니다."), "id", id);
@@ -112,7 +112,7 @@ public class MemberService implements ContainerComponent{
 
 	private void setTempPassword(Member actor, String tempPassword) {
 		// DB에 접근하여 해당 멤버 비밀번호 변경하는 함수
-		memberRepository.setTempPassword(actor, tempPassword);
+		memberRepository.setTempPassword(actor, Ut.sha256(tempPassword));
 	}
 
 	private Member getMemberByLoginId(String loginId) {

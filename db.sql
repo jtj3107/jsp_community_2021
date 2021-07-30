@@ -43,22 +43,13 @@ INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'admin',
-loginPw = 'admin',
-`name` = '홍길동',
+loginPw = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
+`name` = '조태중',
 nickname = '관리자',
-email = 'jangka512@gmail.com',
+email = 'jtj3926@gmail.com',
 cellphoneNo = '01012341234',
 authLevel = 7;
 
-INSERT INTO `member`
-SET regDate = NOW(),
-updateDate = NOW(),
-loginId = 'user1',
-loginPw = 'user1',
-`name` = '홍길순',
-nickname = '강바람',
-email = 'jangka512@gmail.com',
-cellphoneNo = '01012341234';
 
 # 게시판 테이블 생성
 CREATE TABLE board (
