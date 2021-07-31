@@ -26,6 +26,10 @@ public class App implements ContainerComponent {
 		return true;
 	}
 
+	public static boolean isProductMode() {
+		return isDevMode() == false;
+	}
+
 	// 정적 요소 세팅
 	public static void start() {
 		// DB 세팅
@@ -38,7 +42,7 @@ public class App implements ContainerComponent {
 	}
 
 	public String getSiteName() {
-		return "JSP Community";
+		return "레몬 커뮤니티";
 	}
 
 	public String getSmtpGmailId() {
@@ -49,4 +53,49 @@ public class App implements ContainerComponent {
 		return smtpGmailPw;
 	}
 
+	public String getLoginUri() {
+		return getBaseUri() + "/usr/member/login";
+	}
+
+	private String getBaseUri() {
+		String appUri = getSiteProtocol() + "://" + getSiteDomain();
+
+		if (getSitePort() != 80 && getSitePort() != 443) {
+			appUri += ":" + getSitePort();
+		}
+
+		if (getContextName().length() > 0) {
+			appUri += "/" + getContextName();
+		}
+
+		return appUri;
+	}
+
+	private String getContextName() {
+		if (isProductMode()) {
+			return "";
+		}
+
+		return "jsp_community_2021";
+	}
+
+	private int getSitePort() {
+		return 8081;
+	}
+
+	private String getSiteDomain() {
+		return "localhost";
+	}
+
+	private String getSiteProtocol() {
+		if (isProductMode()) {
+			return "https";
+		}
+
+		return "http";
+	}
+
+	public String getNotifyEmailFromName() {
+		return "레몬 커뮤니티 알림봇";
+	}
 }

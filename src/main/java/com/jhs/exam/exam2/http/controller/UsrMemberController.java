@@ -72,19 +72,21 @@ public class UsrMemberController extends Controller {
 		}
 
 		// 받아온 로그인아이디, 이메일 이용해 해당 멤버값 얻어오는 함수
-		ResultData memberRd = memberService.getMemberByLoginIdAndEmail(loginId, email);
+		Member oldMember = memberService.getMemberByLoginId(loginId);
 
 		// 해당 값이 F-로 시작하면 오류 메세지 출력후 리턴
-		if (memberRd.isFail()) {
-			rq.historyBack(memberRd.getMsg());
+		if (oldMember == null) {
+			rq.historyBack("일치하는 회원이 존재하지 않습니다.");
 			return;
 		}
 
-		// F-로 시작하지 않는 memberRd에서 저정한 member값 찾아 저장
-		Member member = (Member) memberRd.getBody().get("member");
+		if (oldMember.getEmail().equals(email) == false) {
+			rq.historyBack("일치하는 회원이 존재하지 않습니다.");
+			return;
+		}
 
 		// 해당 member로 임시비밀번호 생성후 이메일 보내는 함수
-		ResultData sendeTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(member);
+		ResultData sendeTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(oldMember);
 
 		// 메일발송 실패시 오류 메세지 출력후 리턴
 		if (sendeTempLoginPwToEmailRs.isFail()) {
@@ -93,7 +95,7 @@ public class UsrMemberController extends Controller {
 		}
 
 		// 성공메세지 출력후 로그인페이지로 이동
-		rq.replace(sendeTempLoginPwToEmailRs.getMsg(), "../member/login");
+		rq.replace(sendeTempLoginPwToEmailRs.getMsg(), "../home/main");
 
 	}
 

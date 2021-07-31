@@ -45,7 +45,6 @@ public class Container {
 
 	public static BoardRepository boardRepository;
 	public static BoardService boardService;
-
 	public static EmailService emailService;
 
 	public static AdmHomeController admHomeController;
@@ -72,7 +71,6 @@ public class Container {
 		usrArticleController = addContainerComponent(new UsrArticleController());
 		usrHomeController = addContainerComponent(new UsrHomeController());
 		usrLikeController = addContainerComponent(new UsrLikeController());
-
 		emailService = addContainerComponent(new EmailService());
 
 		admHomeController = addContainerComponent(new AdmHomeController());

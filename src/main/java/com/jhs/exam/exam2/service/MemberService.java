@@ -10,12 +10,13 @@ import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.repository.MemberRepository;
 import com.jhs.exam.exam2.util.Ut;
 
-public class MemberService implements ContainerComponent{
+public class MemberService implements ContainerComponent {
 	private MemberRepository memberRepository;
-	// private EmailService emailService = Container.emailService;
+	private EmailService emailService;
 
 	public void init() {
 		memberRepository = Container.memberRepository;
+		emailService = Container.emailService;
 	}
 
 	public ResultData login(String loginId, String loginPw) {
@@ -65,58 +66,42 @@ public class MemberService implements ContainerComponent{
 		return memberRepository.getForPrintMembers();
 	}
 
-	public ResultData getMemberByLoginIdAndEmail(String loginId, String email) {
-		// 컨트롤러에서 받아온 로그인아이디, 이메일로 해당 멤버 구한뒤 저장
-		Member member = memberRepository.getMemberByLoginIdAndEmail(loginId, email);
-
-		// 존재하지 않을시 F-1저장후 리턴
-		if (member == null) {
-			return ResultData.from("F-1", "존재하지 않는 회원입니다.");
-		}
-
-		// 해당 멤버의 이메일과 작성한 이메일이 다를시 F-2저장후 리턴
-		if (member.getEmail().equals(email) == false) {
-			return ResultData.from("F-2", "가입하신 이메일이 아닙니다.");
-		}
-
-		// 해당 멤버가 구해졌을시 S-1 저장후 메세지, member값 저장후 리턴
-		return ResultData.from("S-1", Ut.f("확인 되었습니다."), "member", member);
-	}
-
 	public ResultData sendTempLoginPwToEmail(Member actor) {
 		App app = Container.app;
 		// 메일 제목과 내용 만들기
 		String siteName = app.getSiteName(); // 사이트 이름 리턴하는 함수
-		// String siteLoginUrl = app.getLoginUri();
+		String siteLoginUrl = app.getLoginUri();
 		String title = "[" + siteName + "] 임시 패스워드 발송"; // 이메일 제목
 		String tempPassword = Ut.getTempPassword(6); // 임시 비밀번호 저장
 		String body = "<h1>임시 패스워드 : " + tempPassword + "<h1>"; // 내용
 		// 내용 + 해당 사이트 로그인페이지로 이동하는 a태크 생성
-		body += "<a href=\"" + "http://localhost:8084/jsp_community_2021/usr/member/login"
-				+ "\" target=\"_blank\">로그인 하러가기</a>";
+		body += "<a href=\"" + siteLoginUrl + "\" target=\"_blank\">로그인 하러가기</a>";
 
+		if(actor.getEmail().length() == 0) {
+			return ResultData.from("F-0", "해당 회원의 이메일이 없습니다.");
+		}
+		
 		// 메일 발송(보내는 매개, 매개 비밀번호, 보내는사람, 사이트이름, 해당 멤버의 이메일, 제목, 내용)
-		int sendRs = Ut.sendMail(app.getSmtpGmailId(), app.getSmtpGmailPw(), "no-reply@lemon-cm.com", "레몬 커뮤니티 알림",
-				actor.getEmail(), title, body);
+		int notifyRs = emailService.notify(actor.getEmail(), title, body);
 
 		// sendRs이 1이면 발송 성공 1이 아니면 발송실패
-		if (sendRs != 1) {
+		if (notifyRs != 1) {
 			return ResultData.from("F-1", "메일 발송에 실패하였습니다.");
 		}
 
 		// 해당 멤버와 임시 비밀번호를 이용하여 해당 멤버의 비밀번호를 변경하는 함수
-		setTempPassword(actor, tempPassword);
+		setTempLoginPw(actor, tempPassword);
 
 		// 메일 발송이 완료되면 S-1, 해당 이메일로 발송했다는 메세지 저장후 리턴
 		return ResultData.from("S-1", Ut.f("해당 회원의 새로운 비밀번호를" + actor.getEmail() + "로 발송하였습니다."));
 	}
 
-	private void setTempPassword(Member actor, String tempPassword) {
+	private void setTempLoginPw(Member actor, String tempLoginPw) {
 		// DB에 접근하여 해당 멤버 비밀번호 변경하는 함수
-		memberRepository.setTempPassword(actor, Ut.sha256(tempPassword));
+		memberRepository.modifyPassword(actor.getId(), Ut.sha256(tempLoginPw));
 	}
 
-	private Member getMemberByLoginId(String loginId) {
+	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
 

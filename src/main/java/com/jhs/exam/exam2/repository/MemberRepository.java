@@ -59,24 +59,12 @@ public class MemberRepository implements ContainerComponent{
 		return MysqlUtil.selectRow(sql, Member.class);
 	}
 
-	public Member getMemberByLoginIdAndEmail(String loginId, String email) {
-		// 해당 로그인아이디와 이메일에 맞는 멤버 DB에서 찾아 리턴
-		SecSql sql = new SecSql();
-		sql.append("SELECT M.*");
-		sql.append("FROM member AS M");
-		sql.append("WHERE M.loginId = ?", loginId);
-		sql.append("AND");
-		sql.append("email = ?", email);
-
-		return MysqlUtil.selectRow(sql, Member.class);
-	}
-
-	public void setTempPassword(Member actor, String tempPassword) {
+	public void modifyPassword(int id, String loginPw) {
 		// 해당 멤버 DB에서 비밀번호 변경
 		SecSql sql = new SecSql();
 		sql.append("UPDATE member AS M");
-		sql.append("SET loginPw = ?", tempPassword);
-		sql.append("WHERE M.id= ?", actor.getId());
+		sql.append("SET loginPw = ?", loginPw);
+		sql.append("WHERE M.id= ?", id);
 
 		MysqlUtil.update(sql);
 	}
