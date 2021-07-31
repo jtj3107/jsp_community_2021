@@ -1,6 +1,7 @@
 package com.jhs.exam.exam2.http.controller;
 
 import com.jhs.exam.exam2.app.App;
+import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.util.Ut;
 
@@ -29,7 +30,8 @@ public class UsrHomeController extends Controller {
 	}
 
 	private void actionDoSendMail(Rq rq) {
-		Ut.sendMail(App.getSmtpGmailId(), App.getSmtpGmailPw(), "no-reply@lemon-cm.com", "레몬 커뮤니티 알림", "jtj3926@gmail.com", "제목ㅋㅋㅋ", "내용 ㅋㅋㅋ");	
+		App app = Container.app;
+		Ut.sendMail(app.getSmtpGmailId(), app.getSmtpGmailPw(), "no-reply@lemon-cm.com", "레몬 커뮤니티 알림", "jtj3926@gmail.com", "제목ㅋㅋㅋ", "내용 ㅋㅋㅋ");	
 	}
 
 }

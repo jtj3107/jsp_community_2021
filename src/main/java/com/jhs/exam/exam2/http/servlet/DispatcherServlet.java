@@ -15,6 +15,8 @@ import com.jhs.mysqliutil.MysqlUtil;
 
 abstract public class DispatcherServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		App app = Container.app;
+		
 		Rq rq = new Rq(req, resp);
 
 		// 설정된 길이보다 짧으면 리턴
@@ -23,7 +25,7 @@ abstract public class DispatcherServlet extends HttpServlet {
 			return;
 		}
 
-		if (App.isReady() == false) {
+		if (app.isReady() == false) {
 			rq.print("앱이 실행준비가 아닙니다.");
 			rq.print("<br>");
 			rq.print("필수적으로 만들어야 하는 파일을 만들었는지 체크 후 다시 실행시켜주세요.");

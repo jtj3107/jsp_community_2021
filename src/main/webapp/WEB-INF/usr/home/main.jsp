@@ -6,7 +6,7 @@
 
 <section class="section section-home-main">
 	<div class="container mx-auto card-wrap px-4">
-
+		${rq.app.smtpGmailId}
 		<div class="card bordered shadow-lg">
 			<div class="card-title">
 				<a>

@@ -84,9 +84,10 @@ public class MemberService implements ContainerComponent{
 	}
 
 	public ResultData sendTempLoginPwToEmail(Member actor) {
+		App app = Container.app;
 		// 메일 제목과 내용 만들기
-		String siteName = App.getSiteName(); // 사이트 이름 리턴하는 함수
-		// String siteLoginUrl = App.getLoginUri();
+		String siteName = app.getSiteName(); // 사이트 이름 리턴하는 함수
+		// String siteLoginUrl = app.getLoginUri();
 		String title = "[" + siteName + "] 임시 패스워드 발송"; // 이메일 제목
 		String tempPassword = Ut.getTempPassword(6); // 임시 비밀번호 저장
 		String body = "<h1>임시 패스워드 : " + tempPassword + "<h1>"; // 내용
@@ -95,7 +96,7 @@ public class MemberService implements ContainerComponent{
 				+ "\" target=\"_blank\">로그인 하러가기</a>";
 
 		// 메일 발송(보내는 매개, 매개 비밀번호, 보내는사람, 사이트이름, 해당 멤버의 이메일, 제목, 내용)
-		int sendRs = Ut.sendMail(App.getSmtpGmailId(), App.getSmtpGmailPw(), "no-reply@lemon-cm.com", "레몬 커뮤니티 알림",
+		int sendRs = Ut.sendMail(app.getSmtpGmailId(), app.getSmtpGmailPw(), "no-reply@lemon-cm.com", "레몬 커뮤니티 알림",
 				actor.getEmail(), title, body);
 
 		// sendRs이 1이면 발송 성공 1이 아니면 발송실패
