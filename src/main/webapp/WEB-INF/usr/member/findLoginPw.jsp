@@ -19,7 +19,6 @@
 					let DoFindLoginIdForm__submited = false;
 					function DoFindLoginIdForm__submit(form) {
 						if (DoFindLoginIdForm__submited) {
-							alert('처리중 입니다.');
 							return;
 						}
 
@@ -40,11 +39,7 @@
 
 							return;
 						}
-
-						form.loginPwReal.value = sha256(form.loginPw.value);
-
-						form.loginPw.value = "";
-
+						
 						form.submit();
 						DoFindLoginIdForm__submited = true;
 					}
@@ -54,10 +49,10 @@
 					
 					<div class="form-control">
 						<label class="label">
-							<span class="label-text">아이디</span>
+							<span class="label-text">로그인아이디</span>
 						</label>
 						<div>
-							<input class="input input-bordered w-full" maxlength="50" name="loginId" type="text" placeholder="아이디를 입력해주세요." />
+							<input class="input input-bordered w-full" maxlength="50" name="loginId" type="text" placeholder="로그인아이디를 입력해주세요." />
 						</div>
 					</div>
 
@@ -71,8 +66,10 @@
 					</div>
 
 					<div class="btns">
-						<button type="submit" class="btn btn-link">로그인 비밀번호 찾기</button>
-						<button class="btn btn-link" type="button" onclick="history.back();">뒤로가기</button>
+						<button type="submit" class="btn btn-link">비밀번호 찾기</button>
+						<a href="../member/findLoginId" class="btn btn-link">아이디 찾기</a>
+						<a href="../member/login" class="btn btn-link">로그인</a>
+						<a href="../member/join" class="btn btn-link">회원가입</a>
 					</div>
 				</form>
 			</div>
