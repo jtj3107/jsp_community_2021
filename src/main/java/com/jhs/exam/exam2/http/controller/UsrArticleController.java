@@ -16,6 +16,7 @@ public class UsrArticleController extends Controller {
 	private ArticleService articleService;
 	private BoardService boardService;
 
+	// 재구현 완료[2021-08-03]
 	public void init() {
 		articleService = Container.articleService;
 		boardService = Container.boardService;
@@ -53,94 +54,97 @@ public class UsrArticleController extends Controller {
 		}
 	}
 
-	// jsp페이지에서 삭제 버튼 동작시 해당 삭제 함수로 이동
+	// 재구현 완료[2021-08-03]
+	// 페이지에서 게시물을 삭제 하는 메서드
+	// rq.replace(Ut.f("%d번 게시물을 삭제하였습니다.", id), redirectUri);
 	private void actionDoDelete(Rq rq) {
-		// 해당 게시물을 확인하는 id를 넘겨 받아 변수에 저장
+		// 해당 게시물의 id값을 rq.getIntParam()를 사용하여 불러온다.
 		int id = rq.getIntParam("id", 0);
-		// 해당 페이지에서 이동할 uri를 받아 저장 없을시 ../article/list 저장
-		String redirectUri = rq.getParam("redirectUri", "../article/list");
-
-		// 비정상적으로 접근하여 게시물id가 없을시 리턴
-		if (id == 0) {
+		
+		// id가 0일 경우 메세지 출력 후 뒤로가기
+		if(id == 0) {
 			rq.historyBack("id를 입력해주세요.");
 			return;
 		}
-
-		// 로그인된 멤버와 해당 게시물의 id를 게시물을 작성자만 삭제,수정 할수 있도록 판단하는 함수
+		
+		// 해당 id번 게시물을 불러오는 메서드
 		Article article = articleService.getForPrintArticleById(rq.getLoginedMember(), id);
-
-		// 해당 게시물이 존재하지 않으면 오류메세지 출력후 리턴
-		if (article == null) {
-			rq.historyBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+		
+		// id번 게시물이 존재 하지 않을시 메세지 출력후 뒤로가기
+		if(article == null) {
+			rq.historyBack(Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 			return;
 		}
-
-		// 접속한 member와 게시물 이용하여 삭제여부 판단하는 함수
+		
+		// 로그인 회원 정보와 게시물의 작성자 정보를 비교해 권한여부를 파악하고 해당 메세지를 리턴받는 메서드
 		ResultData actorCanDelete = articleService.actorCanDelete(rq.getLoginedMember(), article);
-
-		// actorCanDelete가 F-로 시작시 오류 메세지 출력후 리턴
-		if (actorCanDelete.isFail()) {
+		
+		// actorCanDelete가 F-로 시작할시 오류 메세지 출력후 리턴
+		// F-로 시작할시 권한이 없다는것을 의미
+		if(actorCanDelete.isFail()) {
 			rq.historyBack(actorCanDelete.getMsg());
 			return;
 		}
-
-		// 해당 id게시물 삭제 하는 함수
-		articleService.delete(id);
-
-		// 완료 메세지 출력후 저장된 페이지로 이동
-		rq.replace(Ut.f("%d번 게시물을 삭제하였습니다.", id), redirectUri);
+		
+		// 해당 id의 게시물을 삭제하는 메서드
+		ResultData deleteRd = articleService.delete(id);
+		
+		// 삭제 완료 메세지 출력후 해당 주소로 이동
+		rq.replace(deleteRd.getMsg(), "../article/list");
+		
 	}
 
-	// 페이지에서 해당 게시물 상세보기 할시 해당 함수 동작
+	// 재구현 완료[2021-08-03]
+	// 게시물 상세보기 메서드
 	private void actionShowDetail(Rq rq) {
-		// 해당 게시물 번호 받아 저장
+		// 해당 게시물의 id값을 rq.getIntParam()를 사용하여 불러온다. 
 		int id = rq.getIntParam("id", 0);
-
-		// 비정상적으로 게시물 번호 없이 접근시 리턴
-		if (id == 0) {
+		
+		// id값이 0이면 메세지 출력후 뒤로가기
+		if(id == 0) {
 			rq.historyBack("id를 입력해주세요.");
 			return;
 		}
-
-		// 접속한 member와 게시물 번호를 이용 하여 수정,삭제 여부 게시물이 존재하는지 여부 확인하는 함수
+		
+		// 해당 id번 게시물 찾기
 		Article article = articleService.getForPrintArticleById(rq.getLoginedMember(), id);
-
-		// 해당 번호의 게시물이 없을시 오류 메세지 출력후 리턴
-		if (article == null) {
-			rq.historyBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+		
+		// id번 게시물이 존재 하지 않을시 메세지 출력후 뒤로가기
+		if(article == null) {
+			rq.historyBack(Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 			return;
 		}
-
-		// 이동할 페이지에 article변수 사용 할 수 있도록 담는다
+		
+		// 페이지에 arricle값을 사용하기 위해 쓰는 메서드
 		rq.setAttr("article", article);
-		// 해당 페이지로 이동하는 함수
+		
+		// 해당 페이지 이동하는 메서드
 		rq.jsp("usr/article/detail");
 	}
 
-	// 페이지에서 게시물 리스트 보여줄때 동작하는 함수
+	// 재구현 완료[2021-08-03]
+	// 게시물 리스트를 보여주는 메서드
 	private void actionShowList(Rq rq) {
-		// 게시판 번호를 지정하면 받아 저장 없을시 0을 저장
+		// 게시판 선택시 게시판 번호 저장 없을시 0(전체게시판) 저장
 		int boardId = rq.getIntParam("boardId", 0);
-
-		// 검색타입을 해당 변수에 저장 없을시 기본값 title,body 저장
+		
+		// 검색 타입 받아오기 없을시 title,body 세팅
 		String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "title,body");
-		// 해당 검색값 없을시 ""저장
+		// 검색 키워드 받아오기
 		String searchKeyword = rq.getParam("searchKeyword", "");
-		// 보여줄 게시물 갯수
-		int itemsCountInAPage = 5;
-		// 페이징 번호 없을시 첫번째 페이지 1 저장
+		// page 받아오기 없을시 첫번째 페이지 세팅
 		int page = rq.getIntParam("page", 1);
-
-		// 검색타입, 검색값, 선택한 게시판 번호를 이용하여 해당되는 게시물수를 리턴하는 함수 후에 저장
+		// 한 페이지에 보여줄 게시물 갯수
+		int itemsCountInAPage = 5;
+		
+		// 검색 타입, 검색 키워드, 게시판 번호를 이용하여 해당 게시물 수 받아오기
 		int totalItemsCount = articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword, boardId);
-		// 접속한 member와 해당 변수를 넣어 해당되는 게시물리스트를 리턴하는 함수 후에 저장
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, page,
-				searchKeywordTypeCode, searchKeyword, boardId);
-
-		// 총 게시물수에서 보여줄 itemsCountInAPage 나눈뒤 저장(나눌때 소숫점까지 나오게 double사용후 올림후 int로 변환)
-		int totalPage = (int) Math.ceil((double) totalItemsCount / itemsCountInAPage); // 마지막 페이징수
-
-		// boardId를 이용하여 해당 boardId에 맞는 board 불러와 저장
+		// 로그인한 회원의 수정,삭제 권한과 해당 변수에 일치하는 게시물들을 받아오기
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, itemsCountInAPage, searchKeywordTypeCode, searchKeyword, boardId);
+		
+		// 필요 페이지 수 구하기 
+		int totalPage = (int)Math.ceil((double)totalItemsCount / itemsCountInAPage);	
+		// 게시판 아이디로 해당 게시판 찾기
 		Board board = boardService.getBoardById(boardId);
 
 		// 필요한 변수들을 jsp에서 사용하도록 지정
@@ -204,9 +208,7 @@ public class UsrArticleController extends Controller {
 		int id = rq.getIntParam("id", 0);
 		String title = rq.getParam("title", "");
 		String body = rq.getParam("body", "");
-		// 게시물 수정 페이지에서 이동할 페이지값 저장 없을시 게시물상세페이지로 연결
-		String redirectUri = rq.getParam("redirectUri", Ut.f("../article/detail?id=%d", id));
-
+	
 		// 비정상적으로 접근하여 필요 변수가 없을시 리턴
 		if (id == 0) {
 			rq.historyBack("id를 입력해주세요.");
@@ -245,7 +247,7 @@ public class UsrArticleController extends Controller {
 		ResultData modifyRd = articleService.modify(id, title, body);
 
 		// 성공메세지 출력후 해당 페이지로 이동하는 함수
-		rq.replace(modifyRd.getMsg(), redirectUri);
+		rq.replace(modifyRd.getMsg(), Ut.f("../article/detail?id=%d", id));
 	}
 
 	// 수정할 게시물이 존재하는 확인하는 함수

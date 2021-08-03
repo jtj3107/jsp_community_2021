@@ -55,6 +55,11 @@ public class ArticleService implements ContainerComponent{
 			return;
 		}
 		
+		// article이 존재 하지 않으면 실행하지 않고 리턴
+		if(article == null) {
+			return;
+		}
+		
 		// 접속한 멤버와 게시물을 비교하여 수정,삭제 true,false여부 판단(F-로 시작시 false S-로 시작시 true)
 		boolean actorCanModify = actorCanModify(actor, article).isSuccess();
 		boolean actorCanDelete = actorCanDelete(actor, article).isSuccess();

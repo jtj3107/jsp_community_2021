@@ -56,6 +56,7 @@ public class Ut {
 		return false;
 	}
 
+	// 지정된 문자열의 형식 항목을 지정된 배열에 있는 해당 개체의 문자열 표현으로 바꿉니다.
 	public static String f(String format, Object... args) {
 		return String.format(format, args);
 	}
