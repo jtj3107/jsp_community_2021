@@ -10,6 +10,7 @@ import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.service.ArticleService;
 import com.jhs.exam.exam2.service.BoardService;
 import com.jhs.exam.exam2.util.Ut;
+import com.mysql.cj.xdevapi.Result;
 
 public class UsrArticleController extends Controller {
 	// articleService와 boardService를 사용하기 위해 Container에 생성된 해당 객체 불러오기
@@ -162,40 +163,44 @@ public class UsrArticleController extends Controller {
 
 	// 게시물작성 jsp에서 연결(작성된 내용을 DB에 저장하는 함수)
 	private void actionDoWrite(Rq rq) {
-		// 게시물작성 jsp에서 넘어온 값을 변수에 저장
+		// 게시물 작성페이지에서 해당 변수를 받아 저장
 		int boardId = rq.getIntParam("boardId", 0);
-		int memberId = rq.getLoginedMemberId();
 		String title = rq.getParam("title", "");
 		String body = rq.getParam("body", "");
-		// 게시물작성 jsp에서 이동할 페이지 받아 저장 없을시 ../article/list 저장
+		// 로그인한 회원의 id값을 받아 저장
+		int memberId = rq.getLoginedMemberId();
+		
+		// 게시물 작성페이지에서 해당 변수를 받아 저장 없을시 ../article/list 저장
 		String redirectUri = rq.getParam("redirectUri", "../article/list");
 
-		// 비정상적으로 접근하여 필요 변수가 존재 하지 않을시 리턴
-		if (boardId == 0) {
-			rq.historyBack("boadrId을 입력 해주세요.");
+		// 필요 변수 없이 비정상적으로 접근시 리턴
+		if(boardId == 0) {
+			rq.historyBack("boardId(을)를 입력해주세요.");
+			return;
+		}
+		
+		if(title.length() == 0) {
+			rq.historyBack("title(을)를 입력해주세요.");
+			return;
+		}
+		
+		if(body.length() == 0) {
+			rq.historyBack("body(을)를 입력해주세요.");
 			return;
 		}
 
-		if (title.length() == 0) {
-			rq.historyBack("title을 입력해주세요.");
-			return;
-		}
-
-		if (body.length() == 0) {
-			rq.historyBack("body를 입력해주세요.");
-			return;
-		}
-
-		// 해당 변수를 이용하여 게시물 작성하는 함수
+		// 해당 변수를 이용하여 게시물 작성
 		ResultData writeRd = articleService.write(boardId, memberId, title, body);
-		// writeRd에 저장된 id값을 찾아 해당 변수에 저장
-		int id = (int) writeRd.getBody().get("id");
+		
+		// 해당 게시물의 id값 받아 저장
+		int id = (int)writeRd.getBody().get("id");
 
-		// [NEW_ID]이 해당 게시물의 id로 변환된다
-		redirectUri = redirectUri.replace("[NEW_ID]", id + "");
-
-		// 완료 메세지 출력후 해당 페이지로 이동
+		// 이동할 페이지의 [NEW_ID]값을 id값으로 변경
+		redirectUri = redirectUri.replace("[NEW_ID]", id+"");
+		
+		// 성공메세지 출력후 해당 페이지로 이동
 		rq.replace(writeRd.getMsg(), redirectUri);
+
 	}
 
 	// 해당 페이지로 이동하는 함수
