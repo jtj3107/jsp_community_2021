@@ -114,7 +114,7 @@
 					<c:set var="endPage" value="${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}" />
 
 					<c:set var="uriBase" value="?boardId=${boardId}" />
-					<c:set var="uriBase" value="${uriBase}&searchKeywordType=${param.searchKeywordType}" />
+					<c:set var="uriBase" value="${uriBase}&searchKeywordTypeCode=${param.searchKeywordTypeCode}" />
 					<c:set var="uriBase" value="${uriBase}&searchKeyword=${param.searchKeyword}" />
 
 					<c:set var="pre" value="${page -1}" />
@@ -150,7 +150,7 @@
 					<c:set var="endPage" value="${page + pageMenuArmSize <= totalPage ? page + pageMenuArmSize : totalPage}" />
 
 					<c:set var="uriBase" value="?boardId=${boardId}" />
-					<c:set var="uriBase" value="${uriBase}&searchKeywordType=${param.searchKeywordType}" />
+					<c:set var="uriBase" value="${uriBase}&searchKeywordTypeCode=${param.searchKeywordTypeCode}" />
 					<c:set var="uriBase" value="${uriBase}&searchKeyword=${param.searchKeyword}" />
 
 					<c:set var="pre" value="${page -1}" />

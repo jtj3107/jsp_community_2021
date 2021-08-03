@@ -140,22 +140,21 @@ public class UsrArticleController extends Controller {
 		// 검색 타입, 검색 키워드, 게시판 번호를 이용하여 해당 게시물 수 받아오기
 		int totalItemsCount = articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword, boardId);
 		// 로그인한 회원의 수정,삭제 권한과 해당 변수에 일치하는 게시물들을 받아오기
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, itemsCountInAPage, searchKeywordTypeCode, searchKeyword, boardId);
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, page, searchKeywordTypeCode, searchKeyword, boardId);
 		
 		// 필요 페이지 수 구하기 
 		int totalPage = (int)Math.ceil((double)totalItemsCount / itemsCountInAPage);	
 		// 게시판 아이디로 해당 게시판 찾기
 		Board board = boardService.getBoardById(boardId);
 
-		// 필요한 변수들을 jsp에서 사용하도록 지정
 		rq.setAttr("board", board);
-		rq.setAttr("searchKeywordTypeCode", searchKeywordTypeCode);
 		rq.setAttr("boardId", boardId);
+		rq.setAttr("searchKeywordTypeCode", searchKeywordTypeCode);
 		rq.setAttr("page", page);
-		rq.setAttr("totalPage", totalPage);
 		rq.setAttr("totalItemsCount", totalItemsCount);
 		rq.setAttr("articles", articles);
-		// 해당 페이지로 이동
+		rq.setAttr("totalPage", totalPage);
+
 		rq.jsp("usr/article/list");
 	}
 

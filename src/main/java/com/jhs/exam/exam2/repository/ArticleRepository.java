@@ -63,7 +63,7 @@ public class ArticleRepository implements ContainerComponent{
 		}
 
 		if (boardId != 0) {
-			sql.append("AND A.boardID = ?", boardId);
+			sql.append("AND A.boardId = ?", boardId);
 		}
 
 		sql.append("ORDER BY A.id DESC");
