@@ -125,36 +125,38 @@ public class UsrArticleController extends Controller {
 	// 재구현 완료[2021-08-03]
 	// 게시물 리스트를 보여주는 메서드
 	private void actionShowList(Rq rq) {
-		// 게시판 선택시 게시판 번호 저장 없을시 0(전체게시판) 저장
+		// 게시판 번호를 받아 저장 없을시 0(전체 게시판) 저장
 		int boardId = rq.getIntParam("boardId", 0);
 		
-		// 검색 타입 받아오기 없을시 title,body 세팅
+		// 검색 타입 받아 저장 없을시 title,body 세팅
 		String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "title,body");
-		// 검색 키워드 받아오기
+		// 검색 값 받아 저장
 		String searchKeyword = rq.getParam("searchKeyword", "");
-		// page 받아오기 없을시 첫번째 페이지 세팅
+		// 페이지값 받아 저장 없을시 첫번째 페이지 1
 		int page = rq.getIntParam("page", 1);
-		// 한 페이지에 보여줄 게시물 갯수
+		// 페이지별 보여줄 게시물의 수
 		int itemsCountInAPage = 5;
 		
-		// 검색 타입, 검색 키워드, 게시판 번호를 이용하여 해당 게시물 수 받아오기
+		// 검색타입, 검색값, 게시판번호를 변수로 총 보여줄 게시물수를 받아 저장
 		int totalItemsCount = articleService.getArticlesCount(searchKeywordTypeCode, searchKeyword, boardId);
-		// 로그인한 회원의 수정,삭제 권한과 해당 변수에 일치하는 게시물들을 받아오기
+		// 로그인회원 정보로 해당 게시물의 수정,삭제 권한 확인 나머지 변수에 맞는 게시물리스트 받아 저장
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMember(), itemsCountInAPage, page, searchKeywordTypeCode, searchKeyword, boardId);
 		
-		// 필요 페이지 수 구하기 
-		int totalPage = (int)Math.ceil((double)totalItemsCount / itemsCountInAPage);	
-		// 게시판 아이디로 해당 게시판 찾기
+		int totalPage = (int)Math.ceil((double)totalItemsCount / itemsCountInAPage);
+		// 게시판 변수 사용을 위해 받아 저장
 		Board board = boardService.getBoardById(boardId);
-
+		
+		// 페이지에 필요가 변수를 setAttr에 저장해 해당 페이지에서 사용
 		rq.setAttr("board", board);
 		rq.setAttr("boardId", boardId);
 		rq.setAttr("searchKeywordTypeCode", searchKeywordTypeCode);
+		rq.setAttr("searchKeyword", searchKeyword);
 		rq.setAttr("page", page);
 		rq.setAttr("totalItemsCount", totalItemsCount);
-		rq.setAttr("articles", articles);
 		rq.setAttr("totalPage", totalPage);
-
+		rq.setAttr("articles", articles);
+		
+		// 해당 페이지로 이동
 		rq.jsp("usr/article/list");
 	}
 

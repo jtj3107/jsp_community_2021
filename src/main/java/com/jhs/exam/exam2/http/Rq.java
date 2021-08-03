@@ -114,19 +114,23 @@ public class Rq {
 		}
 	}
 
+	// 사용자가 입력한 값(문자)을 읽어오는 메서드
 	public String getParam(String paramName, String defaultValue) {
+		// 변수 paramName 값을 읽어와 paramValue에 저장
 		String paramValue = req.getParameter(paramName);
 
+		// paramValue에 저장된 값이 null이거나 길이가 0일경우 defaultValue값 리턴
 		if (paramValue == null || paramValue.trim().length() == 0) {
 			return defaultValue;
 		}
 
+		// 저장된 paramValue값 리턴
 		return paramValue;
 	}
 
 	// 사용자가 입력한 값(정수만 가능)을 읽어오는 메서드
 	public int getIntParam(String paramName, int defaultValue) {
-		// paramName 값을 읽어와 paramValue에 저장
+		// 변수 paramName 값을 읽어와 paramValue에 저장
 		String paramValue = req.getParameter(paramName);
 
 		// paramValue 값이 null일 경우 defaultValue값을 리턴
@@ -160,6 +164,7 @@ public class Rq {
 		println(obj.toString());
 	}
 
+	// 변수를 받아 String attrName이라는 이름 arrtValue라는 값으로 저장
 	public void setAttr(String attrName, Object attrValue) {
 		req.setAttribute(attrName, attrValue);
 	}
