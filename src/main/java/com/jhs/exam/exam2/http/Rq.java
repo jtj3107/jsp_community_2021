@@ -92,6 +92,7 @@ public class Rq {
 		this.actionMethodName = requestUriBits[actionMethodNameIndex];
 	}
 
+	// resp.getWriter().append(변수)를 쓰는대신 간소화 문자를 출력해주는 메서드
 	public void print(String str) {
 		try {
 			resp.getWriter().append(str);
@@ -100,6 +101,7 @@ public class Rq {
 		}
 	}
 
+	// print메서드에 줄바꿈을 더한 메서드
 	public void println(String str) {
 		print(str + "\n");
 	}
@@ -146,6 +148,7 @@ public class Rq {
 		}
 	}
 
+	// 문자 출력 함수에 변수를 넣어 출력해주는 메서드
 	public void printf(String format, Object... args) {
 		print(Ut.f(format, args));
 	}
@@ -160,6 +163,7 @@ public class Rq {
 		println("</script>");
 	}
 
+	// println메서드가 문자형이 아닌 자료형을 받을시 문자화 하여 출력해주는 메서드
 	public void println(Object obj) {
 		println(obj.toString());
 	}

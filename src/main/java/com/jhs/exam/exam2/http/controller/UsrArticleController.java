@@ -161,6 +161,7 @@ public class UsrArticleController extends Controller {
 		rq.jsp("usr/article/list");
 	}
 
+	// 재구현 완료[2021-08-03]
 	// 게시물작성 jsp에서 연결(작성된 내용을 DB에 저장하는 함수)
 	private void actionDoWrite(Rq rq) {
 		// 게시물 작성페이지에서 해당 변수를 받아 저장
@@ -207,87 +208,101 @@ public class UsrArticleController extends Controller {
 	private void actionShowWrite(Rq rq) {
 		rq.jsp("usr/article/write");
 	}
-
+	
+	// 재구현 완료[2021-08-04]
 	// 게시물 수정 페이지에서 연결(변경될 게시물 내용을 DB에 저장하는 함수)
 	private void actionDoModify(Rq rq) {
-		// 게시물 수정 페이지에서 필요한 값 변수에 담아 저장
+		// 게시물 수정 페이지에서 변수 받아 저장
 		int id = rq.getIntParam("id", 0);
 		String title = rq.getParam("title", "");
 		String body = rq.getParam("body", "");
-	
-		// 비정상적으로 접근하여 필요 변수가 없을시 리턴
-		if (id == 0) {
+		
+		// 게시물 수정 페이지에서 redirectUri 받아 저장 없을시 "../article/detail?id=" + id 저장
+		String redirectUri = rq.getParam("redirectUri ", "../article/detail?id=" + id);
+		
+		// 비정상적으로 필요 변수 없이 접근시 오류메세지 출력후 뒤로가기
+		if(id == 0) {
 			rq.historyBack("id를 입력해주세요.");
 			return;
 		}
-
-		if (title.length() == 0) {
-			rq.historyBack("title을 입력해주세요.");
+		
+		if(title.length() == 0) {
+			rq.historyBack("title를 입력해주세요.");
 			return;
 		}
-
-		if (body.length() == 0) {
+		
+		if(body.length() == 0) {
 			rq.historyBack("body를 입력해주세요.");
 			return;
 		}
-
-		// 접속한 member값과 게시물번호를 이용하여 article 구하고 저장하는 식
+		
+		// id에 맞는 게시물을 받아와 저장 하는 메서드
+		// 로그인 member 정보로 수정,삭제 권한 세팅
 		Article article = articleService.getForPrintArticleById(rq.getLoginedMember(), id);
-
-		// article이 존재하지 않을시 오류메세지 출력후 뒤로가기
-		if (article == null) {
+		
+		// id번 게시물이 없을시 메세지 출력후 뒤로가기
+		if(article == null) {
 			rq.historyBack(Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 			return;
 		}
-
-		// 구해진 article과 접속한 member값을 이용하여 게시물 수정 가능여부 판단하는 함수(성공여부 리턴받아 저장)
-		ResultData actorCanModify = articleService.actorCanModify(rq.getLoginedMember(), article);
-
-		// actorCanModify값이 F-로 시작시 오류메세지 출력후 리턴
-		if (actorCanModify.isFail()) {
-			rq.historyBack(actorCanModify.getMsg());
+		
+		// 찾은 게시물에 작성자와 로그인한 멤버의 정보로 수정,삭제 권한 여부 확인하는 메서드
+		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMember(), article);
+		
+		// 권한이 없을경우 메세지 출력후 뒤로가기
+		if(actorCanModifyRd.isFail()) {
+			rq.historyBack(actorCanModifyRd.getMsg());
 			return;
 		}
-
-		// 수정 가능할시 게시물번호와 수정할 제목,내용을 이용하여 해당 게시물을 변경하는 함수(성공여부 리턴받아 저장)
+		
+		// id번 게시물의 title과 body를 수정하는 메서드
 		ResultData modifyRd = articleService.modify(id, title, body);
-
-		// 성공메세지 출력후 해당 페이지로 이동하는 함수
-		rq.replace(modifyRd.getMsg(), Ut.f("../article/detail?id=%d", id));
+		
+		// modifyRd이 F-로 시작시 메세지 출력후 뒤로가기
+		if(modifyRd.isFail()) {
+			rq.historyBack(modifyRd.getMsg());
+			return;
+		}
+		
+		// 성공메세지 출력후 redirectUri 페이지로 이동하는 메서드
+		rq.replace(modifyRd.getMsg(), redirectUri);
 	}
 
+	// 재구현 완료[2021-08-04]
 	// 수정할 게시물이 존재하는 확인하는 함수
 	private void actionShowModify(Rq rq) {
-		// 수정할 게시물을 id를 받아옴 없을시 0저장
+		// 수정페이지로 이동시 해당 게시물 번호를 받아 저장
 		int id = rq.getIntParam("id", 0);
-
-		// 해당 게시물 번호를 못받아올시 오류메세지 출력후 뒤로가기
-		if (id == 0) {
+		
+		// 비정상적으로 id가 없이 수정페이지 이동시 오류메세지 출력후 뒤로가기
+		if(id == 0) {
 			rq.historyBack("id를 입력해주세요.");
 			return;
 		}
-
-		// 접속한 member값과 해당 게시물번호를 이용하여 article 구하여 리턴하는 함수(해당 값을 article변수에 저장)
+		
+		// id번 게시물은 찾는 메서드 
+		// 로그인 멤버 정보로 수정,삭제 권한 세팅
 		Article article = articleService.getForPrintArticleById(rq.getLoginedMember(), id);
-
-		// 게시물이 없을시 오류메세지 출력후 뒤로가기
-		if (article == null) {
-			rq.historyBack(Ut.f("%d번 게시물이 존재하지 않습니다.", id));
+		
+		// id번 게시물이 존재하지 않을시 오류메세지 출력후 뒤로가기
+		if(article == null) {
+			rq.historyBack(Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 			return;
 		}
-
-		// 접속한 member값과 구해진 게시물값으로 수정여부 판단하는 함수(성공여부 리턴받아 저장)
+		
+		// 로그인 멤버의 정보와 게시물의 정보로 수정,삭제 권한 있는지 확인 하는 메서드
 		ResultData actorCanModify = articleService.actorCanModify(rq.getLoginedMember(), article);
-
-		// actorCanModify값이 F-로 시작시 오류메세지 출력후 뒤로가기
-		if (actorCanModify.isFail()) {
+		
+		// 권한이 없을시 메세지 출력후 뒤로가기
+		if(actorCanModify.isFail()) {
 			rq.historyBack(actorCanModify.getMsg());
 			return;
 		}
-
-		// 해당 jsp에서 사용할 article변수 보내기
+		
+		// 수정 페이지에서 필요한 변수를 보내는 메서드
 		rq.setAttr("article", article);
-		// 해당 페이지 이동하는 함수
+	
+		// 해당 페이지로 이동하는 메서드
 		rq.jsp("usr/article/modify");
 	}
 }
