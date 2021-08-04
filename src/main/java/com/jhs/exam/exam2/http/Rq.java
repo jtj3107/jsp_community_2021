@@ -24,34 +24,46 @@ import lombok.ToString;
 public class Rq {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
+	// 입력된 uri가 설정된 uri의 길이와 같다면 true로 변경
+	// 올바른 접근인지 파악하기 위해 사용한다
 	@Getter
 	private boolean isInvalid = false;
+	// 입력된 uri 해당 index에 맞게 저장
+	// [usr]/article/list
 	@Getter
 	private String controllerTypeName;
+	// usr/[article]/list
 	@Getter
 	private String controllerName;
+	// usr/article/[list]
 	@Getter
 	private String actionMethodName;
 	
+	// admin계정 여부를 확인
 	@Getter
 	@Setter
 	private boolean isAdmin = false;
 	
+	// 로그인 여부 확인
 	@Getter
 	@Setter
 	private boolean isLogined = false;
 	
+	// 로그인중이면 해당 멤버의 번호 저장
 	@Getter
 	@Setter
 	private int loginedMemberId = 0;
 	
+	// 로그인중이면 해당 멤버 정보 저장
 	@Getter
 	@Setter
 	private Member loginedMember = null;
 	
+	// App 클래스를 객체화
 	@Getter
 	private App app = Container.app;
 	
+	// 로그인이 필요한 기능에서 로그인을 하지 않으면 true리턴(로그인하지 않음)
 	public boolean isNotLogined() {
 		return isLogined == false;
 	}
@@ -73,20 +85,27 @@ public class Rq {
 		this.req = req;
 		this.resp = resp;
 
+		// 도메인 이후 하부 주소를 가죠오는 메서드
 		String requestUri = req.getRequestURI();
+		// 가져온 uri를 "/"를 기준으로 나누어 배열에 저장
 		String[] requestUriBits = requestUri.split("/");
 
+		// 해당 커뮤니티는 길이를 5로 지정
+		
 		int minBitsCount = 5;
 
+		// 저장된 배열의 길이가 minBitsCount보다 작을시 isInvalid를 true로 변경후 리턴
 		if (requestUriBits.length < minBitsCount) {
 			isInvalid = true;
 			return;
 		}
 
+		// index지정
 		int controllerTypeNameIndex = 2;
 		int controllerNameIndex = 3;
 		int actionMethodNameIndex = 4;
 
+		// 저장된 배열에 맞는 index를 지정하고 배열값 변수에 저장
 		this.controllerTypeName = requestUriBits[controllerTypeNameIndex];
 		this.controllerName = requestUriBits[controllerNameIndex];
 		this.actionMethodName = requestUriBits[actionMethodNameIndex];
@@ -173,6 +192,7 @@ public class Rq {
 		req.setAttribute(attrName, attrValue);
 	}
 
+	// 변수 msg를 출력하고 redirectUri이동하는 메서드
 	public void replace(String msg, String redirectUri) {
 		println("<script>");
 		if (msg != null && msg.trim().length() > 0) {
@@ -198,6 +218,7 @@ public class Rq {
 		return (T) req.getSession().getAttribute(attrName);
 	}
 
+	// uri가 controllerTypeName, controllerName, actionMethodName 에 저장된 값을 저장한 메서드
 	public String getActionPath() {
 		return "/" + controllerTypeName + "/" + controllerName + "/" + actionMethodName;
 	}
@@ -222,9 +243,11 @@ public class Rq {
 		return attrValue;
 	}
 	
+	// map을 편하게 만들어주는 메서드
 	private Map<String, Object> getParamMap() {
 		Map<String, Object> params = new HashMap<>();
 
+		// 요청 페이지의 모든 인자 이름이 저장된 목록을 반환
 		Enumeration<String> parameterNames = req.getParameterNames();
 
 		while (parameterNames.hasMoreElements()) {
@@ -237,6 +260,7 @@ public class Rq {
 		return params;
 	}
 
+	// map으로 저장된 값을 json 형식으로 바꿔주는 메서드
 	public String getParamMapJsonStr() {
 		return Ut.toJson(getParamMap(), "");
 	}
@@ -267,6 +291,7 @@ public class Rq {
 		return Ut.toJson(getBaseTypeAttrMap(), "");
 	}
 	
+	// 현재의 uri를 찾아주는 메서드
 	public String getCurrentUri() {
 		String uri = req.getRequestURI();
 		String queryStr = req.getQueryString();
@@ -286,6 +311,7 @@ public class Rq {
 		return Ut.getUriEncoded(getAfterLoginUri());
 	}
 
+	// 전 페이지 uri값을 저장해 리턴해주는 메서드
 	public String getAfterLoginUri() {
 		String afterLoginUri = getParam("afterLoginUri", "");
 		
@@ -296,6 +322,7 @@ public class Rq {
 		return getCurrentUri();
 	}
 	
+	// 페이지에 오류를 확인하는 메서드
 	public void debugParams() {
 		print("<h1>debugParams</h1>");
 		print("<pre>");
@@ -303,6 +330,7 @@ public class Rq {
 		print("</pre>");
 	}
 
+	// 관리자 인지 아닌지 확인하는 메서드
 	public boolean isNotAdmin() {
 		return !isAdmin;
 	}

@@ -91,6 +91,7 @@ public class Ut {
 		return map;
 	}
 
+	// ObjectMapper 클래스를 이용하여 java 오브젝트를 json형식으로 변환시켜주는 메서드
 	public static String toJson(Object obj, String defaultValue) {
 		ObjectMapper om = new ObjectMapper();
 
@@ -101,6 +102,7 @@ public class Ut {
 		}
 	}
 
+	// java오브젝트를 json 형식으로 보기 편한게 보여주는 메서드
 	public static String toPrettyJson(Object obj, String defaultValue) {
 		ObjectMapper om = new ObjectMapper();
 		om.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
@@ -140,6 +142,7 @@ public class Ut {
 		}
 	}
 
+	// 임시 비밀번호를 만들어주는 메서드
 	public static String getTempPassword(int length) {
 		int index = 0;
 		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
@@ -155,6 +158,7 @@ public class Ut {
 		return sb.toString();
 	}
 
+	// 메일을 보내주는 메서드
 	public static int sendMail(String smtpServerId, String smtpServerPw, String from, String fromName, String to,
 			String title, String body) {
 		Properties prop = System.getProperties();
@@ -193,6 +197,7 @@ public class Ut {
 		return 1;
 	}
 
+	// 받은 변수를 암호화 해주는 메서드
 	public static String sha256(String base) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
