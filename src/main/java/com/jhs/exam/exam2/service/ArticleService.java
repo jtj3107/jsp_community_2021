@@ -60,7 +60,7 @@ public class ArticleService implements ContainerComponent{
 			return;
 		}
 		
-		if(article.getId() == 1) {
+		if(actor.getAuthLevel() == 7) {
 			article.setExtra__actorCanModify(true);
 			article.setExtra__actorCanDelete(true);
 		}
@@ -93,7 +93,7 @@ public class ArticleService implements ContainerComponent{
 		int memberId = member.getId();
 		int writerMemberId = article.getMemberId();
 		
-		if(memberId == 1) {
+		if(member.getAuthLevel() == 7) {
 			return ResultData.from("S-0", "관리자 권한으로 수정 합니다.");
 		}
 		
@@ -111,7 +111,7 @@ public class ArticleService implements ContainerComponent{
 		int memberId = member.getId();
 		int writerMemberId = article.getMemberId();
 		
-		if(memberId == 1) {
+		if(member.getAuthLevel() == 7) {
 			return ResultData.from("S-0", "관리자 권한으로 삭제 합니다.");
 		}
 		
