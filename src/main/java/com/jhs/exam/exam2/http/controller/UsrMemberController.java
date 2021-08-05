@@ -47,6 +47,12 @@ public class UsrMemberController extends Controller {
 		case "doFindLoginPw":
 			actionDoFindLoginPw(rq);
 			break;
+		case "modify":
+			actionShowModify(rq);
+			break;
+		case "doModify":
+			actionDoModify(rq);
+			break;
 		// 없을시 메세지 출력후 break;
 		default:
 			rq.println("존재하지 않는 페이지 입니다.");
@@ -54,49 +60,102 @@ public class UsrMemberController extends Controller {
 		}
 	}
 
+	private void actionDoModify(Rq rq) {
+		String loginPw = rq.getParam("loginPw", "");
+		String name = rq.getParam("name", "");
+		String nickname = rq.getParam("nickname", "");
+		String email = rq.getParam("email", "");
+		String cellphoneNo = rq.getParam("cellphoneNo", "");
+		
+		Member member = rq.getLoginedMember();
+
+		if (loginPw.length() == 0) {
+			rq.historyBack("loginPw를 입력해주세요.");
+			return;
+		}
+
+		if (name.length() == 0) {
+			rq.historyBack("name를 입력해주세요.");
+			return;
+		}
+
+		if (nickname.length() == 0) {
+			rq.historyBack("nickname를 입력해주세요.");
+			return;
+		}
+		if (email.length() == 0) {
+			rq.historyBack("email를 입력해주세요.");
+			return;
+		}
+
+		if (cellphoneNo.length() == 0) {
+			rq.historyBack("cellphoneNo를 입력해주세요.");
+			return;
+		}
+
+		ResultData modifyRd = memberService.modify(member, loginPw, name, nickname, email, cellphoneNo);
+
+		if (modifyRd.isFail()) {
+			rq.historyBack(modifyRd.getMsg());
+			return;
+		}
+
+		String redirectUri = rq.getParam("redirectUri", "../home/main");
+
+		rq.replace(modifyRd.getMsg(), redirectUri);
+	}
+
+	private void actionShowModify(Rq rq) {
+		Member member = rq.getLoginedMember();
+
+		rq.setAttr("member", member);
+
+		rq.jsp("usr/member/modify");
+	}
+
 	// 재구현 완료[2021-08-04]
-	// 비밀번호 찾기 페이지에서 이동 
+	// 비밀번호 찾기 페이지에서 이동
 	// 비밀번호 찾기 메서드
 	private void actionDoFindLoginPw(Rq rq) {
 		// 비밀번호 찾기 페이지에서 입력한 loginId와 email을 받아 변수에 저장
 		String loginId = rq.getParam("loginId", "");
 		String email = rq.getParam("email", "");
-		
+
 		// 비정상적으로 loginId와 email이 없을 경우 메세지 출력후 뒤로가기
-		if(loginId.length() == 0) {
+		if (loginId.length() == 0) {
 			rq.historyBack("loginId를 입력해주세요.");
 			return;
 		}
-		
-		if(email.length() == 0) {
+
+		if (email.length() == 0) {
 			rq.historyBack("email를 입력해주세요.");
 			return;
 		}
-		
+
 		// loginId로 해당 member 찾는 메서드
 		Member member = memberService.getMemberByLoginId(loginId);
-		
+
 		// member가 존재하지 않을시 메세지 출력후 뒤로가기
-		if(member == null) {
+		if (member == null) {
 			rq.historyBack("존재하지 않는 회원입니다.");
 			return;
 		}
-		
+
 		// member의 이메일가 입력한 이메일이 틀릴시 메세지 출력후 뒤로가기
-		if(member.getEmail().equals(email) == false) {
+		if (member.getEmail().equals(email) == false) {
 			rq.historyBack("입력하신 이메일과 회원님의 이메일이 일치하지 않습니다.");
 			return;
 		}
-		
+
 		// 해당 member의 비밀번호를 임시비밀번호로 바꾸고 해당 이메일로 보내주는 메서드
 		ResultData sendTempLoginPwToEmailRd = memberService.sendTempLoginPwToEmail(member);
-		
+
 		// sendTempLoginPwToEmailRd 변수가 F-로 시작할시 메세지 출력후 뒤로가기
-		if(sendTempLoginPwToEmailRd.isFail()) {
+		if (sendTempLoginPwToEmailRd.isFail()) {
 			rq.historyBack(sendTempLoginPwToEmailRd.getMsg());
 			return;
 		}
-		
+
 		// sendTempLoginPwToEmailRd 변수가 S-로 시작할시 메세지 출력후 메인 페이지로 이동하는 메서드
 		rq.replace(sendTempLoginPwToEmailRd.getMsg(), "../home/main");
 	}

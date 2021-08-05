@@ -113,4 +113,20 @@ public class MemberService implements ContainerComponent {
 		return member.getAuthLevel() >= 7;
 	}
 
+	public ResultData modify(Member member, String loginPw, String name, String nickname, String email, String cellphoneNo) {
+		int id = member.getId();
+		
+		if(member.getEmail().equals(email) == false || member.getName().equals(name) == false) {
+			Member oldMember = getMemberByNameAndEmail(name, email);
+	
+			if (oldMember != null) {
+				return ResultData.from("F-2", Ut.f("`%s`님은 이메일 주소 `%s`를 사용하는 회원이 존재합니다.", name, email));
+			}
+		}
+		
+		memberRepository.modify(id, Ut.sha256(loginPw), name, nickname, email, cellphoneNo);
+		
+		return ResultData.from("S-1", Ut.f("회원정보 수정이 완료되었습니다."));
+	}
+
 }
