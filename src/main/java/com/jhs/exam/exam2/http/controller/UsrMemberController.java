@@ -8,7 +8,7 @@ import com.jhs.exam.exam2.service.MemberService;
 import com.jhs.exam.exam2.util.Ut;
 
 public class UsrMemberController extends Controller {
-	// memberService 사용하기 위해 Container에서 memberService객체 불러오기
+	// memberService객체를 Container에서 받아온다
 	private MemberService memberService;
 
 	public void init() {
@@ -54,49 +54,51 @@ public class UsrMemberController extends Controller {
 		}
 	}
 
-	// 비밀번호 찾기 jsp에서 이동
+	// 재구현 완료[2021-08-04]
+	// 비밀번호 찾기 페이지에서 이동 
+	// 비밀번호 찾기 메서드
 	private void actionDoFindLoginPw(Rq rq) {
-		// 해당 jsp에서 로그인아이디, 이메일 받아오기
+		// 비밀번호 찾기 페이지에서 입력한 loginId와 email을 받아 변수에 저장
 		String loginId = rq.getParam("loginId", "");
 		String email = rq.getParam("email", "");
-
-		// 비정상적인 방법으로 작성없이 접근시 리턴
-		if (loginId.length() == 0) {
+		
+		// 비정상적으로 loginId와 email이 없을 경우 메세지 출력후 뒤로가기
+		if(loginId.length() == 0) {
 			rq.historyBack("loginId를 입력해주세요.");
 			return;
 		}
-
-		if (email.length() == 0) {
+		
+		if(email.length() == 0) {
 			rq.historyBack("email를 입력해주세요.");
 			return;
 		}
-
-		// 받아온 로그인아이디, 이메일 이용해 해당 멤버값 얻어오는 함수
-		Member oldMember = memberService.getMemberByLoginId(loginId);
-
-		// 해당 값이 F-로 시작하면 오류 메세지 출력후 리턴
-		if (oldMember == null) {
-			rq.historyBack("일치하는 회원이 존재하지 않습니다.");
+		
+		// loginId로 해당 member 찾는 메서드
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		// member가 존재하지 않을시 메세지 출력후 뒤로가기
+		if(member == null) {
+			rq.historyBack("존재하지 않는 회원입니다.");
 			return;
 		}
-
-		if (oldMember.getEmail().equals(email) == false) {
-			rq.historyBack("일치하는 회원이 존재하지 않습니다.");
+		
+		// member의 이메일가 입력한 이메일이 틀릴시 메세지 출력후 뒤로가기
+		if(member.getEmail().equals(email) == false) {
+			rq.historyBack("입력하신 이메일과 회원님의 이메일이 일치하지 않습니다.");
 			return;
 		}
-
-		// 해당 member로 임시비밀번호 생성후 이메일 보내는 함수
-		ResultData sendeTempLoginPwToEmailRs = memberService.sendTempLoginPwToEmail(oldMember);
-
-		// 메일발송 실패시 오류 메세지 출력후 리턴
-		if (sendeTempLoginPwToEmailRs.isFail()) {
-			rq.historyBack(sendeTempLoginPwToEmailRs.getMsg());
+		
+		// 해당 member의 비밀번호를 임시비밀번호로 바꾸고 해당 이메일로 보내주는 메서드
+		ResultData sendTempLoginPwToEmailRd = memberService.sendTempLoginPwToEmail(member);
+		
+		// sendTempLoginPwToEmailRd 변수가 F-로 시작할시 메세지 출력후 뒤로가기
+		if(sendTempLoginPwToEmailRd.isFail()) {
+			rq.historyBack(sendTempLoginPwToEmailRd.getMsg());
 			return;
 		}
-
-		// 성공메세지 출력후 로그인페이지로 이동
-		rq.replace(sendeTempLoginPwToEmailRs.getMsg(), "../home/main");
-
+		
+		// sendTempLoginPwToEmailRd 변수가 S-로 시작할시 메세지 출력후 메인 페이지로 이동하는 메서드
+		rq.replace(sendTempLoginPwToEmailRd.getMsg(), "../home/main");
 	}
 
 	private void actionShowFindLoginPw(Rq rq) {

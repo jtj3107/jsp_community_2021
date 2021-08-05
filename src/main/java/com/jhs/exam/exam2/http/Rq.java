@@ -24,7 +24,7 @@ import lombok.ToString;
 public class Rq {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
-	// 입력된 uri가 설정된 uri의 길이와 같다면 true로 변경
+	// 입력된 uri가 설정된 uri의 길이보다 짧으면 true로 변경
 	// 올바른 접근인지 파악하기 위해 사용한다
 	@Getter
 	private boolean isInvalid = false;
@@ -91,7 +91,7 @@ public class Rq {
 		String[] requestUriBits = requestUri.split("/");
 
 		// 해당 커뮤니티는 길이를 5로 지정
-		
+		// []/jsp_community_2021/usr/article/modify = 5
 		int minBitsCount = 5;
 
 		// 저장된 배열의 길이가 minBitsCount보다 작을시 isInvalid를 true로 변경후 리턴
@@ -202,14 +202,17 @@ public class Rq {
 		println("</script>");
 	}
 
+	// 입력받은 변수(attrValue)를 attrName이름으로 세션에 저장하는 메서드
 	public void setSessionAttr(String attrName, String attrValue) {
 		req.getSession().setAttribute(attrName, attrValue);
 	}
 
+	// attrName이름의 세션을 삭제하는 메서드
 	public void removeSessionAttr(String attrName) {
 		req.getSession().removeAttribute(attrName);
 	}
 
+	// attrName이름의 세션을 불러오는 메서드
 	public <T> T getSessionAttr(String attrName, T defaultValue) {
 		if (req.getSession().getAttribute(attrName) == null) {
 			return defaultValue;
@@ -223,6 +226,7 @@ public class Rq {
 		return "/" + controllerTypeName + "/" + controllerName + "/" + actionMethodName;
 	}
 	
+	// req.setAttribute으로 저장한 attrName이름의 매개변수를 가져오는 메서드(문자)
 	public String getAttr(String attrName, String defaultValue) {
 		String attrValue = (String)req.getAttribute(attrName);
 
@@ -232,7 +236,8 @@ public class Rq {
 
 		return attrValue;
 	}
-
+	
+	// req.setAttribute으로 저장한 attrName이름의 매개변수를 가져오는 메서드(정수)
 	public int getIntAttr(String attrName, int defaultValue) {
 		Integer attrValue = (Integer)req.getAttribute(attrName);
 

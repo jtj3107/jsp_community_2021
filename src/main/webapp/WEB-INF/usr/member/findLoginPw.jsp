@@ -45,7 +45,6 @@
 					}
 				</script>
 				<form action="../member/doFindLoginPw" method="POST" onsubmit="DoFindLoginIdForm__submit(this); return false;">
-					<input type="hidden" name="loginPwReal" />
 					
 					<div class="form-control">
 						<label class="label">

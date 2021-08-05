@@ -80,7 +80,7 @@ public class App implements ContainerComponent {
 	}
 
 	private int getSitePort() {
-		return 8081;
+		return 8080;
 	}
 
 	private String getSiteDomain() {

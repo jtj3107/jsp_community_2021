@@ -61,6 +61,7 @@ public class Ut {
 		return String.format(format, args);
 	}
 
+	// map을 편하게 만들어 주는 메서드
 	public static Map<String, Object> mapOf(Object... args) {
 		if (args.length % 2 != 0) {
 			throw new IllegalArgumentException("인자를 짝수개 입력해주세요.");
@@ -114,6 +115,7 @@ public class Ut {
 		}
 	}
 
+	// json 형태의 문자를 java형식으로 바꿔주는 메서드???
 	public static <T> T toObjFromJson(String jsonStr, TypeReference<T> typeReference) {
 		ObjectMapper om = new ObjectMapper();
 
@@ -124,6 +126,7 @@ public class Ut {
 		}
 	}
 
+	// json 형태의 문자를 java형식으로 바꿔주는 메서드???
 	public static <T> T toObjFromJson(String jsonStr, Class<T> cls) {
 		ObjectMapper om = new ObjectMapper();
 
