@@ -40,10 +40,12 @@ public class Ut {
 		WRAPPER_TYPE_MAP.put(Void.class, void.class);
 	}
 
+	// 베이스 타입만 리턴?
 	public static boolean isPrimitiveType(Object source) {
 		return WRAPPER_TYPE_MAP.containsKey(source.getClass());
-	}
-
+	};
+  
+	// 해당 변수가 베이스 타입인지 여부 확인하는 메서드
 	public static boolean isBaseType(Object source) {
 		if (isPrimitiveType(source)) {
 			return true;
@@ -115,7 +117,7 @@ public class Ut {
 		}
 	}
 
-	// json 형태의 문자를 java형식으로 바꿔주는 메서드???
+	// json 형태의 문자를 해당유형으로 바꿔주는 메서드
 	public static <T> T toObjFromJson(String jsonStr, TypeReference<T> typeReference) {
 		ObjectMapper om = new ObjectMapper();
 
@@ -126,7 +128,7 @@ public class Ut {
 		}
 	}
 
-	// json 형태의 문자를 java형식으로 바꿔주는 메서드???
+	// json 형태의 문자를 class형식으로 바꿔주는 메서드
 	public static <T> T toObjFromJson(String jsonStr, Class<T> cls) {
 		ObjectMapper om = new ObjectMapper();
 
@@ -137,6 +139,7 @@ public class Ut {
 		}
 	}
 
+	// 해당 변수를 인코딩해주는 메서드
 	public static String getUriEncoded(String str) {
 		try {
 			return URLEncoder.encode(str, "UTF-8");

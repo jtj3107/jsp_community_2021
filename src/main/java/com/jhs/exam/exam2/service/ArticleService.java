@@ -60,6 +60,11 @@ public class ArticleService implements ContainerComponent{
 			return;
 		}
 		
+		if(article.getId() == 1) {
+			article.setExtra__actorCanModify(true);
+			article.setExtra__actorCanDelete(true);
+		}
+		
 		// 접속한 멤버와 게시물을 비교하여 수정,삭제 true,false여부 판단(F-로 시작시 false S-로 시작시 true)
 		boolean actorCanModify = actorCanModify(actor, article).isSuccess();
 		boolean actorCanDelete = actorCanDelete(actor, article).isSuccess();
@@ -88,6 +93,10 @@ public class ArticleService implements ContainerComponent{
 		int memberId = member.getId();
 		int writerMemberId = article.getMemberId();
 		
+		if(memberId == 1) {
+			return ResultData.from("S-0", "관리자 권한으로 수정 합니다.");
+		}
+		
 		// memberId와 writerMemberId가 다를시 F-1저장 후 리턴
 		if(memberId != writerMemberId) {
 			return ResultData.from("F-1", "권한이 없습니다.");
@@ -101,6 +110,10 @@ public class ArticleService implements ContainerComponent{
 		// 접속한 member의 id와 게시물 작성자(memberId)를 변수에 저장
 		int memberId = member.getId();
 		int writerMemberId = article.getMemberId();
+		
+		if(memberId == 1) {
+			return ResultData.from("S-0", "관리자 권한으로 삭제 합니다.");
+		}
 		
 		// memberId와 writerMemberId가 다를시 F-1저장후 리턴
 		if(memberId != writerMemberId) {

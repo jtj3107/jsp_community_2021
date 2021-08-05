@@ -270,6 +270,7 @@ public class Rq {
 		return Ut.toJson(getParamMap(), "");
 	}
 	
+	// 자바스크립트 변수를 어디서든 쓸 수 있도록 해주는 메서드
 	private Map<String, Object> getBaseTypeAttrMap() {
 		Map<String, Object> attrs = new HashMap<>();
 
@@ -308,10 +309,12 @@ public class Rq {
 		return uri;
 	}
 	
+	// 현재 페이지를 인코딩하는 메서드
 	public String getEncodedCurrentUri() {
 		return Ut.getUriEncoded(getCurrentUri());
 	}
 	
+	// 이전 페이지를 인코딩하는 메서드
 	public String getEncodedAfterLoginUri() {
 		return Ut.getUriEncoded(getAfterLoginUri());
 	}

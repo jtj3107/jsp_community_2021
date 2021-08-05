@@ -31,6 +31,7 @@ public class NeedLoginInterceptor extends Interceptor {
 			return true;
 		}
 
+		// 로그인 요구 메세지 출력후 로그인 페이지 이동 + 로그인페이지로 이동전 페이지 정보를 담아 이동하는 메서드
 		if (rq.isNotLogined()) {
 			rq.replace("로그인 후 이용해주세요.", "../member/login?afterLoginUri=" + rq.getEncodedAfterLoginUri());
 
