@@ -112,7 +112,6 @@
 					}
 				</script>
 				<form action="../member/doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
-					<input type="hidden" name="redirectUri" value="${param.afterLoginUri}" />
 					
 					<div class="form-control">
 						<label class="label">
