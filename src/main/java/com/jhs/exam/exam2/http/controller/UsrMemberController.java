@@ -73,7 +73,8 @@ public class UsrMemberController extends Controller {
 		Member member = rq.getLoginedMember();
 		String currentloginPw = rq.getParam("currentloginPw", "");
 		
-		if(member.getLoginPw().equals(currentloginPw) == false) {
+		// 입력한 현재 비밀번호와 로그인한 회원의 비밀번호가 다를경우 뒤로가기
+		if(member.getLoginPw().equals(Ut.sha256(currentloginPw)) == false) {
 			rq.historyBack("현재 비밀번호가 틀렸습니다.");
 			return;
 		}
