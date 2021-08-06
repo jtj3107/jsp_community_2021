@@ -47,11 +47,11 @@ public class UsrMemberController extends Controller {
 		case "doFindLoginPw":
 			actionDoFindLoginPw(rq);
 			break;
-		case "modify":
-			actionShowModify(rq);
+		case "memberModify":
+			actionShowMemberModify(rq);
 			break;
-		case "doModify":
-			actionDoModify(rq);
+		case "doMemberModify":
+			actionDoMemberModify(rq);
 			break;
 		// 없을시 메세지 출력후 break;
 		default:
@@ -60,15 +60,25 @@ public class UsrMemberController extends Controller {
 		}
 	}
 
-	private void actionDoModify(Rq rq) {
+	// 회원정보 수정 페이지에서 받은 파라미터로 회원정보를 수정하는 메서드
+	private void actionDoMemberModify(Rq rq) {
+		// 회원정보 수정 페이지에서 받은 파라미터를 각 변수에 담는다
 		String loginPw = rq.getParam("loginPw", "");
 		String name = rq.getParam("name", "");
 		String nickname = rq.getParam("nickname", "");
 		String email = rq.getParam("email", "");
 		String cellphoneNo = rq.getParam("cellphoneNo", "");
 		
+		// 접속한 회원의 member 값을 저장
 		Member member = rq.getLoginedMember();
+		String currentloginPw = rq.getParam("currentloginPw", "");
+		
+		if(member.getLoginPw().equals(currentloginPw) == false) {
+			rq.historyBack("현재 비밀번호가 틀렸습니다.");
+			return;
+		}
 
+		// 각 파라미터가 값이 없이 해당 메서드 접근시 리턴
 		if (loginPw.length() == 0) {
 			rq.historyBack("loginPw를 입력해주세요.");
 			return;
@@ -93,24 +103,28 @@ public class UsrMemberController extends Controller {
 			return;
 		}
 
+		// 접속한 회원의 정보를 수정 해주는 메서드
 		ResultData modifyRd = memberService.modify(member, loginPw, name, nickname, email, cellphoneNo);
 
+		// modifyRd 값이 F-로 시작시 오류메세지 출력후 뒤로가기
 		if (modifyRd.isFail()) {
 			rq.historyBack(modifyRd.getMsg());
 			return;
 		}
 
+		// 회원정보 수정페이지에서 redirectUri파라미터 값을 저장합니다 없을시 ../home/main 저장
 		String redirectUri = rq.getParam("redirectUri", "../home/main");
 
+		// 성공메세지 출력후 저장된 redirectUri 페이지로 이동
 		rq.replace(modifyRd.getMsg(), redirectUri);
 	}
 
-	private void actionShowModify(Rq rq) {
+	private void actionShowMemberModify(Rq rq) {
 		Member member = rq.getLoginedMember();
 
 		rq.setAttr("member", member);
 
-		rq.jsp("usr/member/modify");
+		rq.jsp("usr/member/memberModify");
 	}
 
 	// 재구현 완료[2021-08-04]

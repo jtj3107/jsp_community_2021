@@ -25,12 +25,15 @@ public class ArticleService implements ContainerComponent{
 		return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다.", id), "id", id);
 	}
 
+	// 해당 변수를 받아 요구에 맞는 게시물리스트르 리턴하는 메서드
 	public List<Article> getForPrintArticles(Member actor, int itemsCountInAPage, int page, String searchKeywordTypeCode, String searchKeyword, int boardId) {
 		int limitPage = (page - 1) * itemsCountInAPage;
 		int limitTake = itemsCountInAPage;
 		
+		// 요구에 맞는 게시물 리스트 변수에 저장
 		List<Article> articles = articleRepository.getForPrintArticles(limitPage, limitTake, searchKeywordTypeCode, searchKeyword, boardId);
 		
+		// 각 게시물마다 권한이 있는 member에 수정,삭제 버튼 보이게 해주는 메서드
 		for(Article article : articles) {
 			updateForPrintData(actor, article);
 		}
@@ -60,6 +63,8 @@ public class ArticleService implements ContainerComponent{
 			return;
 		}
 		
+		// 접속한 멤버가 관리자이면 Extra__actorCanModify 변수 true로 변경
+		// 기존 false -> true로 변경시 수정,삭제 버튼 생성
 		if(actor.getAuthLevel() == 7) {
 			article.setExtra__actorCanModify(true);
 			article.setExtra__actorCanDelete(true);
@@ -82,6 +87,7 @@ public class ArticleService implements ContainerComponent{
 		return ResultData.from("S-1", Ut.f("%d번 게시물이 삭제되었습니다.", id), "id", id);
 	}
 
+	// 게시물을 수정하는 메서드
 	public ResultData modify(int id, String title, String body) {
 		articleRepository.modify(id, title, body);
 
@@ -93,6 +99,7 @@ public class ArticleService implements ContainerComponent{
 		int memberId = member.getId();
 		int writerMemberId = article.getMemberId();
 		
+		// 접속하 멤버가 관리자이면 S-0 저장후 리턴
 		if(member.getAuthLevel() == 7) {
 			return ResultData.from("S-0", "관리자 권한으로 수정 합니다.");
 		}
@@ -110,7 +117,8 @@ public class ArticleService implements ContainerComponent{
 		// 접속한 member의 id와 게시물 작성자(memberId)를 변수에 저장
 		int memberId = member.getId();
 		int writerMemberId = article.getMemberId();
-		
+	
+		// 접속하 멤버가 관리자이면 S-0 저장후 리턴
 		if(member.getAuthLevel() == 7) {
 			return ResultData.from("S-0", "관리자 권한으로 삭제 합니다.");
 		}

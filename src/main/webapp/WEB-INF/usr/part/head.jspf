@@ -115,7 +115,7 @@ const rqParams = ${rq.paramMapJsonStr};
 				</a>
 
 				<c:if test="${rq.logined}">
-					<a href="../member/modify" class="flex items-center px-4 hover:text-red-500">
+					<a href="../member/memberModify" class="flex items-center px-4 hover:text-red-500">
 						<span>
 							<i class="fas fa-user"></i>
 						</span>
@@ -228,7 +228,7 @@ const rqParams = ${rq.paramMapJsonStr};
 						</li>
 						<c:if test="${rq.logined}">
 							<li>
-								<a href="../member/modify" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
+								<a href="../member/memberModify" class="h-full flex items-center px-6 hover:underline hover:text-red-500">
 									<span>
 										<i class="fas fa-user"></i>
 									</span>

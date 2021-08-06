@@ -23,11 +23,19 @@
 						}
 
 						// 좌우 공백제거
-						
+						form.currentloginPw.value = form.currentloginPw.value.trim();
+
+						if (form.currentloginPw.value.length == 0) {
+							alert('현재 로그인 비밀번호를 입력해주세요.');
+							form.currentloginPw.focus();
+
+							return;
+						}
+										
 						form.loginPw.value = form.loginPw.value.trim();
 
 						if (form.loginPw.value.length == 0) {
-							alert('로그인 비밀번호를 입력해주세요.');
+							alert('변경할 로그인 비밀번호를 입력해주세요.');
 							form.loginPw.focus();
 
 							return;
@@ -36,7 +44,7 @@
 						form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
 						
 						if (form.loginPwConfirm.value.length == 0) {
-							alert('로그인 비밀번호 확인을 입력해주세요.');
+							alert('변경할 로그인 비밀번호 확인을 입력해주세요.');
 							form.loginPwConfirm.focus();
 
 							return;
@@ -89,8 +97,17 @@
 						MemberModify__submitDone = true;
 					}
 				</script>
-				<form action="../member/doModify" method="POST" onsubmit="MemberModify__submit(this); return false;">
+				<form action="../member/doMemberModify" method="POST" onsubmit="MemberModify__submit(this); return false;">
 					<input type="hidden" name="redirectUri" value="${param.afterLoginUri}" />
+					
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">현재 로그인 비밀번호</span>
+						</label>
+						<div>
+							<input class="input input-bordered w-full" maxlength="100" name="currentloginPw" type="password" placeholder="현재 로그인 비밀번호를 입력해주세요." />
+						</div>
+					</div>
 					
 					<div class="form-control">
 						<label class="label">
