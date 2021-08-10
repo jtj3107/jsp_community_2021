@@ -25,10 +25,12 @@ public class UsrHomeController extends Controller {
 		}
 	}
 
+	// 해당 페이지로 이동하는 메서드
 	private void actionShowMain(Rq rq) {
 		rq.jsp("usr/home/main");
 	}
 
+	// 메일발송하는 메서드
 	private void actionDoSendMail(Rq rq) {
 		App app = Container.app;
 		Ut.sendMail(app.getSmtpGmailId(), app.getSmtpGmailPw(), "no-reply@lemon-cm.com", "레몬 커뮤니티 알림", "jtj3926@gmail.com", "제목ㅋㅋㅋ", "내용 ㅋㅋㅋ");	

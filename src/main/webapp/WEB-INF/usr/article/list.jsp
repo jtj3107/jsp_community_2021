@@ -97,7 +97,7 @@
 							</a>
 						</c:if>
 						<c:if test="${article.extra__actorCanDelete}">
-							<a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" href="../article/doDelete?id=${article.id}" class="btn btn-link">
+							<a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" href="../article/doDelete?id=${article.id}&boardId=${article.boardId}" class="btn btn-link">
 								<span>
 									<i class="fas fa-trash-alt"></i>
 								</span>
