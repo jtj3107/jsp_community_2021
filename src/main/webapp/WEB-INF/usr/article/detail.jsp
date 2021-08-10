@@ -87,7 +87,8 @@
 							</a>
 						</c:if>
 						<c:if test="${article.extra__actorCanDelete}">
-							<a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" href="../article/doDelete?id=${article.id}&boardId=${article.boardId}" class="btn btn-link">
+							<a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" href="../article/doDelete?id=${article.id}&boardId=${article.boardId}"
+								class="btn btn-link">
 								<span>
 									<i class="fas fa-trash-alt"></i>
 								</span>
@@ -100,5 +101,16 @@
 		</div>
 	</div>
 </section>
+<section class="section section-article-detail px-4 mt-4">
+	<div class="container mx-auto">
+		<div class="card bordered shadow-lg">
+			<div class="card-title">
+				<i class="far fa-comment-dots"></i>
+				<span>댓글</span>
+			</div>
+		</div>
+	</div>
+</section>
+
 
 <%@ include file="../part/foot.jspf"%>

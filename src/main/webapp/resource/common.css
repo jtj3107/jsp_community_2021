@@ -48,7 +48,6 @@ body {
   color: white;
   text-align: center;
   height: var(--card-title_height);
-  position: absolute;
   width: 100%;
   display: grid;
   align-items: center;
@@ -57,13 +56,35 @@ body {
     var(--card-title_left-btn-cell-width);
 }
 
+.card-reply {
+  background-color: rgb(87, 13, 248);
+  color: white;
+  text-align: center;
+  height: var(--card-reply_height);
+  width: 100%;
+  display: grid;
+  align-items: center;
+  grid-template-columns:
+    var(--card-reply_left-btn-cell-width) auto
+    var(--card-reply_left-btn-cell-width);
+}
+
 .card-title > span:first-child {
+  text-align: left;
+  padding-left: 22px;
+}
+
+.card-reply > span:first-child {
   text-align: left;
   padding-left: 22px;
 }
 
 .card-title + * {
   margin-top: var(--card-title_height);
+}
+
+.card-reply + * {
+  margin-top: var(--card-reply_height);
 }
 
 @media (max-width: 480px) {
