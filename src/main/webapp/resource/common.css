@@ -47,6 +47,7 @@ body {
   background-color: rgb(87, 13, 248);
   color: white;
   text-align: center;
+  position:absolute;
   height: var(--card-title_height);
   width: 100%;
   display: grid;

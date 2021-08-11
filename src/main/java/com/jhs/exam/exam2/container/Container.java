@@ -9,6 +9,7 @@ import com.jhs.exam.exam2.http.controller.UsrArticleController;
 import com.jhs.exam.exam2.http.controller.UsrHomeController;
 import com.jhs.exam.exam2.http.controller.UsrLikeController;
 import com.jhs.exam.exam2.http.controller.UsrMemberController;
+import com.jhs.exam.exam2.http.controller.UsrReplyController;
 import com.jhs.exam.exam2.interceptor.BeforeActionInterceptor;
 import com.jhs.exam.exam2.interceptor.NeedAdminInterceptor;
 import com.jhs.exam.exam2.interceptor.NeedLoginInterceptor;
@@ -16,17 +17,19 @@ import com.jhs.exam.exam2.interceptor.NeedLogoutInterceptor;
 import com.jhs.exam.exam2.repository.ArticleRepository;
 import com.jhs.exam.exam2.repository.BoardRepository;
 import com.jhs.exam.exam2.repository.MemberRepository;
+import com.jhs.exam.exam2.repository.ReplyRepository;
 import com.jhs.exam.exam2.service.ArticleService;
 import com.jhs.exam.exam2.service.BoardService;
 import com.jhs.exam.exam2.service.EmailService;
 import com.jhs.exam.exam2.service.MemberService;
+import com.jhs.exam.exam2.service.ReplyService;
 
 // 웹사이트 실행이 모든 객체 한번 실행(필요시 마다 따로 만들어 따로 실행하는것이 아닌 한번에 실행하여 사용)
 public class Container {
 	private static List<ContainerComponent> containerComponents;
 
 	public static App app;
-	
+
 	public static BeforeActionInterceptor beforeActionInterceptor;
 	public static NeedLoginInterceptor needLoginInterceptor;
 	public static NeedLogoutInterceptor needLogoutInterceptor;
@@ -42,12 +45,16 @@ public class Container {
 	public static UsrMemberController usrMemberController;
 
 	public static UsrHomeController usrHomeController;
+	public static UsrReplyController usrReplyController;
 
 	public static BoardRepository boardRepository;
 	public static BoardService boardService;
 	public static EmailService emailService;
+	public static ReplyService replyService;
 
 	public static AdmHomeController admHomeController;
+
+	public static ReplyRepository replyRepository;
 
 	public static void init() {
 		containerComponents = new ArrayList<>();
@@ -57,10 +64,12 @@ public class Container {
 		memberRepository = addContainerComponent(new MemberRepository());
 		boardRepository = addContainerComponent(new BoardRepository());
 		articleRepository = addContainerComponent(new ArticleRepository());
+		replyRepository = addContainerComponent(new ReplyRepository());
 
 		memberService = addContainerComponent(new MemberService());
 		boardService = addContainerComponent(new BoardService());
 		articleService = addContainerComponent(new ArticleService());
+		replyService = addContainerComponent(new ReplyService());
 
 		beforeActionInterceptor = addContainerComponent(new BeforeActionInterceptor());
 		needLoginInterceptor = addContainerComponent(new NeedLoginInterceptor());
@@ -71,6 +80,7 @@ public class Container {
 		usrArticleController = addContainerComponent(new UsrArticleController());
 		usrHomeController = addContainerComponent(new UsrHomeController());
 		usrLikeController = addContainerComponent(new UsrLikeController());
+		usrReplyController = addContainerComponent(new UsrReplyController());
 		emailService = addContainerComponent(new EmailService());
 
 		admHomeController = addContainerComponent(new AdmHomeController());

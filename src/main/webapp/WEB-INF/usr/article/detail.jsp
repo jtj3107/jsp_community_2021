@@ -108,23 +108,82 @@
 				<i class="far fa-comment-dots"></i>
 				<span>댓글</span>
 			</div>
-			<div class="px-4">
+			<div class="p-3">
 
 				<div>
-					<div class="grid">
+					<div class="grid gap-3">
 						<div>
 							<span class="badge badge-primary">댓글</span>
 							<span>0개</span>
 						</div>
-						<div>
-							<span>${article.extra__writerName}</span>
-						</div>
+						<script>
+					let ReplyWrite__submitDone = false;
+					function ReplyWrite__submit(form) {
+						if (ReplyWrite__submitDone) {
+							return;
+						
+						}
+						
+						form.reply.value = form.reply.value.trim();
+
+						if (form.reply.value.length == 0) {
+							alert('댓글을 입력해주세요.');
+							form.reply.focus();
+
+							return;
+						}
+						
+						form.submit();
+						ReplyWrite__submitDone = true;
+					}
+				</script>
+						<form action="../reply/doWrite" method="POST" onsubmit="ReplyWrite__submit(this); return false;">
+							<input type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
+							<input type="hidden" name="articleId" value="${article.id}"/>
+
+							<div class="form-control">
+								<input class="input input-bordered w-full" maxlength="100" name="reply" type="text" placeholder="댓글을 입력해주세요." />
+							</div>
+
+							<div class="btns">
+								<button type="submit" class="btn btn-link">작성</button>
+								<button type="button" class="btn btn-link">작성취소</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+<c:forEach items="${replies}" var="reply">
+	<section class="section section-article-detail px-4 mt-4">
+		<div class="container mx-auto">
+			<div class="card bordered shadow-lg">
+				<div class="p-3">
+					<div>
+						<div>
+							<div class="flex py-4">
+								<div class="px-4">
+									<span class="badge badge-accent">작성자</span>
+									<span>${reply.extra__writerName}</span>
+								</div>
+								<div class="px-4">
+									<span class="badge badge-accent">본문</span>
+									<span>${reply.body}</span>
+								</div>
+								<div class="px-4">
+									<span class="badge badge-accent">등록날짜</span>
+									<span>${reply.bodySummaryForPrint}</span>
+								</div>
+							</div>
 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</c:forEach>
 
 <%@ include file="../part/foot.jspf"%>
