@@ -108,6 +108,20 @@
 				<i class="far fa-comment-dots"></i>
 				<span>댓글</span>
 			</div>
+			<div class="px-4">
+
+				<div>
+					<div class="grid">
+						<div>
+							<span class="badge badge-primary">댓글</span>
+							<span>0개</span>
+						</div>
+						<div>
+							<span>${article.extra__writerName}</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
