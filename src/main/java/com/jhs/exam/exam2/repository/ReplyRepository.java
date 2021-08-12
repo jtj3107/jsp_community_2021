@@ -34,6 +34,7 @@ public class ReplyRepository implements ContainerComponent{
 		sql.append("LEFT JOIN `member` AS M");
 		sql.append("ON R.memberId = M.id");
 		sql.append("WHERE articleId = ?", articleId);
+		sql.append("ORDER BY R.id DESC");
 		
 		return MysqlUtil.selectRows(sql, Reply.class);
 	}

@@ -133,7 +133,7 @@ public class UsrArticleController extends Controller {
 	// 게시물 리스트를 보여주는 메서드
 	private void actionShowList(Rq rq) {
 		// 게시판 번호를 받아 저장 없을시 0(전체 게시판) 저장
-		int boardId = rq.getIntAttr("boardId", 0);
+		int boardId = rq.getIntParam("boardId", 0);
 
 		// 검색 타입 받아 저장 없을시 title,body 세팅
 		String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "title,body");
