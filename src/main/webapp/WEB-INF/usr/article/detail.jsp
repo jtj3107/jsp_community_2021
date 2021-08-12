@@ -116,40 +116,32 @@
 							<span class="badge badge-primary">댓글</span>
 							<span>0개</span>
 						</div>
+												
+						<input id="redirectUri" type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
+						<input id="articleId" type="hidden" name="articleId" value="${article.id}" />
+
+						<div class="form-control">
+							<input class="input input-bordered w-full" id="reply" maxlength="100" name="reply" type="text" placeholder="댓글을 입력해주세요." />
+						</div>
+						<div class="btns">
+							<button id="submit"type="button" class="btn btn-link">작성</button>
+							<button type="button" class="btn btn-link">작성취소</button>
+						</div>
 						<script>
-							let ReplyWrite__submitDone = false;
-							function ReplyWrite__submit(form) {
-								if (ReplyWrite__submitDone) {
-									return;
-
-								}
-
-								form.reply.value = form.reply.value.trim();
-
-								if (form.reply.value.length == 0) {
-									alert('댓글을 입력해주세요.');
-									form.reply.focus();
-
-									return;
-								}
-
-								form.submit();
-								ReplyWrite__submitDone = true;
-							}
-						</script>
-						<form action="../reply/doWrite" method="POST" onsubmit="ReplyWrite__submit(this); return false;">
-							<input type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
-							<input type="hidden" name="articleId" value="${article.id}" />
-
-							<div class="form-control">
-								<input class="input input-bordered w-full" maxlength="100" name="reply" type="text" placeholder="댓글을 입력해주세요." />
-							</div>
-
-							<div class="btns">
-								<button type="submit" class="btn btn-link">작성</button>
-								<button type="button" class="btn btn-link">작성취소</button>
-							</div>
-						</form>
+						document.querySelector('#submit').addEventListener('click', function(event){
+						    var xhr = new XMLHttpRequest();
+						    xhr.open('POST', '../reply/doWrite');
+						    xhr.onreadystatechange = function(){
+						        document.querySelector('#reply').innerHTML = xhr.responseText;
+						    }
+						    var data = '';
+						    data += 'redirectUri='+document.getElementById('redirectUri').value;
+						    data += '&articleId='+document.getElementById('articleId').value;
+						    data += '&reply='+document.getElementById('reply').value;
+						    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+						    xhr.send(data); 
+						});
+						</script> 
 					</div>
 				</div>
 			</div>
@@ -161,7 +153,7 @@
 				<div class="p-3">
 					<div>
 						<div>
-							<div class="py-4">
+							<div class="py-4" id="reply">
 								<div class="px-4">
 									<span>${reply.extra__writerName}</span>
 								</div>

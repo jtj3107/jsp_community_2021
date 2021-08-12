@@ -28,8 +28,6 @@ public class UsrReplyController extends Controller{
 		int articleId = rq.getIntParam("articleId", 0);
 		String reply = rq.getParam("reply", "");
 		
-		String redirectUri = rq.getParam("redirectUri", "../article/detail?id=" + articleId);
-		
 		if(articleId == 0) {
 			rq.historyBack("articleId를 입력해주세요.");
 			return;
@@ -47,9 +45,6 @@ public class UsrReplyController extends Controller{
 			return;
 		}
 
-		redirectUri = redirectUri.replace("[NEW_ID]", articleId + "");
-
-		rq.replace(writeRd.getMsg(), redirectUri);
 	}
 
 }
