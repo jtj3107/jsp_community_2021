@@ -47,8 +47,6 @@ public class UsrReplyController extends Controller{
 			return;
 		}
 
-		int id = (int) writeRd.getBody().get("id");
-
 		redirectUri = redirectUri.replace("[NEW_ID]", articleId + "");
 
 		rq.replace(writeRd.getMsg(), redirectUri);

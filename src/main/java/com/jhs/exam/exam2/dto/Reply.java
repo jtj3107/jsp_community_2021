@@ -6,7 +6,7 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class reply {
+public class Reply {
 	private int id;
 	private String regDate;
 	private String updateDate;

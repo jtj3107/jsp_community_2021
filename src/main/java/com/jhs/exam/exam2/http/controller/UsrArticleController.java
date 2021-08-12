@@ -5,10 +5,12 @@ import java.util.List;
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.dto.Article;
 import com.jhs.exam.exam2.dto.Board;
+import com.jhs.exam.exam2.dto.Reply;
 import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.service.ArticleService;
 import com.jhs.exam.exam2.service.BoardService;
+import com.jhs.exam.exam2.service.ReplyService;
 import com.jhs.exam.exam2.util.Ut;
 import com.mysql.cj.xdevapi.Result;
 
@@ -16,11 +18,13 @@ public class UsrArticleController extends Controller {
 	// articleService와 boardService를 사용하기 위해 Container에 생성된 해당 객체 불러오기
 	private ArticleService articleService;
 	private BoardService boardService;
+	private ReplyService replyService;
 
 	// 재구현 완료[2021-08-03]
 	public void init() {
 		articleService = Container.articleService;
 		boardService = Container.boardService;
+		replyService = Container.replyService;
 	}
 
 	@Override
@@ -114,9 +118,12 @@ public class UsrArticleController extends Controller {
 			rq.historyBack(Ut.f("`%d`번 게시물은 존재하지 않습니다.", id));
 			return;
 		}
+		
+		List<Reply> replies = replyService.getForPrintReplies(id);
 
 		// 페이지에 article값을 사용하기 위해 쓰는 메서드
 		rq.setAttr("article", article);
+		rq.setAttr("replies", replies);
 
 		// 해당 페이지 이동하는 메서드
 		rq.jsp("usr/article/detail");
