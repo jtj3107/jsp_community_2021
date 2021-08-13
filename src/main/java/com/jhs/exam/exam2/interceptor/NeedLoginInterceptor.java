@@ -8,12 +8,14 @@ public class NeedLoginInterceptor extends Interceptor {
 
 	}
 
+	// ControllerTypeName 값이 "usr"가 아닐경우 true를 리턴
 	@Override
 	public boolean runBeforeAction(Rq rq) {
 		if (rq.getControllerTypeName().equals("usr") == false) {
 			return true;
 		}
 
+		// getActionPath 값이 해당 case값일 경우 true를 리턴
 		switch (rq.getActionPath()) {
 		case "/usr/article/list":
 		case "/usr/article/detail":

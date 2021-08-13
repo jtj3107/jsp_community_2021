@@ -293,6 +293,7 @@ public class Rq {
 		return attrs;
 	}
 
+	// 구해진 AttrMap값을 json 형식으로 바꿔주는 메서드
 	public String getBaseTypeAttrs() {
 		return Ut.toJson(getBaseTypeAttrMap(), "");
 	}

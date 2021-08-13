@@ -8,6 +8,7 @@ public class NeedLogoutInterceptor extends Interceptor {
 		
 	}
 	
+	// getActionPath 값이 해당 case값과 같고 이미 로그인 한 상태이면 메세지 출력후 페이지이동하는 메서드
 	@Override
 	public boolean runBeforeAction(Rq rq) {
 		switch (rq.getActionPath()) {

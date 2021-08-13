@@ -19,14 +19,19 @@ public class ReplyService implements ContainerComponent {
 		replyRepository = Container.replyRepository;
 	}
 
+	// 댓글을 등록하는 메서드
 	public ResultData write(Member actor, int articleId, String reply) {
+		// 로그인한 회원의 id값을 구함
 		int memberId = actor.getId();
 		
+		// 댓글을 등록하는 함수
 		replyRepository.write(memberId, articleId, reply);
 		
+		// S-1, 메세지 저장후 리턴
 		return ResultData.from("S-1", "등록되었습니다.");
 	}
 
+	// 댓글 리스트를 리턴하는 함수
 	public List<Reply> getForPrintReplies(int id) {
 		return replyRepository.getForPrintReplies(id);
 	}

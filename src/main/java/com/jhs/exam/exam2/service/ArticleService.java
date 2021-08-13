@@ -59,6 +59,8 @@ public class ArticleService implements ContainerComponent {
 		return article;
 	}
 
+	// 재구현 완료[2021-08-10]
+	// 접속한 멤버와 게시물로 수정,삭제 여부 판단해주는 함수
 	private void updateForPrintData(Member actor, Article article) {
 		// 멤버가 존재 하지 않으면 실행하지 않고 리턴
 		if (actor == null) {

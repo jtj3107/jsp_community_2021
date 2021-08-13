@@ -25,6 +25,7 @@ abstract public class DispatcherServlet extends HttpServlet {
 			return;
 		}
 
+		// isReady()가 false면 실행X
 		if (app.isReady() == false) {
 			rq.print("앱이 실행준비가 아닙니다.");
 			rq.print("<br>");
@@ -110,6 +111,7 @@ abstract public class DispatcherServlet extends HttpServlet {
 		return true;
 	}
 
+	// 실행하면 doGet함수 실행되는 함수
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}

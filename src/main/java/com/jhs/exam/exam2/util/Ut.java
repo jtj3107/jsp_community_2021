@@ -173,6 +173,7 @@ public class Ut {
 		prop.put("mail.smtp.auth", "true");
 		prop.put("mail.smtp.port", "587");
 
+		// 해당 ID와 비밀번호로 메일를 발송
 		Authenticator auth = new MailAuth(smtpServerId, smtpServerPw);
 
 		Session session = Session.getDefaultInstance(prop, auth);

@@ -24,10 +24,13 @@ public class UsrReplyController extends Controller{
 		}
 	}
 
+	// 댓글을 등록하는 메서드
 	private void actionDoWrite(Rq rq) {
+		// 댓글등록 페이제에서 해당 변수값을 찾아 저장
 		int articleId = rq.getIntParam("articleId", 0);
 		String reply = rq.getParam("reply", "");
 		
+		// 비정상적으로 접근시 메세지 출력후 뒤로가기
 		if(articleId == 0) {
 			rq.historyBack("articleId를 입력해주세요.");
 			return;
@@ -38,8 +41,10 @@ public class UsrReplyController extends Controller{
 			return;
 		}
 		
+		// 댓글을 등록하고 리턴값 저장
 		ResultData writeRd = replyService.write(rq.getLoginedMember(), articleId, reply);
 
+		// writeRd값이 F-로 시작시 메세지 출력후 리턴
 		if (writeRd.isFail()) {
 			rq.historyBack(writeRd.getMsg());
 			return;

@@ -21,6 +21,7 @@ public class AdmHomeController extends Controller {
 		}
 	}
 
+	// 관리자 페이지로 이동하는 메서드
 	private void actionShowMain(Rq rq) {
 		rq.print("관리자 페이지 입니다.");
 	}

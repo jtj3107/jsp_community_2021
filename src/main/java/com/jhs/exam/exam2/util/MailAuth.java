@@ -3,6 +3,7 @@ package com.jhs.exam.exam2.util;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 
+// 메일 발송하는 클래스
 public class MailAuth extends Authenticator {
 
 	PasswordAuthentication pa;
