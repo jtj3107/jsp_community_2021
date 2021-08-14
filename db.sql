@@ -17,10 +17,10 @@ title = '제목1',
 `body` = '내용1';
 
 INSERT INTO article
-SET regDate = NOW(),
-updateDate = NOW(),
-title = '제목2',
-`body` = '내용2';
+    SET regDate = NOW(),
+    updateDate = NOW(),
+    title = '제목2',
+    `body` = '내용2';
 
 # 회원 테이블 생성
 CREATE TABLE `member` (
@@ -100,6 +100,25 @@ ADD COLUMN likeCount INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `body`;
 
 ALTER TABLE article
 ADD COLUMN dislikeCount INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `body`;
+
+CREATE TABLE reply(
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id),
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    articleId INT(10) UNSIGNED NOT NULL,
+    `body` TEXT NOT NULL
+);
+
+CREATE TABLE islike(
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id),
+    regDate DATETIME NOT NULL,
+    articleId INT(10) UNSIGNED NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    islike TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+);
 
 # 기존 게시물을 2번 회원이 쓴 자유게시물로 지정
 UPDATE article
