@@ -40,4 +40,25 @@ public class LikeService implements ContainerComponent{
 		articleRepository.likeDown(articleId);
 	}
 
+	public ResultData disLikeUpDown(int articleId, Member actor) {
+		int memberId = actor.getId();
+		
+		IsLike disLike = likeRepository.getDisLikeByArticleIdAndMemberId(articleId, memberId);
+	
+		if(disLike != null) {
+			disLikeDown(articleId, memberId);
+			return ResultData.from("S-1", "싫어요 취소");
+		}
+		
+		likeRepository.disLikeInsert(articleId, memberId);	
+		articleRepository.disLikeup(articleId);
+		
+		return ResultData.from("S-2", "싫어요");
+	}
+
+	private void disLikeDown(int articleId, int memberId) {
+		likeRepository.disLikeDelete(articleId, memberId);
+		articleRepository.disLikeDown(articleId);
+	}
+
 }

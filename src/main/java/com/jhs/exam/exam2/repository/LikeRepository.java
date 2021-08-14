@@ -41,4 +41,38 @@ public class LikeRepository implements ContainerComponent {
 		MysqlUtil.delete(sql);
 	}
 
+	public IsLike getDisLikeByArticleIdAndMemberId(int articleId, int memberId) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT L.*");
+		sql.append("FROM isLike AS L");
+		sql.append("WHERE L.articleId = ?", articleId);
+		sql.append("AND L.memberId = ?", memberId);
+		sql.append("AND L.islike = 0");
+
+		return MysqlUtil.selectRow(sql, IsLike.class);
+	}
+
+	public void disLikeInsert(int articleId, int memberId) {
+		SecSql sql = new SecSql();
+		sql.append("INSERT INTO isLike");
+		sql.append("SET regDate = NOW()");
+		sql.append(", articleId = ?", articleId);
+		sql.append(", memberId = ?", memberId);
+		sql.append(", islike = 0");
+
+		MysqlUtil.insert(sql);
+		
+	}
+
+	public void disLikeDelete(int articleId, int memberId) {
+		SecSql sql = new SecSql();
+		sql.append("DELETE FROM isLike");
+		sql.append("WHERE articleId = ?", articleId);
+		sql.append("AND memberId = ?", memberId);
+		sql.append("AND islike = 0");
+
+		MysqlUtil.delete(sql);
+		
+	}
+
 }

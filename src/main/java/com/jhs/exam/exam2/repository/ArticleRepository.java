@@ -164,4 +164,23 @@ public class ArticleRepository implements ContainerComponent {
 		MysqlUtil.update(sql);
 	}
 
+	public void disLikeup(int id) {
+		SecSql sql = new SecSql();
+		sql.append("UPDATE article AS A");
+		sql.append("SET disLikeCount = disLikeCount + 1");
+		sql.append("WHERE A.id = ?", id);
+
+		MysqlUtil.update(sql);
+	}
+
+	public void disLikeDown(int id) {
+		SecSql sql = new SecSql();
+		sql.append("UPDATE article AS A");
+		sql.append("SET disLikeCount = disLikeCount - 1");
+		sql.append("WHERE A.id = ?", id);
+
+		MysqlUtil.update(sql);
+		
+	}
+
 }
