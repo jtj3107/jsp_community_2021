@@ -50,22 +50,92 @@
 						</div>
 
 						<div>
-							<a href="../like/doLike?articleId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+							<div id="like" class="cursor-pointer">
+								<input id="redirectUri" type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
+								<input id="articleId" type="hidden" name="articleId" value="${article.id}" />
 								<span class="badge">
 									<i class="far fa-thumbs-up"></i>
 								</span>
 								<span class="text-gray-600 text-light">${article.likeCount}</span>
-							</a>
+							</div>
 						</div>
+						<script type="text/javascript">
+							$("#like").click(
+									function() {
+										var redirectUri = $("#redirectUri")
+												.val().trim();
+										var articleId = $("#articleId").val()
+												.trim();
+
+										var data = '';
+										data += "&redirectUri=" + redirectUri;
+										data += "&articleId=" + articleId;
+
+										$.ajax({
+											type : "post",
+											url : "../like/doLike",
+											data : data,
+											dataType : "html",
+
+											success : function(html) {
+												commentLoad();
+											},
+
+											error : function(xhr) {
+												alert("Error Code : "
+														+ xhr.status);
+											}
+										});
+
+									});
+							function commentLoad() {
+								location.reload();
+							}
+						</script>
 						<div>
-							<a href="../like/doDisLike?articleId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+							<div id="disLike" class="cursor-pointer">
+								<input id="redirectUri" type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
+								<input id="articleId" type="hidden" name="articleId" value="${article.id}" />
 								<span class="badge">
 									<i class="far fa-thumbs-down"></i>
 								</span>
 								<span class="text-gray-600 text-light">${article.dislikeCount}</span>
-							</a>
+							</div>
 						</div>
 					</div>
+					<script type="text/javascript">
+							$("#disLike").click(
+									function() {
+										var redirectUri = $("#redirectUri")
+												.val().trim();
+										var articleId = $("#articleId").val()
+												.trim();
+
+										var data = '';
+										data += "&redirectUri=" + redirectUri;
+										data += "&articleId=" + articleId;
+
+										$.ajax({
+											type : "post",
+											url : "../like/doDisLike",
+											data : data,
+											dataType : "html",
+
+											success : function(html) {
+												commentLoad();
+											},
+
+											error : function(xhr) {
+												alert("Error Code : "
+														+ xhr.status);
+											}
+										});
+
+									});
+							function commentLoad() {
+								location.reload();
+							}
+						</script>
 
 					<div class="block mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3 f">
 						<span class="badge badge-outline">본문</span>
