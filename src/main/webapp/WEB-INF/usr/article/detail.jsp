@@ -102,6 +102,18 @@
 	</div>
 </section>
 <section class="section section-article-detail px-4 mt-4">
+	<c:if test="${rq.notLogined}">
+		<div class="container mx-auto">
+			<div class="card bordered shadow-lg">
+				<div>
+					<i class="far fa-comment-dots"></i>
+					<span>로그인후 사용 해주세요</span>
+				</div>
+			</div>
+		</div>
+	</c:if>
+</section>
+<section class="section section-article-detail px-4 mt-4">
 	<c:if test="${rq.logined}">
 		<div class="container mx-auto">
 			<div class="card bordered shadow-lg">
