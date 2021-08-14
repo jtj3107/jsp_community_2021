@@ -146,4 +146,22 @@ public class ArticleRepository implements ContainerComponent {
 		return MysqlUtil.selectRowIntValue(sql);
 	}
 
+	public void likeup(int id) {
+		SecSql sql = new SecSql();
+		sql.append("UPDATE article AS A");
+		sql.append("SET likeCount = likeCount + 1");
+		sql.append("WHERE A.id = ?", id);
+
+		MysqlUtil.update(sql);
+	}
+
+	public void likeDown(int id) {
+		SecSql sql = new SecSql();
+		sql.append("UPDATE article AS A");
+		sql.append("SET likeCount = likeCount - 1");
+		sql.append("WHERE A.id = ?", id);
+
+		MysqlUtil.update(sql);
+	}
+
 }

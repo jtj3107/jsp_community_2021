@@ -16,11 +16,13 @@ import com.jhs.exam.exam2.interceptor.NeedLoginInterceptor;
 import com.jhs.exam.exam2.interceptor.NeedLogoutInterceptor;
 import com.jhs.exam.exam2.repository.ArticleRepository;
 import com.jhs.exam.exam2.repository.BoardRepository;
+import com.jhs.exam.exam2.repository.LikeRepository;
 import com.jhs.exam.exam2.repository.MemberRepository;
 import com.jhs.exam.exam2.repository.ReplyRepository;
 import com.jhs.exam.exam2.service.ArticleService;
 import com.jhs.exam.exam2.service.BoardService;
 import com.jhs.exam.exam2.service.EmailService;
+import com.jhs.exam.exam2.service.LikeService;
 import com.jhs.exam.exam2.service.MemberService;
 import com.jhs.exam.exam2.service.ReplyService;
 
@@ -51,10 +53,15 @@ public class Container {
 	public static BoardService boardService;
 	public static EmailService emailService;
 	public static ReplyService replyService;
-
+	public static LikeService likeService;
+	
 	public static AdmHomeController admHomeController;
 
 	public static ReplyRepository replyRepository;
+
+	public static LikeRepository likeRepository;
+
+	
 
 	public static void init() {
 		containerComponents = new ArrayList<>();
@@ -65,11 +72,13 @@ public class Container {
 		boardRepository = addContainerComponent(new BoardRepository());
 		articleRepository = addContainerComponent(new ArticleRepository());
 		replyRepository = addContainerComponent(new ReplyRepository());
+		likeRepository = addContainerComponent(new LikeRepository());
 
 		memberService = addContainerComponent(new MemberService());
 		boardService = addContainerComponent(new BoardService());
 		articleService = addContainerComponent(new ArticleService());
 		replyService = addContainerComponent(new ReplyService());
+		likeService = addContainerComponent(new LikeService());
 
 		beforeActionInterceptor = addContainerComponent(new BeforeActionInterceptor());
 		needLoginInterceptor = addContainerComponent(new NeedLoginInterceptor());

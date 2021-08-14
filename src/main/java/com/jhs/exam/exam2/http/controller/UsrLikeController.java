@@ -1,10 +1,16 @@
 package com.jhs.exam.exam2.http.controller;
 
+import com.jhs.exam.exam2.container.Container;
+import com.jhs.exam.exam2.dto.Article;
+import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.http.Rq;
+import com.jhs.exam.exam2.service.LikeService;
 
 public class UsrLikeController extends Controller {
-	public void init() {
+	private LikeService likeService;
 
+	public void init() {
+		likeService = Container.likeService;
 	}
 
 	@Override
@@ -23,13 +29,18 @@ public class UsrLikeController extends Controller {
 	}
 
 	private void actionDoLike(Rq rq) {
-		String relTypeCode = rq.getParam("relTypeCode", "");
-		int relId = rq.getIntParam("relId", 0);
-		String redirectUrl = rq.getParam("redirectUrl", "../article/detail?id=" + relId);
-
-		rq.print(relTypeCode);
-		rq.print(relId + "");
-		rq.print(redirectUrl);
+		int articleId = rq.getIntParam("articleId", 0);
+		String redirectUrl = rq.getParam("redirectUrl", "usr/article/detail?id=" + articleId);
+		
+		if(articleId == 0) {
+			rq.historyBack("id를 입력해주세요.");
+			return;
+		}
+		
+		ResultData likeUpRd = likeService.likeUpDown(articleId, rq.getLoginedMember());
+		
+		rq.replace(likeUpRd.getMsg(), redirectUrl);
+		
 	}
 
 }

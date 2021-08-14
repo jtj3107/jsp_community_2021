@@ -50,19 +50,19 @@
 						</div>
 
 						<div>
-							<a href="../like/doLike=relTypeCode=${article}&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+							<a href="../like/doLike?articleId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
 								<span class="badge">
 									<i class="far fa-thumbs-up"></i>
 								</span>
-								<span class="text-gray-600 text-light">0</span>
+								<span class="text-gray-600 text-light">${article.likeCount}</span>
 							</a>
 						</div>
 						<div>
-							<a href="../like/doDisLike=relTypeCode=${article}&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+							<a href="../like/doDisLike?articleId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
 								<span class="badge">
 									<i class="far fa-thumbs-down"></i>
 								</span>
-								<span class="text-gray-600 text-light">0</span>
+								<span class="text-gray-600 text-light">${article.dislikeCount}</span>
 							</a>
 						</div>
 					</div>
