@@ -60,47 +60,58 @@ public class UsrMemberController extends Controller {
 		}
 	}
 
+	// 재구현 완료[2021-08-04]
 	// 회원정보 수정 페이지에서 받은 파라미터로 회원정보를 수정하는 메서드
 	private void actionDoMemberModify(Rq rq) {
 		// 회원정보 수정 페이지에서 받은 파라미터를 각 변수에 담는다
+		String currentloginPw = rq.getParam("currentloginPw", "");
 		String loginPw = rq.getParam("loginPw", "");
+		String loginPwConfirm = rq.getParam("loginPwConfirm", "");
+		String cellphoneNo = rq.getParam("cellphoneNo", "");
 		String name = rq.getParam("name", "");
 		String nickname = rq.getParam("nickname", "");
 		String email = rq.getParam("email", "");
-		String cellphoneNo = rq.getParam("cellphoneNo", "");
-		
 		// 접속한 회원의 member 값을 저장
 		Member member = rq.getLoginedMember();
-		String currentloginPw = rq.getParam("currentloginPw", "");
-		
 		// 입력한 현재 비밀번호와 로그인한 회원의 비밀번호가 다를경우 뒤로가기
 		if(member.getLoginPw().equals(Ut.sha256(currentloginPw)) == false) {
-			rq.historyBack("현재 비밀번호가 틀렸습니다.");
+			rq.historyBack("현재 비밀번호가 일치하지 않습니다.");
 			return;
 		}
 
 		// 각 파라미터가 값이 없이 해당 메서드 접근시 리턴
-		if (loginPw.length() == 0) {
-			rq.historyBack("loginPw를 입력해주세요.");
+		if(loginPw.length() == 0) {
+			rq.historyBack("loginPw를 입력해주세요");
+			return;
+		}
+		
+		if(loginPwConfirm.length() == 0) {
+			rq.historyBack("loginPwConfirm를 입력해주세요");
+			return;
+		}
+		
+		if(nickname.length() == 0) {
+			rq.historyBack("nickname를 입력해주세요");
+			return;
+		}
+		
+		if(name.length() == 0) {
+			rq.historyBack("name를 입력해주세요");
+			return;
+		}
+		
+		if(cellphoneNo.length() == 0) {
+			rq.historyBack("cellphoneNo를 입력해주세요");
+			return;
+		}
+		
+		if(email.length() == 0) {
+			rq.historyBack("email를 입력해주세요");
 			return;
 		}
 
-		if (name.length() == 0) {
-			rq.historyBack("name를 입력해주세요.");
-			return;
-		}
-
-		if (nickname.length() == 0) {
-			rq.historyBack("nickname를 입력해주세요.");
-			return;
-		}
-		if (email.length() == 0) {
-			rq.historyBack("email를 입력해주세요.");
-			return;
-		}
-
-		if (cellphoneNo.length() == 0) {
-			rq.historyBack("cellphoneNo를 입력해주세요.");
+		if(loginPw.equals(loginPwConfirm) == false) {
+			rq.historyBack("비밀번호 확인이 일치하지 않습니다.");
 			return;
 		}
 
@@ -108,11 +119,10 @@ public class UsrMemberController extends Controller {
 		ResultData modifyRd = memberService.modify(member, loginPw, name, nickname, email, cellphoneNo);
 
 		// modifyRd 값이 F-로 시작시 오류메세지 출력후 뒤로가기
-		if (modifyRd.isFail()) {
+		if(modifyRd.isFail()) {
 			rq.historyBack(modifyRd.getMsg());
 			return;
 		}
-
 		// 회원정보 수정페이지에서 redirectUri파라미터 값을 저장합니다 없을시 ../home/main 저장
 		String redirectUri = rq.getParam("redirectUri", "../home/main");
 
@@ -122,10 +132,11 @@ public class UsrMemberController extends Controller {
 
 	// 회원정보 수정 페이지로 이동하는 메서드
 	private void actionShowMemberModify(Rq rq) {
-		Member member = rq.getLoginedMember();
-
+		int memberId = rq.getLoginedMemberId();
+		
+		Member member = memberService.getMemberById(memberId);
 		rq.setAttr("member", member);
-
+		
 		rq.jsp("usr/member/memberModify");
 	}
 
@@ -135,45 +146,44 @@ public class UsrMemberController extends Controller {
 	private void actionDoFindLoginPw(Rq rq) {
 		// 비밀번호 찾기 페이지에서 입력한 loginId와 email을 받아 변수에 저장
 		String loginId = rq.getParam("loginId", "");
-		String email = rq.getParam("email", "");
+		String email  = rq.getParam("email", "");
 
 		// 비정상적으로 loginId와 email이 없을 경우 메세지 출력후 뒤로가기
-		if (loginId.length() == 0) {
+		if(loginId.length() == 0) {
 			rq.historyBack("loginId를 입력해주세요.");
 			return;
 		}
-
-		if (email.length() == 0) {
+		
+		if(email.length() == 0) {
 			rq.historyBack("email를 입력해주세요.");
 			return;
 		}
-
 		// loginId로 해당 member 찾는 메서드
-		Member member = memberService.getMemberByLoginId(loginId);
+		Member oldMember = memberService.getMemberByLoginId(loginId);
 
 		// member가 존재하지 않을시 메세지 출력후 뒤로가기
-		if (member == null) {
-			rq.historyBack("존재하지 않는 회원입니다.");
+		if(oldMember == null) {
+			rq.historyBack("존재하지 않는 회원입니다");
 			return;
 		}
 
 		// member의 이메일가 입력한 이메일이 틀릴시 메세지 출력후 뒤로가기
-		if (member.getEmail().equals(email) == false) {
-			rq.historyBack("입력하신 이메일과 회원님의 이메일이 일치하지 않습니다.");
+		if(oldMember.getEmail().equals(email) == false) {
+			rq.historyBack("회원님의 이메일과 입력하신 이메일이 다릅니다.");
 			return;
 		}
 
 		// 해당 member의 비밀번호를 임시비밀번호로 바꾸고 해당 이메일로 보내주는 메서드
-		ResultData sendTempLoginPwToEmailRd = memberService.sendTempLoginPwToEmail(member);
+		ResultData sendTempLoginPwToEmailRd = memberService.sendTempLoginPwToEmail(oldMember);
 
 		// sendTempLoginPwToEmailRd 변수가 F-로 시작할시 메세지 출력후 뒤로가기
-		if (sendTempLoginPwToEmailRd.isFail()) {
+		if(sendTempLoginPwToEmailRd.isFail()) {
 			rq.historyBack(sendTempLoginPwToEmailRd.getMsg());
 			return;
 		}
 
 		// sendTempLoginPwToEmailRd 변수가 S-로 시작할시 메세지 출력후 메인 페이지로 이동하는 메서드
-		rq.replace(sendTempLoginPwToEmailRd.getMsg(), "../home/main");
+		rq.replace(sendTempLoginPwToEmailRd.getMsg(), "../member/login");
 	}
 
 	// 비밀번호 찾기 페이지로 이동
@@ -189,13 +199,13 @@ public class UsrMemberController extends Controller {
 		String email = rq.getParam("email", "");
 		
 		// 피라미터 값이 없을경우 메세지 출력후 뒤로가기
-		if(name.length() == 0) {
+		if(name.length() == 0 ) {
 			rq.historyBack("name을 입력해주세요.");
 			return;
 		}
 		
-		if(email.length() == 0) {
-			rq.historyBack("email를 입력해주세요.");
+		if(email.length() == 0 ) {
+			rq.historyBack("email을 입력해주세요.");
 			return;
 		}
 		
@@ -204,16 +214,15 @@ public class UsrMemberController extends Controller {
 		
 		// 일치하는 회원이 없을 경우 메세지 출력후 뒤로가기
 		if(oldMember == null) {
-			rq.historyBack("존재하지 않는 회원정보 입니다.");
+			rq.historyBack("존재하지 않는 회원입니다.");
 			return;
 		}
 		
 		// 이동할 페이지를 로그인아이디를 포함해 저장
-		String redirectUri = "../member/login?loginId=" + oldMember.getLoginId();
+		String redirectUri = "../member/login?loginId" + oldMember.getLoginId();
 		
 		// 찾은 로그인 아이디를 보여주고 페이지 이동
-		rq.replace(Ut.f("회원님의 로그인 아이디는 `%s` 입니다.", oldMember.getLoginId()), redirectUri);
-		
+		rq.replace(Ut.f("회원님의 아이디는 `%s`입니다.", oldMember.getLoginId()), redirectUri);
 	}
 
 	// 로그인아이디 찾기 페이지로 이동하는 함수
@@ -221,25 +230,41 @@ public class UsrMemberController extends Controller {
 		rq.jsp("usr/member/findLoginId");
 	}
 
-	// 재구현 완료[2021-08-06]
+	// 재구현 완료[2021-08-06], [2021-08-16]
 	// 회원가입 함수(회원가입 페이지에서 연결)
 	private void actionDoJoin(Rq rq) {
 		// 회원가입 페이지에서 받아온 파리미터를 변수에 저장
 		String loginId = rq.getParam("loginId", "");
 		String loginPw = rq.getParam("loginPw", "");
+		String loginPwConfirm  = rq.getParam("loginPwConfirm", "");
+		String cellphoneNo = rq.getParam("cellphoneNo", "");
 		String name = rq.getParam("name", "");
 		String nickname = rq.getParam("nickname", "");
 		String email = rq.getParam("email", "");
-		String cellphoneNo = rq.getParam("cellphoneNo", "");
 		
 		// 파라미터 값이 없을 경우 메세지 출력후 뒤로가기
 		if(loginId.length() == 0) {
 			rq.historyBack("loginId를 입력해주세요.");
 			return;
 		}
-		
+
 		if(loginPw.length() == 0) {
 			rq.historyBack("loginPw를 입력해주세요.");
+			return;
+		}
+		
+		if(loginPwConfirm.length() == 0) {
+			rq.historyBack("loginPwConfirm를 입력해주세요.");
+			return;
+		}
+		
+		if(loginPw.equals(loginPwConfirm) == false) {
+			rq.historyBack("비밀번호 확인이 다릅니다.");
+			return;
+		}
+		
+		if(cellphoneNo.length() == 0) {
+			rq.historyBack("cellphoneNo를 입력해주세요.");
 			return;
 		}
 		
@@ -258,11 +283,6 @@ public class UsrMemberController extends Controller {
 			return;
 		}
 		
-		if(cellphoneNo.length() == 0) {
-			rq.historyBack("cellphoneNo를 입력해주세요.");
-			return;
-		}
-		
 		// 저장한 변수를 이용하여 회원가입하는 메서드
 		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, email, cellphoneNo);
 		
@@ -271,10 +291,9 @@ public class UsrMemberController extends Controller {
 			rq.historyBack(joinRd.getMsg());
 			return;
 		}
-		
 		// 메세지 출력후 해당 페이지로 이동
+		
 		rq.replace(joinRd.getMsg(), "../member/login");
-	
 	}
 
 	// 회원가입 페이지로 이동하는 메서드
@@ -282,7 +301,7 @@ public class UsrMemberController extends Controller {
 		rq.jsp("usr/member/join");
 	}
 
-	// 재구현 완료[2021-08-06]
+	// 재구현 완료[2021-08-06], [2021-08-16]
 	// 로그아웃 메서드
 	private void actionDoLogout(Rq rq) {
 		// 로그인된 json 형식의 로그인멤버를 삭제
@@ -290,7 +309,7 @@ public class UsrMemberController extends Controller {
 		rq.replace("로그아웃 되었습니다.", "../../");
 	}
 
-	// 재구현 완료[2021-08-06]
+	// 재구현 완료[2021-08-06], [2021-08-16]
 	// 로그인 페이지에서 연결
 	// 로그인 가능 여부를 판별하는 메서드
 	private void actionDoLogin(Rq rq) {
@@ -320,7 +339,6 @@ public class UsrMemberController extends Controller {
 		
 		// loginRd의 body에 있는 member을 가져와 저장
 		Member member = (Member)loginRd.getBody().get("member");
-		
 		// member값을 loginedMemberJson라는 이름으로 json형식으로 저장
 		rq.setSessionAttr("loginedMemberJson", Ut.toJson(member, ""));
 		
