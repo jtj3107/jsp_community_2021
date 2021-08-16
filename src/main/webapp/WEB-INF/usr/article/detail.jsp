@@ -274,7 +274,7 @@
 	<div>
 		<div class="container mx-auto p-2">
 			<span class="badge badge-primary">댓글</span>
-			<span>0개</span>
+			<span>${totalRepliesCount}개</span>
 		</div>
 		<c:forEach items="${replies}" var="reply">
 			<div class="container mx-auto mt-1">

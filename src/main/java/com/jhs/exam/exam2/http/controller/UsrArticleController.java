@@ -120,10 +120,12 @@ public class UsrArticleController extends Controller {
 		}
 		
 		List<Reply> replies = replyService.getForPrintReplies(id);
-
+		int totalRepliesCount = replies.size();
+		
 		// 페이지에 article값을 사용하기 위해 쓰는 메서드
 		rq.setAttr("article", article);
 		rq.setAttr("replies", replies);
+		rq.setAttr("totalRepliesCount", totalRepliesCount);
 
 		// 해당 페이지 이동하는 메서드
 		rq.jsp("usr/article/detail");
