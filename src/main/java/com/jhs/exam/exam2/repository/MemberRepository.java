@@ -42,13 +42,6 @@ public class MemberRepository implements ContainerComponent {
 		return MysqlUtil.insert(sql);
 	}
 
-	// 재구현 완료[2021-08-09]
-	// DB에서 members를 구해 리턴 함수
-	public static List<Member> getForPrintMembers() {
-		return null;
-		
-	}
-
 	// 재구현 완료[2021-08-09], [2021-08-16]
 	// 해당 name과 email을 이용해 해당member를 DB에서 찾아 리턴하는 함수
 	public Member getMemberByNameAndEmail(String name, String email) {
@@ -62,7 +55,7 @@ public class MemberRepository implements ContainerComponent {
 		
 	}
 
-	// 재구현 완료[2021-08-09]
+	// 재구현 완료[2021-08-09], [2021-08-16]
 	// 해당 멤버 DB에서 비밀번호 변경하는 함수
 	public void modifyPassword(int id, String loginPw) {
 		SecSql sql = new SecSql();
@@ -73,7 +66,7 @@ public class MemberRepository implements ContainerComponent {
 		MysqlUtil.update(sql);
 	}
 
-	// 재구현 완료[2021-08-09]
+	// 재구현 완료[2021-08-09], [2021-08-16]
 	// 해당 변수로 회원 정보를 수정하는 메서드
 	public void modify(int id, String loginPw, String name, String nickname, String email, String cellphoneNo) {
 		SecSql sql = new SecSql();

@@ -19,7 +19,7 @@ public class MemberService implements ContainerComponent {
 		emailService = Container.emailService;
 	}
 
-	// 재구현 완료[2021-08-09]
+	// 재구현 완료[2021-08-09], [2021-08-16]
 	// 로그인 여부를 확인하는 메서드
 	public ResultData login(String loginId, String loginPw) {
 		// loginId를 이용하여 member값을 구한다
@@ -61,13 +61,7 @@ public class MemberService implements ContainerComponent {
 		return ResultData.from("S-1", "회원 가입이 완료 되었습니다.");
 	}
 
-	// members를 구하는 함수
-	public List<Member> getForPrintMembers() {
-		return null;
-
-	}
-
-	// 재구현 완료[2021-08-09]
+	// 재구현 완료[2021-08-09], [2021-08-16]
 	// 메일을 발송하는 함수
 	// body += "<a href=\"" + siteLoginUri + "\" target=\"_blank\">로그인 하러가기</a>";
 	public ResultData sendTempLoginPwToEmail(Member actor) {
@@ -97,7 +91,7 @@ public class MemberService implements ContainerComponent {
 		return ResultData.from("S-1", Ut.f("임시 비밀번호를 `%s`로 발송 하였습니다.", actor.getEmail()));
 	}
 
-	// 재구현 완료[2021-08-09]
+	// 재구현 완료[2021-08-09], [2021-08-16]
 	// 해당 회원의 정보를 수정해주는 메서드
 	public ResultData modify(Member member, String loginPw, String name, String nickname, String email,
 			String cellphoneNo) {
@@ -140,7 +134,8 @@ public class MemberService implements ContainerComponent {
 	public boolean isAdmin(Member member) {
 		return member.getAuthLevel() >= 7;
 	}
-
+ 
+	// id로 해당 member값을 불러와 리턴하는 함수
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);
 	}

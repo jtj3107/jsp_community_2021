@@ -60,7 +60,7 @@ public class UsrMemberController extends Controller {
 		}
 	}
 
-	// 재구현 완료[2021-08-04]
+	// 재구현 완료[2021-08-04], [2021-08-16]
 	// 회원정보 수정 페이지에서 받은 파라미터로 회원정보를 수정하는 메서드
 	private void actionDoMemberModify(Rq rq) {
 		// 회원정보 수정 페이지에서 받은 파라미터를 각 변수에 담는다
@@ -140,7 +140,7 @@ public class UsrMemberController extends Controller {
 		rq.jsp("usr/member/memberModify");
 	}
 
-	// 재구현 완료[2021-08-04]
+	// 재구현 완료[2021-08-04], [2021-08-16]
 	// 비밀번호 찾기 페이지에서 이동
 	// 비밀번호 찾기 메서드
 	private void actionDoFindLoginPw(Rq rq) {
@@ -191,7 +191,7 @@ public class UsrMemberController extends Controller {
 		rq.jsp("usr/member/findLoginPw");
 	}
 	
-	// 재구현 완료[2021-08-06]
+	// 재구현 완료[2021-08-06], [2021-08-16]
 	// 로그인아이디 찾기 함수(로그인아이디 찾기 페이지에서 이동)
 	private void actionDoFindLoginId(Rq rq) {
 		// 로그인 아이디 찾기 페이지에서 받은 파라미터 값을 변수에 저장
