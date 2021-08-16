@@ -66,7 +66,10 @@
 												.val().trim();
 										var articleId = $("#articleId").val()
 												.trim();
-
+										if (${rq.logined} == false) {
+											alert('로그인 후 이용해주세요.');
+											return;
+										}
 										var data = '';
 										data += "&redirectUri=" + redirectUri;
 										data += "&articleId=" + articleId;
@@ -110,7 +113,10 @@
 												.val().trim();
 										var articleId = $("#articleId").val()
 												.trim();
-
+										if (${rq.logined} == false) {
+											alert('로그인 후 이용해주세요.');
+											return;
+										}
 										var data = '';
 										data += "&redirectUri=" + redirectUri;
 										data += "&articleId=" + articleId;
