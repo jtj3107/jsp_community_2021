@@ -69,6 +69,63 @@ function SearchBar__hide() {
 }
 /* 검색바 끝 */
 
+/* 이메일 인증 발송 시작 */
+function emailSend() {
+	let clientEmail = document.getElementById('emailText').value;
+	let emailYN = isEmail(clientEmail);
+	
+	console.log('입력 이메일' + clientEmail);
+	
+	if(emailYN == true) { 	
+		var data = "clientEmail=" + clientEmail;
+		
+		$.ajax({
+			type: "POST",
+			url: "../home/doSendMail",
+			data : data,
+			dataType : "html",
+			
+			success : function(html){
+				alert('이메일로 인증번호를 발송했습니다.');
+			},error : function(xhr){
+				alert('오류입니다. 잠시 후 다시 시도해주세요.');
+			}
+		});
+	} else {
+		alert('이메일 형식에 맞게 입력해주세요 xxx@xxx.com');
+	}
+
+}
+
+function isEmail(asValue) {
+	var r = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return r.test(asValue);
+}
+
+/* 이메일 인증 발송 끝 */
+
+/* 이메일 인증 시작 */
+function emailCertification() {
+	let certificationNumber = document.getElementById('certificationNumber').value;
+	
+	var data = "certificationNumber=" + certificationNumber;
+		$.ajax({
+			type: "POST",
+			url: "../home/doEmailCertification",
+			data : data,
+			dataType : "html",
+			
+			success : function(html){
+				alert('인증완료');
+				document.getElementById('certificationYN').value = "true";
+			},error : function(xhr){
+				alert('오류입니다. 잠시 후 다시 시도해주세요.');
+			}
+		});
+}
+
+/* 이메일 인증 끝 */
+
 MobileTopBar__init();
 MobileSideBar__init();
 TopBar__init();

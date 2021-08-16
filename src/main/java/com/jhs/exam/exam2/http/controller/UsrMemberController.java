@@ -234,66 +234,67 @@ public class UsrMemberController extends Controller {
 	// 회원가입 함수(회원가입 페이지에서 연결)
 	private void actionDoJoin(Rq rq) {
 		// 회원가입 페이지에서 받아온 파리미터를 변수에 저장
-		String loginId = rq.getParam("loginId", "");
-		String loginPw = rq.getParam("loginPw", "");
-		String loginPwConfirm  = rq.getParam("loginPwConfirm", "");
-		String cellphoneNo = rq.getParam("cellphoneNo", "");
-		String name = rq.getParam("name", "");
-		String nickname = rq.getParam("nickname", "");
-		String email = rq.getParam("email", "");
-		
-		// 파라미터 값이 없을 경우 메세지 출력후 뒤로가기
-		if(loginId.length() == 0) {
-			rq.historyBack("loginId를 입력해주세요.");
-			return;
-		}
-
-		if(loginPw.length() == 0) {
-			rq.historyBack("loginPw를 입력해주세요.");
-			return;
-		}
-		
-		if(loginPwConfirm.length() == 0) {
-			rq.historyBack("loginPwConfirm를 입력해주세요.");
-			return;
-		}
-		
-		if(loginPw.equals(loginPwConfirm) == false) {
-			rq.historyBack("비밀번호 확인이 다릅니다.");
-			return;
-		}
-		
-		if(cellphoneNo.length() == 0) {
-			rq.historyBack("cellphoneNo를 입력해주세요.");
-			return;
-		}
-		
-		if(name.length() == 0) {
-			rq.historyBack("name를 입력해주세요.");
-			return;
-		}
-		
-		if(nickname.length() == 0) {
-			rq.historyBack("nickname를 입력해주세요.");
-			return;
-		}
-		
-		if(email.length() == 0) {
-			rq.historyBack("email를 입력해주세요.");
-			return;
-		}
-		
-		// 저장한 변수를 이용하여 회원가입하는 메서드
-		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, email, cellphoneNo);
-		
-		// joinRd값이 F-로 시작시 메세지 출력후 뒤로가기
-		if(joinRd.isFail()) {
-			rq.historyBack(joinRd.getMsg());
-			return;
-		}
-		// 메세지 출력후 해당 페이지로 이동
-		
-		rq.replace(joinRd.getMsg(), "../member/login");
+		rq.debugParams();
+//		String loginId = rq.getParam("loginId", "");
+//		String loginPw = rq.getParam("loginPw", "");
+//		String loginPwConfirm  = rq.getParam("loginPwConfirm", "");
+//		String cellphoneNo = rq.getParam("cellphoneNo", "");
+//		String name = rq.getParam("name", "");
+//		String nickname = rq.getParam("nickname", "");
+//		String email = rq.getParam("email", "");
+//		
+//		// 파라미터 값이 없을 경우 메세지 출력후 뒤로가기
+//		if(loginId.length() == 0) {
+//			rq.historyBack("loginId를 입력해주세요.");
+//			return;
+//		}
+//
+//		if(loginPw.length() == 0) {
+//			rq.historyBack("loginPw를 입력해주세요.");
+//			return;
+//		}
+//		
+//		if(loginPwConfirm.length() == 0) {
+//			rq.historyBack("loginPwConfirm를 입력해주세요.");
+//			return;
+//		}
+//		
+//		if(loginPw.equals(loginPwConfirm) == false) {
+//			rq.historyBack("비밀번호 확인이 다릅니다.");
+//			return;
+//		}
+//		
+//		if(cellphoneNo.length() == 0) {
+//			rq.historyBack("cellphoneNo를 입력해주세요.");
+//			return;
+//		}
+//		
+//		if(name.length() == 0) {
+//			rq.historyBack("name를 입력해주세요.");
+//			return;
+//		}
+//		
+//		if(nickname.length() == 0) {
+//			rq.historyBack("nickname를 입력해주세요.");
+//			return;
+//		}
+//		
+//		if(email.length() == 0) {
+//			rq.historyBack("email를 입력해주세요.");
+//			return;
+//		}
+//		
+//		// 저장한 변수를 이용하여 회원가입하는 메서드
+//		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, email, cellphoneNo);
+//		
+//		// joinRd값이 F-로 시작시 메세지 출력후 뒤로가기
+//		if(joinRd.isFail()) {
+//			rq.historyBack(joinRd.getMsg());
+//			return;
+//		}
+//		// 메세지 출력후 해당 페이지로 이동
+//		
+//		rq.replace(joinRd.getMsg(), "../member/login");
 	}
 
 	// 회원가입 페이지로 이동하는 메서드

@@ -71,7 +71,7 @@
 											return;
 										}
 										var data = '';
-										data += "&redirectUri=" + redirectUri;
+										data += "redirectUri=" + redirectUri;
 										data += "&articleId=" + articleId;
 
 										$.ajax({
@@ -118,7 +118,7 @@
 											return;
 										}
 										var data = '';
-										data += "&redirectUri=" + redirectUri;
+										data += "redirectUri=" + redirectUri;
 										data += "&articleId=" + articleId;
 
 										$.ajax({

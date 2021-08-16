@@ -21,14 +21,14 @@
 						if (MemberJoin__submitDone) {
 							return;
 						}
-						
+
 						if (form.agreementTermsOfService.checked == false) {
 							alert('이용약관에 동의해야 진행할 수 있습니다.');
 							form.agreementTermsOfService.focus();
 
 							return;
 						}
-						
+
 						if (form.agreementPrivacyPolicy.checked == false) {
 							alert('개인정보취급방침에 동의해야 진행할 수 있습니다.');
 							form.agreementPrivacyPolicy.focus();
@@ -38,14 +38,14 @@
 
 						// 좌우 공백제거
 						form.loginId.value = form.loginId.value.trim();
-						
+
 						if (form.loginId.value.length == 0) {
 							alert('로그인 아이디를 입력해주세요.');
 							form.loginId.focus();
 
 							return;
 						}
-						
+
 						form.loginPw.value = form.loginPw.value.trim();
 
 						if (form.loginPw.value.length == 0) {
@@ -54,95 +54,96 @@
 
 							return;
 						}
-						
-						form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-						
+
+						form.loginPwConfirm.value = form.loginPwConfirm.value
+								.trim();
+
 						if (form.loginPwConfirm.value.length == 0) {
 							alert('로그인 비밀번호 확인을 입력해주세요.');
 							form.loginPwConfirm.focus();
 
 							return;
 						}
-						
+
 						if (form.loginPw.value != form.loginPwConfirm.value) {
 							alert('로그인 비밀번호 확인이 일치하지 않습니다.');
 							form.loginPwConfirm.focus();
 
 							return;
 						}
-						
+
 						form.name.value = form.name.value.trim();
-						
+
 						if (form.name.value.length == 0) {
 							alert('이름을 입력해주세요.');
 							form.name.focus();
 
 							return;
 						}
-						
+
 						form.nickname.value = form.nickname.value.trim();
-						
+
 						if (form.nickname.value.length == 0) {
 							alert('닉네임을 입력해주세요.');
 							form.nickname.focus();
 
 							return;
 						}
-						
+
 						form.email.value = form.email.value.trim();
-						
+
 						if (form.email.value.length == 0) {
 							alert('이메일을 입력해주세요.');
 							form.email.focus();
 
 							return;
 						}
-						
+
 						form.cellphoneNo.value = form.cellphoneNo.value.trim();
-						
+
 						if (form.cellphoneNo.value.length == 0) {
 							alert('전화번호를 입력해주세요.');
 							form.cellphoneNo.focus();
 
 							return;
 						}
-												
+
 						form.submit();
 						MemberJoin__submitDone = true;
 					}
 				</script>
 				<form action="../member/doJoin" method="POST" onsubmit="MemberJoin__submit(this); return false;">
-					
+
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">
 								<span>이용약관</span>
-								<a href="#" class="s-link">다시 확인하기</a>		
+								<a href="#" class="s-link">다시 확인하기</a>
 							</span>
 						</label>
 						<div>
 							<label class="flex">
 								<input type="checkbox" class="checkbox" name="agreementTermsOfService">
-								<span class="ml-2">이용약관에 동의합니다.</span>					
+								<span class="ml-2">이용약관에 동의합니다.</span>
 							</label>
 						</div>
 					</div>
-					
+
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">
 								<span>개인정보취급방침</span>
-								<a href="#" class="s-link">다시 확인하기</a>		
+								<a href="#" class="s-link">다시 확인하기</a>
 							</span>
 						</label>
 						<div>
 							<label class="flex">
 								<input type="checkbox" class="checkbox" name="agreementPrivacyPolicy">
-								<span class="ml-2">개인정보취급방침에 동의합니다.</span>					
+								<span class="ml-2">개인정보취급방침에 동의합니다.</span>
 							</label>
 						</div>
 					</div>
-					
+
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">로그인 아이디</span>
@@ -160,7 +161,7 @@
 							<input class="input input-bordered w-full" maxlength="100" name="loginPw" type="password" placeholder="사용하실 로그인 비밀번호를 입력해주세요." />
 						</div>
 					</div>
-					
+
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">로그인 비밀번호 확인</span>
@@ -169,7 +170,7 @@
 							<input class="input input-bordered w-full" maxlength="100" name="loginPwConfirm" type="password" placeholder="로그인비밀번호 확인을 입력해주세요." />
 						</div>
 					</div>
-					
+
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">이름</span>
@@ -178,7 +179,7 @@
 							<input class="input input-bordered w-full" maxlength="100" name="name" type="text" placeholder="이름을 입력해주세요." />
 						</div>
 					</div>
-					
+
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">닉네임</span>
@@ -187,16 +188,32 @@
 							<input class="input input-bordered w-full" maxlength="100" name="nickname" type="text" placeholder="닉네임을 입력해주세요." />
 						</div>
 					</div>
-					
+
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">이메일</span>
 						</label>
 						<div>
-							<input class="input input-bordered w-full" maxlength="100" name="email" type="email" placeholder="이메일을 입력해주세요." />
+							<input class="input input-bordered w-full" id="emailText" maxlength="100" name="email" type="email" placeholder="이메일을 입력해주세요." />
+						</div>
+						<div>
+							<button type="button" onclick="emailSend()">인증번호 받기</button>
 						</div>
 					</div>
 					
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">인증번호</span>
+						</label>
+						<div>
+							<input class="input input-bordered w-full" id="certificationNumber" maxlength="100" name="certificationNumber" type="text" placeholder="이메일을 인증번호를 입력해주세요." />
+						</div>
+						<div>
+							<button type="button" onclick="emailCertification()">인증하기</button>
+							<input type="hidden" name="certificationYN" value="false"/>
+						</div>
+					</div>
+
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">전화번호</span>
