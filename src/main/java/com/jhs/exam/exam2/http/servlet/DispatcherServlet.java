@@ -89,7 +89,7 @@ abstract public class DispatcherServlet extends HttpServlet {
 
 	private boolean runInterceptors(Rq rq) {
 
-		// 로그인 했을시 세션을 저장(바로 사용할 수 있게 로그인여부 로그인아이디 로그인멤버 json 형식으로 굳힘)
+		// 로그인 했을시 세션을 저장(바로 사용할 수 있게 json 형식의 member값을 녹여서 변수에 저장)
 		if (Container.beforeActionInterceptor.runBeforeAction(rq) == false) {
 			return false;
 		}

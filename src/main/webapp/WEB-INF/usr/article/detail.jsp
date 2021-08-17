@@ -92,7 +92,7 @@
 
 									});
 							function commentLoad() {
-								location.reload();
+								location.replace(location.href);
 							}
 						</script>
 						<div>
@@ -139,7 +139,7 @@
 
 									});
 							function commentLoad() {
-								location.reload();
+								location.replace(location.href);
 							}
 						</script>
 
@@ -261,7 +261,7 @@
 
 										});
 								function commentLoad() {
-									location.reload();
+									location.replace(location.href);
 								}
 							</script>
 
