@@ -102,6 +102,13 @@
 					
 					<div class="form-control">
 						<label class="label">
+							<span class="label-text">로그인 아이디</span>
+						</label>
+						<div>&nbsp;${member.loginId}</div>
+					</div>
+					
+					<div class="form-control">
+						<label class="label">
 							<span class="label-text">현재 로그인 비밀번호</span>
 						</label>
 						<div>
