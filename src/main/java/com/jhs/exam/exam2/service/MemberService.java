@@ -29,7 +29,7 @@ public class MemberService implements ContainerComponent {
 		}
 
 		// 찾은 member의 loginPw값과 입력받은 loginPw와 비교하여 틀릴시 F-2 리턴
-		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
+		if (member.getLoginPw().equals(loginPw) == false) {
 			return ResultData.from("F-2", "비밀번호가 틀렸습니다.");
 		}
 
@@ -54,7 +54,7 @@ public class MemberService implements ContainerComponent {
 			return ResultData.from("F-2", Ut.f("`%s`이름의 회원님은 이미 `%s`이메일로 회원가입 하셨습니다.", name, email));
 		}
 		// 해당 변수를 이용하여 member를 만들어주는 함수
-		memberRepository.join(loginId, Ut.sha256(loginPw), name, nickname, email, cellphoneNo);
+		memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
 		// S-1저장후 리턴
 		return ResultData.from("S-1", "회원 가입이 완료 되었습니다.");
 	}
@@ -107,7 +107,7 @@ public class MemberService implements ContainerComponent {
 		}
 		
 		// 회원의 정보를 수정해주는 메서드
-		memberRepository.modify(memberId, Ut.sha256(loginPw), name, nickname, email, cellphoneNo);
+		memberRepository.modify(memberId, loginPw, name, nickname, email, cellphoneNo);
 		// S-1, 완료메세지 저장후 리턴
 		return ResultData.from("S-1", "회원정보 수정이 완료되었습니다.");
 	}

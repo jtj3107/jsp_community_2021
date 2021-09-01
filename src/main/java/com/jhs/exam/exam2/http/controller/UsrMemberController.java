@@ -81,8 +81,7 @@ public class UsrMemberController extends Controller {
 	private void actionDoMemberModify(Rq rq) {
 		// 회원정보 수정 페이지에서 받은 파라미터를 각 변수에 담는다
 		String currentloginPw = rq.getParam("currentloginPw", "");
-		String loginPw = rq.getParam("loginPw", "");
-		String loginPwConfirm = rq.getParam("loginPwConfirm", "");
+		String loginPw = rq.getParam("loginPwReal", "");
 		String cellphoneNo = rq.getParam("cellphoneNo", "");
 		String name = rq.getParam("name", "");
 		String nickname = rq.getParam("nickname", "");
@@ -100,12 +99,7 @@ public class UsrMemberController extends Controller {
 			rq.historyBack("loginPw를 입력해주세요");
 			return;
 		}
-		
-		if(loginPwConfirm.length() == 0) {
-			rq.historyBack("loginPwConfirm를 입력해주세요");
-			return;
-		}
-		
+			
 		if(nickname.length() == 0) {
 			rq.historyBack("nickname를 입력해주세요");
 			return;
@@ -123,11 +117,6 @@ public class UsrMemberController extends Controller {
 		
 		if(email.length() == 0) {
 			rq.historyBack("email를 입력해주세요");
-			return;
-		}
-
-		if(loginPw.equals(loginPwConfirm) == false) {
-			rq.historyBack("비밀번호 확인이 일치하지 않습니다.");
 			return;
 		}
 
@@ -252,8 +241,7 @@ public class UsrMemberController extends Controller {
 		// 회원가입 페이지에서 받아온 파리미터를 변수에 저장
 	
 		String loginId = rq.getParam("loginId", "");
-		String loginPw = rq.getParam("loginPw", "");
-		String loginPwConfirm  = rq.getParam("loginPwConfirm", "");
+		String loginPw = rq.getParam("loginPwReal", "");
 		String cellphoneNo = rq.getParam("cellphoneNo", "");
 		String name = rq.getParam("name", "");
 		String nickname = rq.getParam("nickname", "");
@@ -266,17 +254,7 @@ public class UsrMemberController extends Controller {
 		}
 
 		if(loginPw.length() == 0) {
-			rq.historyBack("loginPw를 입력해주세요.");
-			return;
-		}
-		
-		if(loginPwConfirm.length() == 0) {
-			rq.historyBack("loginPwConfirm를 입력해주세요.");
-			return;
-		}
-		
-		if(loginPw.equals(loginPwConfirm) == false) {
-			rq.historyBack("비밀번호 확인이 다릅니다.");
+			rq.historyBack("loginPwReal를 입력해주세요.");
 			return;
 		}
 		
@@ -332,7 +310,7 @@ public class UsrMemberController extends Controller {
 	private void actionDoLogin(Rq rq) {
 		// 로그인 페이지에서 받아온 파라미터를 해당 변수에 저장
 		String loginId = rq.getParam("loginId", "");
-		String loginPw = rq.getParam("loginPw", "");
+		String loginPw = rq.getParam("loginPwReal", "");
 		
 		// 파라미터 값이 없을 경우 메세지 출력 후 뒤로가기
 		if(loginId.length() == 0) {
