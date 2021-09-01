@@ -12,7 +12,6 @@ import com.jhs.exam.exam2.service.ArticleService;
 import com.jhs.exam.exam2.service.BoardService;
 import com.jhs.exam.exam2.service.ReplyService;
 import com.jhs.exam.exam2.util.Ut;
-import com.mysql.cj.xdevapi.Result;
 
 public class UsrArticleController extends Controller {
 	// articleService와 boardService를 사용하기 위해 Container에 생성된 해당 객체 불러오기

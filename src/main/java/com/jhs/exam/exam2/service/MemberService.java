@@ -1,7 +1,5 @@
 package com.jhs.exam.exam2.service;
 
-import java.util.List;
-
 import com.jhs.exam.exam2.app.App;
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.container.ContainerComponent;
@@ -138,6 +136,16 @@ public class MemberService implements ContainerComponent {
 	// id로 해당 member값을 불러와 리턴하는 함수
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);
+	}
+
+	public ResultData getMemberRdByLoginId(String loginId) {
+		Member oldMember = getMemberByLoginId(loginId);
+		
+		if(oldMember != null) {
+			return ResultData.from("F-1", Ut.f("`%s`(은)는 이미 사용중인 아이디 입니다.", loginId), "loginId", loginId);
+		}
+		
+		return ResultData.from("S-1", Ut.f("`%s`(은)는 사용 가능한 아이디 입니다.", loginId), "loginId", loginId);
 	}
 
 }

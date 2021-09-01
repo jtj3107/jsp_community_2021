@@ -17,6 +17,30 @@
 			<div class="px-4 py-4">
 				<script>
 					let MemberJoin__submitDone = false;
+					let MemberJoin__checkedLoginId = "";
+					
+					// 로그인 아이디 중복체크
+					function MemberJoin__checkLoginIdDup(el) {
+						const form = $(el).closest('form').get(0);
+						const loginId = form.loginId.value;
+						
+						$.get(
+							"getLoginIdDup",
+							{
+								loginId
+							},
+							function(data) {
+								if(data.msg){
+									alert(data.msg);
+								}
+								
+								if(data.success) {
+									MemberJoin__checkedLoginId = data.body.loginId;
+								}
+							},
+							"json"
+						);
+					}
 					function MemberJoin__submit(form) {
 						if (MemberJoin__submitDone) {
 							return;
@@ -45,6 +69,13 @@
 
 							return;
 						}
+						
+						if(form.loginId.value != MemberJoin__checkedLoginId) {
+							alert('로그인 아이디 중복검사를 해주세요.');
+							form.btnLoginIdDupCheck.focus();
+							return false;
+						}
+						
 
 						form.loginPw.value = form.loginPw.value.trim();
 
@@ -148,8 +179,10 @@
 						<label class="label">
 							<span class="label-text">로그인 아이디</span>
 						</label>
-						<div>
-							<input class="input input-bordered w-full" maxlength="100" name="loginId" type="text" placeholder="사용하실 로그인아이디를 입력해주세요." />
+						<div class="flex">
+							<input class="input input-bordered flex-grow" maxlength="100" name="loginId" type="text" placeholder="사용하실 로그인아이디를 입력해주세요." />
+						
+							<button class="btn btn-primary w-24 ml-1" onclick="MemberJoin__checkLoginIdDup(this);" name="btnLoginIdDupCheck" type="button">중복체크</button>
 						</div>
 					</div>
 
@@ -196,11 +229,14 @@
 						<div>
 							<input class="input input-bordered w-full" id="emailText" maxlength="100" name="email" type="email" placeholder="이메일을 입력해주세요." />
 						</div>
+						<!-- 
 						<div>
 							<button type="button" onclick="emailSend()">인증번호 받기</button>
 						</div>
+						-->
 					</div>
 					
+					<!-- 
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">인증번호</span>
@@ -213,7 +249,7 @@
 							<input type="hidden" name="certificationYN" value="false"/>
 						</div>
 					</div>
-
+ 					-->
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">전화번호</span>
