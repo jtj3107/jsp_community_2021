@@ -12,7 +12,7 @@ public class LikeRepository implements ContainerComponent {
 
 	}
 
-	public IsLike getLikeByArticleIdAndMemberId(String relTypeCode, int relId, int memberId) {
+	public IsLike getLikeByRelTypeCodeAndMemberId(String relTypeCode, int relId, int memberId) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT L.*");
 		sql.append("FROM islike AS L");
@@ -48,38 +48,76 @@ public class LikeRepository implements ContainerComponent {
 		MysqlUtil.delete(sql);
 	}
 
-	public IsLike getDisLikeByArticleIdAndMemberId(int articleId, int memberId) {
+	public IsLike getDisLikeByRelTypeCodeAndMemberId(String relTypeCode, int relId, int memberId) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT L.*");
 		sql.append("FROM islike AS L");
-		sql.append("WHERE L.articleId = ?", articleId);
+		sql.append("WHERE L.relTypeCode = ?", relTypeCode);
+		sql.append("AND L.relId = ?", relId);
 		sql.append("AND L.memberId = ?", memberId);
-		sql.append("AND L.islike = 0");
-
+		sql.append("AND L.point = -1");
+		
 		return MysqlUtil.selectRow(sql, IsLike.class);
 	}
 
-	public void disLikeInsert(int articleId, int memberId) {
+	public void disLikeInsert(String relTypeCode, int relId, int memberId) {
 		SecSql sql = new SecSql();
 		sql.append("INSERT INTO isLike");
 		sql.append("SET regDate = NOW()");
-		sql.append(", articleId = ?", articleId);
+		sql.append(", updateDate = NOW()");
+		sql.append(", relTypeCode = ?", relTypeCode);
+		sql.append(", relId = ?", relId);
 		sql.append(", memberId = ?", memberId);
-		sql.append(", islike = 0");
+		sql.append(", `point` = -1");
 
 		MysqlUtil.insert(sql);
 		
 	}
 
-	public void disLikeDelete(int articleId, int memberId) {
+	public void disLikeDelete(String relTypeCode, int relId, int memberId) {
 		SecSql sql = new SecSql();
-		sql.append("DELETE FROM isLike");
-		sql.append("WHERE articleId = ?", articleId);
+		sql.append("DELETE FROM islike");
+		sql.append("WHERE relTypeCode = ?", relTypeCode);
+		sql.append("AND relId = ?", relId);
 		sql.append("AND memberId = ?", memberId);
-		sql.append("AND islike = 0");
+		sql.append("AND `point` = -1");
 
 		MysqlUtil.delete(sql);
-		
 	}
 
+	public void likeUpdate(String relTypeCode, int relId, int memberId) {
+		SecSql sql = new SecSql();
+		sql.append("UPDATE islike");
+		sql.append("SET updateDate = NOW()");
+		sql.append(", `point` = -1");
+		sql.append("WHERE relTypeCode = ?", relTypeCode);
+		sql.append("AND relId = ?", relId);
+		sql.append("AND memberId = ?", memberId);
+
+		MysqlUtil.update(sql);
+	}
+
+	public void disLikeUpdate(String relTypeCode, int relId, int memberId) {
+		SecSql sql = new SecSql();
+		sql.append("UPDATE islike");
+		sql.append("SET updateDate = NOW()");
+		sql.append(", `point` = 1");
+		sql.append("WHERE relTypeCode = ?", relTypeCode);
+		sql.append("AND relId = ?", relId);
+		sql.append("AND memberId = ?", memberId);
+
+		MysqlUtil.update(sql);
+	}
+
+	public int getPoint(String relTypeCode, int relId, int memberId) {
+		SecSql sql = new SecSql();
+		sql.append("SELECT IFNULL(SUM(L.point), 0) AS `point`");
+		sql.append("FROM islike AS L");
+		sql.append("WHERE 1");
+		sql.append("AND L.relTypeCode = ?", relTypeCode);
+		sql.append("AND L.relId = ?", relId);
+		sql.append("AND L.memberId = ?", memberId);
+
+		return MysqlUtil.selectRowIntValue(sql);
+	}
 }

@@ -9,13 +9,14 @@ import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.repository.ArticleRepository;
 import com.jhs.exam.exam2.util.Ut;
-import com.mysql.cj.x.protobuf.MysqlxCrud.Update;
 
 public class ArticleService implements ContainerComponent {
 	private ArticleRepository articleRepository;
+	private LikeService likeService;
 
 	public void init() {
 		articleRepository = Container.articleRepository;
+		likeService = Container.likeService;
 	}
 
 	// 재구현 완료[2021-08-10]
@@ -71,7 +72,17 @@ public class ArticleService implements ContainerComponent {
 		if (article == null) {
 			return;
 		}
-
+		
+		boolean actorCanLike = likeService.actorCanLike(article, actor);
+		boolean actorCanCancelLike = likeService.actorCanCancelLike(article, actor);
+		boolean actorCanDisLike = likeService.actorCanDisLike(article, actor);
+		boolean actorCanCancelDisLike = likeService.actorCanCancelDisLike(article, actor);
+		
+		article.setExtra__actorCanLike(actorCanLike);
+		article.setExtra__actorCanCancelLike(actorCanCancelLike);
+		article.setExtra__actorCanDisLike(actorCanDisLike);
+		article.setExtra__actorCanCancelDisLike(actorCanCancelDisLike);
+		
 		// 접속한 멤버와 게시물을 비교하여 수정,삭제 true,false여부 판단(F-로 시작시 false S-로 시작시 true)
 		boolean actorCanModify = actorCanModify(actor, article).isSuccess();
 		boolean actorCanDelete = actorCanDelete(actor, article).isSuccess();

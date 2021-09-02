@@ -67,9 +67,6 @@
 
 							<div>${article.bodySummaryForPrint}</div>
 						</div>
-
-
-
 					</div>
 				</div>
 			</div>
@@ -90,37 +87,38 @@
 
 <section class="section section-article-detail px-4">
 	<div class="btns container mx-auto">
-		<a class="btn btn-primary" href="../like/doLike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}"
-			onclick="if(!confirm('`좋아요` 처리 하시겠습니다?')) return false;">
-			<span>
-				<i class="far fa-thumbs-up"></i>
-			</span>
-			<span>좋아요</span>
-		</a>
-
-		<a class="btn btn-info" href="../like/doCancelLike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}"
-			onclick="if(!confirm('`좋아요` 취소 처리 하시겠습니다?')) return false;">
-			<span>
-				<i class="fas fa-thumbs-up text-red-500"></i>
-			</span>
-			<span>좋아요</span>
-		</a>
-
-		<a class="btn btn-danger" href="../like/doDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}"
-			onclick="if(!confirm('`싫어요` 처리 하시겠습니다?')) return false;">
-			<span>
-				<i class="far fa-thumbs-down"></i>
-			</span>
-			<span>싫어요</span>
-		</a>
-
-		<a class="btn btn-primary" href="../like/doCancelDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}"
-			onclick="if(!confirm('`싫어요` 취소 처리 하시겠습니다?')) return false;">
-			<span>
-				<i class="fas fa-thumbs-down text-red-500"></i>
-			</span>
-			<span>싫어요</span>
-		</a>
+		<c:if test="${article.extra__actorCanLike || article.extra__actorCanCancelDisLike}">
+			<a class="btn btn-primary" href="../like/doLike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+				<span>
+					<i class="far fa-thumbs-up"></i>
+				</span>
+				<span>좋아요</span>
+			</a>
+		</c:if>
+		<c:if test="${article.extra__actorCanCancelLike}">
+			<a class="btn btn-primary" href="../like/doLike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+				<span>
+					<i class="fas fa-thumbs-up text-red-500"></i>
+				</span>
+				<span>좋아요</span>
+			</a>
+		</c:if>
+		<c:if test="${article.extra__actorCanDisLike || article.extra__actorCanCancelLike}">
+			<a class="btn btn-danger" href="../like/doDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+				<span>
+					<i class="far fa-thumbs-down"></i>
+				</span>
+				<span>싫어요</span>
+			</a>
+		</c:if>
+		<c:if test="${article.extra__actorCanCancelDisLike}">
+			<a class="btn btn-danger" href="../like/doDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+				<span>
+					<i class="fas fa-thumbs-down text-red-500"></i>
+				</span>
+				<span>싫어요</span>
+			</a>
+		</c:if>
 
 		<c:if test="${article.extra__actorCanModify}">
 			<a href="../article/modify?id=${article.id}" class="btn btn-link">

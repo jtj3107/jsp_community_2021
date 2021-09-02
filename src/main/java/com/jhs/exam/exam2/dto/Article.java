@@ -23,6 +23,11 @@ public class Article {
 	private Boolean extra__actorCanModify;
 	private Boolean extra__actorCanDelete;
 
+	private Boolean extra__actorCanLike;
+	private Boolean extra__actorCanCancelLike;
+	private Boolean extra__actorCanDisLike;
+	private Boolean extra__actorCanCancelDisLike;
+	
 	private int extra__likePoint;
 	private int extra__likeOnlyPoint;
 	private int extra__dislikeOnlyPoint;

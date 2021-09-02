@@ -19,7 +19,7 @@ public class UsrLikeController extends Controller {
 		case "doLike":
 			actionDoLike(rq);
 			break;
-		case "doDisLike":
+		case "doDislike":
 			actionDoDisLike(rq);
 			break;
 		default:
@@ -29,40 +29,46 @@ public class UsrLikeController extends Controller {
 	}
 
 	private void actionDoDisLike(Rq rq) {
-		int articleId = rq.getIntParam("articleId", 0);
-		String redirectUrl = rq.getParam("redirectUrl", "usr/article/detail?id=" + articleId);
-		
-		if(articleId == 0) {
-			rq.historyBack("id를 입력해주세요.");
-			return;
-		}
-		
-		ResultData disLikeUpRd = likeService.disLikeUpDown(articleId, rq.getLoginedMember());
-		
-		rq.replace(disLikeUpRd.getMsg(), redirectUrl);
-		
-	}
-
-	private void actionDoLike(Rq rq) {	
 		String relTypeCode = rq.getParam("relTypeCode", "");
-		
-		if(relTypeCode.length() == 0) {
+
+		if (relTypeCode.length() == 0) {
 			rq.historyBack("관련데이터 코드를 입력해주세요.");
 			return;
 		}
-		
+
 		int relId = rq.getIntParam("relId", 0);
-		
-		if(relId == 0) {
+
+		if (relId == 0) {
 			rq.historyBack("관련데이터 번호를 입력해주세요.");
 			return;
 		}
-		
+
 		int actorId = rq.getLoginedMemberId();
-		
-		ResultData likeUpDownRd = likeService.likeUpDown(relTypeCode, relId, actorId);
-		
+
+		ResultData likeUpDownRd = likeService.disLikeUpDown(relTypeCode, relId, actorId);
+
 		rq.replace(likeUpDownRd.getMsg(), rq.getParam("redirectUrl", "usr/home/main"));
-		
+	}
+
+	private void actionDoLike(Rq rq) {
+		String relTypeCode = rq.getParam("relTypeCode", "");
+
+		if (relTypeCode.length() == 0) {
+			rq.historyBack("관련데이터 코드를 입력해주세요.");
+			return;
+		}
+
+		int relId = rq.getIntParam("relId", 0);
+
+		if (relId == 0) {
+			rq.historyBack("관련데이터 번호를 입력해주세요.");
+			return;
+		}
+
+		int actorId = rq.getLoginedMemberId();
+
+		ResultData likeUpDownRd = likeService.likeUpDown(relTypeCode, relId, actorId);
+
+		rq.replace(likeUpDownRd.getMsg(), rq.getParam("redirectUrl", "usr/home/main"));
 	}
 }
