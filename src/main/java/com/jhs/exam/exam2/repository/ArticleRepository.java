@@ -77,10 +77,20 @@ public class ArticleRepository implements ContainerComponent {
 		SecSql sql = new SecSql();
 		sql.append("SELECT *");
 		sql.append(", IFNULL(M.nickname, '삭제된회원') AS extra__writerName");
+		sql.append(", B.name AS extra_boardName");
+		sql.append(", IFNULL(SUM(L.point), 0) AS extra__likePoint");
+		sql.append(", IFNULL(SUM(IF(L.point > 0, L.point, 0)), 0) AS extra__likeOnlyPoint");
+		sql.append(", IFNULL(SUM(IF(L.point < 0, L.point * -1, 0)), 0) AS extra__dislikeOnlyPoint");
 		sql.append("FROM article AS A");
 		sql.append("LEFT JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
+		sql.append("INNER JOIN board AS B");
+		sql.append("ON A.boardId = B.id");
+		sql.append("LEFT JOIN islike AS L");
+		sql.append("ON L.relTypeCode = 'article'");
+		sql.append("AND A.id = L.relId");
 		sql.append("WHERE A.id = ?", id);
+		sql.append("GROUP BY A.id");
 
 		return MysqlUtil.selectRow(sql, Article.class);
 	}
@@ -145,42 +155,4 @@ public class ArticleRepository implements ContainerComponent {
 
 		return MysqlUtil.selectRowIntValue(sql);
 	}
-
-	public void likeup(int id) {
-		SecSql sql = new SecSql();
-		sql.append("UPDATE article AS A");
-		sql.append("SET likeCount = likeCount + 1");
-		sql.append("WHERE A.id = ?", id);
-
-		MysqlUtil.update(sql);
-	}
-
-	public void likeDown(int id) {
-		SecSql sql = new SecSql();
-		sql.append("UPDATE article AS A");
-		sql.append("SET likeCount = likeCount - 1");
-		sql.append("WHERE A.id = ?", id);
-
-		MysqlUtil.update(sql);
-	}
-
-	public void disLikeup(int id) {
-		SecSql sql = new SecSql();
-		sql.append("UPDATE article AS A");
-		sql.append("SET disLikeCount = disLikeCount + 1");
-		sql.append("WHERE A.id = ?", id);
-
-		MysqlUtil.update(sql);
-	}
-
-	public void disLikeDown(int id) {
-		SecSql sql = new SecSql();
-		sql.append("UPDATE article AS A");
-		sql.append("SET disLikeCount = disLikeCount - 1");
-		sql.append("WHERE A.id = ?", id);
-
-		MysqlUtil.update(sql);
-		
-	}
-
 }

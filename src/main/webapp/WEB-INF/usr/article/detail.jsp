@@ -12,7 +12,7 @@
 				<a href="javascript:history.back();" class="cursor-pointer">
 					<i class="fas fa-chevron-left"></i>
 				</a>
-				<span>게시물 상세페이지</span>
+				<span>게시물 상세페이지(${article.extra_boardName})</span>
 			</div>
 
 			<div class="px-4">
@@ -50,132 +50,30 @@
 						</div>
 
 						<div>
-							<div id="like" class="cursor-pointer">
-								<input id="redirectUri" type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
-								<input id="articleId" type="hidden" name="articleId" value="${article.id}" />
-								<span class="badge">
-									<i class="far fa-thumbs-up"></i>
-								</span>
-								<span class="text-gray-600 text-light">${article.likeCount}</span>
-							</div>
+							<span class="badge badge-secondary">좋아요</span>
+							<span>${article.extra__likeOnlyPoint}</span>
 						</div>
-						<script type="text/javascript">
-							$("#like").click(
-									function() {
-										var redirectUri = $("#redirectUri")
-												.val().trim();
-										var articleId = $("#articleId").val()
-												.trim();
-										if (${rq.logined} == false) {
-											alert('로그인 후 이용해주세요.');
-											return;
-										}
-										var data = '';
-										data += "redirectUri=" + redirectUri;
-										data += "&articleId=" + articleId;
 
-										$.ajax({
-											type : "post",
-											url : "../like/doLike",
-											data : data,
-											dataType : "html",
-
-											success : function(html) {
-												commentLoad();
-											},
-
-											error : function(xhr) {
-												alert("Error Code : "
-														+ xhr.status);
-											}
-										});
-
-									});
-							function commentLoad() {
-								location.replace(location.href);
-							}
-						</script>
 						<div>
-							<div id="disLike" class="cursor-pointer">
-								<input id="redirectUri" type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
-								<input id="articleId" type="hidden" name="articleId" value="${article.id}" />
-								<span class="badge">
-									<i class="far fa-thumbs-down"></i>
-								</span>
-								<span class="text-gray-600 text-light">${article.dislikeCount}</span>
+							<span class="badge badge-secondary">싫어요</span>
+							<span>${article.extra__dislikeOnlyPoint}</span>
+						</div>
+						<div class="block mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3 f">
+							<span class="badge badge-outline">본문</span>
+
+							<div class="mt-2">
+								<img class="rounded" src="https://picsum.photos/id/237/300/300" alt="" />
 							</div>
-						</div>
-					</div>
-					<script type="text/javascript">
-							$("#disLike").click(
-									function() {
-										var redirectUri = $("#redirectUri")
-												.val().trim();
-										var articleId = $("#articleId").val()
-												.trim();
-										if (${rq.logined} == false) {
-											alert('로그인 후 이용해주세요.');
-											return;
-										}
-										var data = '';
-										data += "redirectUri=" + redirectUri;
-										data += "&articleId=" + articleId;
 
-										$.ajax({
-											type : "post",
-											url : "../like/doDisLike",
-											data : data,
-											dataType : "html",
-
-											success : function(html) {
-												commentLoad();
-											},
-
-											error : function(xhr) {
-												alert("Error Code : "
-														+ xhr.status);
-											}
-										});
-
-									});
-							function commentLoad() {
-								location.replace(location.href);
-							}
-						</script>
-
-					<div class="block mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3 f">
-						<span class="badge badge-outline">본문</span>
-
-						<div class="mt-2">
-							<img class="rounded" src="https://picsum.photos/id/237/300/300" alt="" />
+							<div>${article.bodySummaryForPrint}</div>
 						</div>
 
-						<div>${article.bodySummaryForPrint}</div>
-					</div>
 
-					<div class="btns mt-3">
-						<c:if test="${article.extra__actorCanModify}">
-							<a href="../article/modify?id=${article.id}" class="btn btn-link">
-								<span>
-									<i class="fas fa-edit"></i>
-								</span>
-								<span>수정</span>
-							</a>
-						</c:if>
-						<c:if test="${article.extra__actorCanDelete}">
-							<a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" href="../article/doDelete?id=${article.id}&boardId=${article.boardId}"
-								class="btn btn-link">
-								<span>
-									<i class="fas fa-trash-alt"></i>
-								</span>
-								<span>삭제</span>
-							</a>
-						</c:if>
+
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 <section class="section section-article-detail px-4 mt-4">
 	<c:if test="${rq.notLogined}">
@@ -189,6 +87,61 @@
 		</div>
 	</c:if>
 </section>
+
+<section class="section section-article-detail px-4">
+	<div class="btns container mx-auto">
+		<a class="btn btn-primary" href="../like/doLike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}"
+			onclick="if(!confirm('`좋아요` 처리 하시겠습니다?')) return false;">
+			<span>
+				<i class="far fa-thumbs-up"></i>
+			</span>
+			<span>좋아요</span>
+		</a>
+
+		<a class="btn btn-info" href="../like/doCancelLike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}"
+			onclick="if(!confirm('`좋아요` 취소 처리 하시겠습니다?')) return false;">
+			<span>
+				<i class="fas fa-thumbs-up text-red-500"></i>
+			</span>
+			<span>좋아요</span>
+		</a>
+
+		<a class="btn btn-danger" href="../like/doDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}"
+			onclick="if(!confirm('`싫어요` 처리 하시겠습니다?')) return false;">
+			<span>
+				<i class="far fa-thumbs-down"></i>
+			</span>
+			<span>싫어요</span>
+		</a>
+
+		<a class="btn btn-primary" href="../like/doCancelDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}"
+			onclick="if(!confirm('`싫어요` 취소 처리 하시겠습니다?')) return false;">
+			<span>
+				<i class="fas fa-thumbs-down text-red-500"></i>
+			</span>
+			<span>싫어요</span>
+		</a>
+
+		<c:if test="${article.extra__actorCanModify}">
+			<a href="../article/modify?id=${article.id}" class="btn btn-link">
+				<span>
+					<i class="fas fa-edit"></i>
+				</span>
+				<span>수정</span>
+			</a>
+		</c:if>
+		<c:if test="${article.extra__actorCanDelete}">
+			<a onclick="if ( !confirm('정말로 삭제하시겠습니까?') ) return false;" href="../article/doDelete?id=${article.id}&boardId=${article.boardId}"
+				class="btn btn-link">
+				<span>
+					<i class="fas fa-trash-alt"></i>
+				</span>
+				<span>삭제</span>
+			</a>
+		</c:if>
+	</div>
+</section>
+
 <section class="section section-article-detail px-4 mt-4">
 	<c:if test="${rq.logined}">
 		<div class="container mx-auto">
@@ -293,7 +246,6 @@
 										<span>${reply.regDate}</span>
 									</div>
 								</div>
-
 							</div>
 						</div>
 					</div>
@@ -302,7 +254,5 @@
 		</c:forEach>
 	</div>
 </section>
-
-
 
 <%@ include file="../part/foot.jspf"%>

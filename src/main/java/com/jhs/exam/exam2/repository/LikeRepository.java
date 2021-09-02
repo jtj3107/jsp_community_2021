@@ -12,33 +12,38 @@ public class LikeRepository implements ContainerComponent {
 
 	}
 
-	public IsLike getLikeByArticleIdAndMemberId(int articleId, int memberId) {
+	public IsLike getLikeByArticleIdAndMemberId(String relTypeCode, int relId, int memberId) {
 		SecSql sql = new SecSql();
 		sql.append("SELECT L.*");
 		sql.append("FROM islike AS L");
-		sql.append("WHERE L.articleId = ?", articleId);
+		sql.append("WHERE L.relTypeCode = ?", relTypeCode);
+		sql.append("AND L.relId = ?", relId);
 		sql.append("AND L.memberId = ?", memberId);
-		sql.append("AND L.islike = 1");
+		sql.append("AND L.point = 1");
 		
 		return MysqlUtil.selectRow(sql, IsLike.class);
 	}
 
-	public void likeInsert(int articleId, int memberId) {
+	public void likeInsert(String relTypeCode, int relId, int memberId) {
 		SecSql sql = new SecSql();
 		sql.append("INSERT INTO isLike");
 		sql.append("SET regDate = NOW()");
-		sql.append(", articleId = ?", articleId);
+		sql.append(", updateDate = NOW()");
+		sql.append(", relTypeCode = ?", relTypeCode);
+		sql.append(", relId = ?", relId);
 		sql.append(", memberId = ?", memberId);
+		sql.append(", `point` = 1");
 
 		MysqlUtil.insert(sql);
 	}
 
-	public void likeDelete(int articleId, int memberId) {
+	public void likeDelete(String relTypeCode, int relId, int memberId) {
 		SecSql sql = new SecSql();
 		sql.append("DELETE FROM islike");
-		sql.append("WHERE articleId = ?", articleId);
+		sql.append("WHERE relTypeCode = ?", relTypeCode);
+		sql.append("AND relId = ?", relId);
 		sql.append("AND memberId = ?", memberId);
-		sql.append("AND islike = 1");
+		sql.append("AND `point` = 1");
 
 		MysqlUtil.delete(sql);
 	}

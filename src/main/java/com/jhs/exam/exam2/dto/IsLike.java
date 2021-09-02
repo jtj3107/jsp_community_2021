@@ -7,7 +7,8 @@ public class IsLike {
 	private int id;
 	private String regDate;
 	private String updateDate;
-	private int articleId;
+	private String relTypeCode;
+	private int relId;
 	private int memberId;
-	private int islike;
+	private int point;
 }

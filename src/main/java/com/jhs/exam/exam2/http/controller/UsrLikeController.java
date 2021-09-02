@@ -43,19 +43,26 @@ public class UsrLikeController extends Controller {
 		
 	}
 
-	private void actionDoLike(Rq rq) {
-		int articleId = rq.getIntParam("articleId", 0);
-		String redirectUrl = rq.getParam("redirectUrl", "usr/article/detail?id=" + articleId);
+	private void actionDoLike(Rq rq) {	
+		String relTypeCode = rq.getParam("relTypeCode", "");
 		
-		if(articleId == 0) {
-			rq.historyBack("id를 입력해주세요.");
+		if(relTypeCode.length() == 0) {
+			rq.historyBack("관련데이터 코드를 입력해주세요.");
 			return;
 		}
 		
-		ResultData likeUpRd = likeService.likeUpDown(articleId, rq.getLoginedMember());
+		int relId = rq.getIntParam("relId", 0);
 		
-		rq.replace(likeUpRd.getMsg(), redirectUrl);
+		if(relId == 0) {
+			rq.historyBack("관련데이터 번호를 입력해주세요.");
+			return;
+		}
+		
+		int actorId = rq.getLoginedMemberId();
+		
+		ResultData likeUpDownRd = likeService.likeUpDown(relTypeCode, relId, actorId);
+		
+		rq.replace(likeUpDownRd.getMsg(), rq.getParam("redirectUrl", "usr/home/main"));
 		
 	}
-
 }

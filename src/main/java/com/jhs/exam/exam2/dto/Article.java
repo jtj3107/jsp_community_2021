@@ -22,6 +22,10 @@ public class Article {
 	private String extra_boardName;
 	private Boolean extra__actorCanModify;
 	private Boolean extra__actorCanDelete;
+
+	private int extra__likePoint;
+	private int extra__likeOnlyPoint;
+	private int extra__dislikeOnlyPoint;
 	
 	public String getTitleForPrint() {
 		return title;
