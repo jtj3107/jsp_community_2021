@@ -88,38 +88,37 @@
 <section class="section section-article-detail px-4">
 	<div class="btns container mx-auto">
 		<c:if test="${article.extra__actorCanLike || article.extra__actorCanCancelDisLike}">
-			<a class="btn btn-primary" href="../like/doLike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+			<button type="button" class="btn btn-primary" id="likeUpDown">
 				<span>
 					<i class="far fa-thumbs-up"></i>
 				</span>
 				<span>좋아요</span>
-			</a>
+			</button>
 		</c:if>
 		<c:if test="${article.extra__actorCanCancelLike}">
-			<a class="btn btn-primary" href="../like/doLike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+			<button type="button" class="btn btn-primary" id="likeUpDown">
 				<span>
 					<i class="fas fa-thumbs-up text-red-500"></i>
 				</span>
 				<span>좋아요</span>
-			</a>
+			</button>
 		</c:if>
 		<c:if test="${article.extra__actorCanDisLike || article.extra__actorCanCancelLike}">
-			<a class="btn btn-danger" href="../like/doDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+			<button type="button" class="btn btn-primary" id="dislikeUpDown">
 				<span>
 					<i class="far fa-thumbs-down"></i>
 				</span>
 				<span>싫어요</span>
-			</a>
+			</button>
 		</c:if>
 		<c:if test="${article.extra__actorCanCancelDisLike}">
-			<a class="btn btn-danger" href="../like/doDislike?relTypeCode=article&relId=${article.id}&redirectUrl=${rq.encodedCurrentUri}">
+			<button type="button" class="btn btn-primary" id="dislikeUpDown">
 				<span>
 					<i class="fas fa-thumbs-down text-red-500"></i>
 				</span>
 				<span>싫어요</span>
-			</a>
+			</button>
 		</c:if>
-
 		<c:if test="${article.extra__actorCanModify}">
 			<a href="../article/modify?id=${article.id}" class="btn btn-link">
 				<span>
@@ -138,6 +137,61 @@
 			</a>
 		</c:if>
 	</div>
+	<script type="text/javascript">
+		$("#likeUpDown").click(function() {
+			var relTypeCode = 'article';
+			var relId = ${article.id}
+
+			var data = '';
+			data += "relTypeCode=" + relTypeCode;
+			data += "&relId=" + relId;
+
+			$.ajax({
+				type : "GET",
+				url : "../like/doLike",
+				data : data,
+				dataType : "html",
+				success : function(html) {
+					commentLoad();
+				},
+
+				error : function(xhr) {
+					alert("Error Code : " + xhr.status);
+				}
+			});
+		});
+		function commentLoad() {
+			location.replace(location.href);
+		}
+	</script>
+
+	<script type="text/javascript">
+		$("#dislikeUpDown").click(function() {
+			var relTypeCode = 'article';
+			var relId = ${article.id};
+
+			var data = '';
+			data += "relTypeCode=" + relTypeCode;
+			data += "&relId=" + relId;
+
+			$.ajax({
+				type : "GET",
+				url : "../like/doDislike",
+				data : data,
+				dataType : "html",
+				success : function(html) {
+					commentLoad();
+				},
+
+				error : function(xhr) {
+					alert("Error Code : " + xhr.status);
+				}
+			});
+		});
+		function commentLoad() {
+			location.replace(location.href);
+		}
+	</script>
 </section>
 
 <section class="section section-article-detail px-4 mt-4">
@@ -151,9 +205,31 @@
 				<div class="p-3">
 
 					<div>
-						<div class="grid gap-3">
-							<input id="redirectUri" type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
-							<input id="articleId" type="hidden" name="articleId" value="${article.id}" />
+						<script>
+							let Reply__DoWriteForm__submited = false;
+
+							// 폼 발송전 체크
+							function Reply__DoWriteForm__submit(form) {
+								if (Reply__DoWriteForm__submited) {
+									alert('처리중 입니다.');
+									return;
+								}
+
+								form.reply.value = form.reply.value.trim();
+
+								if (form.reply.value.length == 0) {
+									alert('댓글을 입력해주세요.');
+									form.reply.focus();
+
+									return;
+								}
+
+								form.submit();
+								Reply__DoWriteForm__submited = true;
+							}
+						</script>
+						<form action="../reply/doWrite" method="POST" onsubmit="Reply__DoWriteForm__submit(this); return false;">
+							<input id="relId" type="hidden" name="relId" value="${article.id}" />
 
 							<div class="form-control">
 								<input class="input input-bordered w-full" id="reply" maxlength="100" name="reply" type="text" placeholder="댓글을 입력해주세요." />
@@ -169,10 +245,8 @@
 										function() {
 											var reply = $("#reply").val()
 													.trim();
-											var redirectUri = $("#redirectUri")
-													.val().trim();
-											var articleId = $("#articleId")
-													.val().trim();
+											var relId = $("#relId").val()
+													.trim();
 											if (reply == "") {
 												alert('내용을 입력해주세요');
 												return;
@@ -182,9 +256,7 @@
 
 											var data = '';
 											data += "reply=" + reply;
-											data += "&redirectUri="
-													+ redirectUri;
-											data += "&articleId=" + articleId;
+											data += "&relId=" + relId;
 											// [ajax기능을 구현하고싶은 경우 : 특정엘리먼트선택X >> jQuery 메소드 중 ajax를 호출할게요]
 											// $.ajax() : AJAX기능을 제공하는 jQuery메소드
 											//          : AJAX기능을 구현하기위해 필요한 정보(매개변수)를 object객체형식으로 전달
@@ -216,7 +288,7 @@
 								}
 							</script>
 
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
