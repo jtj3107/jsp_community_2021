@@ -138,14 +138,13 @@
 		</c:if>
 	</div>
 	<script type="text/javascript">
-		$("#likeUpDown").click(function() {
-			var relTypeCode = 'article';
-			var relId = ${article.id}
-
-			var data = '';
-			data += "relTypeCode=" + relTypeCode;
-			data += "&relId=" + relId;
-
+		var relTypeCode = 'article';
+		var relId = ${article.id}
+	
+		var data = '';
+		data += "relTypeCode=" + relTypeCode;
+		data += "&relId=" + relId;
+		$("#likeUpDown").click(function() {		
 			$.ajax({
 				type : "GET",
 				url : "../like/doLike",
@@ -160,20 +159,8 @@
 				}
 			});
 		});
-		function commentLoad() {
-			location.replace(location.href);
-		}
-	</script>
-
-	<script type="text/javascript">
+		
 		$("#dislikeUpDown").click(function() {
-			var relTypeCode = 'article';
-			var relId = ${article.id};
-
-			var data = '';
-			data += "relTypeCode=" + relTypeCode;
-			data += "&relId=" + relId;
-
 			$.ajax({
 				type : "GET",
 				url : "../like/doDislike",
