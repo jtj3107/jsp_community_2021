@@ -56,9 +56,9 @@ public class MemberService implements ContainerComponent {
 			return ResultData.from("F-2", Ut.f("`%s`이름의 회원님은 이미 `%s`이메일로 회원가입 하셨습니다.", name, email));
 		}
 		// 해당 변수를 이용하여 member를 만들어주는 함수
-		memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
+		int id = memberRepository.join(loginId, loginPw, name, nickname, email, cellphoneNo);
 		// S-1저장후 리턴
-		return ResultData.from("S-1", "회원 가입이 완료 되었습니다.");
+		return ResultData.from("S-1", "회원 가입이 완료 되었습니다.", "id", id);
 	}
 
 	// 재구현 완료[2021-08-09], [2021-08-16]
@@ -118,7 +118,15 @@ public class MemberService implements ContainerComponent {
 	private void setTempLoginPw(Member actor, String tempLoginPw) {
 		memberRepository.modifyPassword(actor.getId(), Ut.sha256(tempLoginPw));
 	
-		attrService.setValue("member__" + actor.getId() + "__extra__isUsingTempPassword", "1", null);
+		setIsUsingTempPassword(actor.getId(), true);
+	}
+	
+	public void setIsUsingTempPassword(int actorId, boolean use) {
+		attrService.setValue("member__" + actorId + "__extra__isUsingTempPassword", use, null);
+	}
+
+	public boolean getIsUsingTempPassword(int actorId) {
+		return attrService.getValueAsBoolean("member__" + actorId + "__extra__isUsingTempPassword");
 	}
 
 	// loginId로 해당 member값을 불러와 리턴하는 함수
