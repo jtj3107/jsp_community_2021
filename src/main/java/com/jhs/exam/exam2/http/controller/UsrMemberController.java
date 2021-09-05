@@ -349,10 +349,18 @@ public class UsrMemberController extends Controller {
 		String redirectUri = rq.getParam("redirectUri", "../home/main");
 		String msg = loginRd.getMsg();
 		
-		boolean isUsingTempPassword = memberService.getIsUsingTempPassword(member.getId());
+		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
 
 		if (isUsingTempPassword) {
 			msg = Ut.f("%s님은 현재 임시 비밀번호를 사용중입니다. 변경 후 이용해주세요.", member.getNickname());
+			redirectUri = "../member/memberModify";
+		}
+		
+		boolean isNeedtoModifyOldLoginPw = memberService.isNeedtoModifyOldLoginPw(member.getId());
+		
+		if(isNeedtoModifyOldLoginPw) {
+			int oldPasswordDays = memberService.getOldPasswordDays();
+			msg = "가장 마지막 비밀번호 변경일로부터" + oldPasswordDays + "일이 경과하였습니다. 비밀번호를 변경해주세요.";
 			redirectUri = "../member/memberModify";
 		}
 
