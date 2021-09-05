@@ -15,11 +15,13 @@ import com.jhs.exam.exam2.interceptor.NeedAdminInterceptor;
 import com.jhs.exam.exam2.interceptor.NeedLoginInterceptor;
 import com.jhs.exam.exam2.interceptor.NeedLogoutInterceptor;
 import com.jhs.exam.exam2.repository.ArticleRepository;
+import com.jhs.exam.exam2.repository.AttrRepository;
 import com.jhs.exam.exam2.repository.BoardRepository;
 import com.jhs.exam.exam2.repository.LikeRepository;
 import com.jhs.exam.exam2.repository.MemberRepository;
 import com.jhs.exam.exam2.repository.ReplyRepository;
 import com.jhs.exam.exam2.service.ArticleService;
+import com.jhs.exam.exam2.service.AttrService;
 import com.jhs.exam.exam2.service.BoardService;
 import com.jhs.exam.exam2.service.EmailService;
 import com.jhs.exam.exam2.service.LikeService;
@@ -49,31 +51,31 @@ public class Container {
 	public static UsrHomeController usrHomeController;
 	public static UsrReplyController usrReplyController;
 
+	public static AttrRepository attrRepository;
 	public static BoardRepository boardRepository;
+	public static AttrService attrService;
 	public static BoardService boardService;
 	public static EmailService emailService;
 	public static ReplyService replyService;
 	public static LikeService likeService;
 	
 	public static AdmHomeController admHomeController;
-
 	public static ReplyRepository replyRepository;
-
 	public static LikeRepository likeRepository;
-
-	
 
 	public static void init() {
 		containerComponents = new ArrayList<>();
 
 		// 의존성 세팅 시작
 		app = addContainerComponent(new App());
+		attrRepository = addContainerComponent(new AttrRepository());
 		memberRepository = addContainerComponent(new MemberRepository());
 		boardRepository = addContainerComponent(new BoardRepository());
 		articleRepository = addContainerComponent(new ArticleRepository());
 		replyRepository = addContainerComponent(new ReplyRepository());
 		likeRepository = addContainerComponent(new LikeRepository());
 
+		attrService = addContainerComponent(new AttrService());
 		memberService = addContainerComponent(new MemberService());
 		boardService = addContainerComponent(new BoardService());
 		articleService = addContainerComponent(new ArticleService());

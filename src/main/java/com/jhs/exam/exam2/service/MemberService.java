@@ -11,10 +11,12 @@ import com.jhs.exam.exam2.util.Ut;
 public class MemberService implements ContainerComponent {
 	private MemberRepository memberRepository;
 	private EmailService emailService;
+	private AttrService attrService;
 
 	public void init() {
 		memberRepository = Container.memberRepository;
 		emailService = Container.emailService;
+		attrService = Container.attrService;
 	}
 
 	// 재구현 완료[2021-08-09], [2021-08-16]
@@ -115,6 +117,8 @@ public class MemberService implements ContainerComponent {
 	// DB에 접근하여 해당 멤버 비밀번호 변경하는 함수
 	private void setTempLoginPw(Member actor, String tempLoginPw) {
 		memberRepository.modifyPassword(actor.getId(), Ut.sha256(tempLoginPw));
+	
+		attrService.setValue("member__" + actor.getId() + "__extra__isUsingTempPassword", "1", null);
 	}
 
 	// loginId로 해당 member값을 불러와 리턴하는 함수
