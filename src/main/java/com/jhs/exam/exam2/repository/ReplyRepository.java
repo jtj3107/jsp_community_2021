@@ -15,7 +15,7 @@ public class ReplyRepository implements ContainerComponent{
 	}
 
 	// 댓글을 DB에 저장하는 메서드
-	public void write(int memberId, int articleId, String body) {
+	public int write(int memberId, int articleId, String body) {
 		SecSql sql = new SecSql();
 		sql.append("INSERT INTO reply");
 		sql.append("SET regDate = NOW()");
@@ -24,7 +24,7 @@ public class ReplyRepository implements ContainerComponent{
 		sql.append(", articleId = ?", articleId);
 		sql.append(", body = ?", body);
 
-		MysqlUtil.insert(sql);
+		return MysqlUtil.insert(sql);
 	}
 
 	// DB에서 댓글 rows값을 리턴하는 메서드

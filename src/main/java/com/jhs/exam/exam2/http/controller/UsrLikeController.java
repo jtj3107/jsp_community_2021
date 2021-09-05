@@ -1,7 +1,6 @@
 package com.jhs.exam.exam2.http.controller;
 
 import com.jhs.exam.exam2.container.Container;
-import com.jhs.exam.exam2.dto.Article;
 import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.http.Rq;
 import com.jhs.exam.exam2.service.LikeService;
@@ -17,10 +16,10 @@ public class UsrLikeController extends Controller {
 	public void performAction(Rq rq) {
 		switch (rq.getActionMethodName()) {
 		case "doLike":
-			actionDoLike(rq);
+			getDoLike(rq);
 			break;
 		case "doDislike":
-			actionDoDisLike(rq);
+			getDoDisLike(rq);
 			break;
 		default:
 			rq.println("존재하지 않는 페이지 입니다.");
@@ -28,18 +27,16 @@ public class UsrLikeController extends Controller {
 		}
 	}
 
-	private void actionDoDisLike(Rq rq) {
+	private void getDoDisLike(Rq rq) {
 		String relTypeCode = rq.getParam("relTypeCode", "");
 
 		if (relTypeCode.length() == 0) {
-			rq.historyBack("관련데이터 코드를 입력해주세요.");
 			return;
 		}
 
 		int relId = rq.getIntParam("relId", 0);
 
 		if (relId == 0) {
-			rq.historyBack("관련데이터 번호를 입력해주세요.");
 			return;
 		}
 
@@ -50,18 +47,16 @@ public class UsrLikeController extends Controller {
 		rq.replace(likeUpDownRd.getMsg(), rq.getParam("redirectUrl", "usr/home/main"));
 	}
 
-	private void actionDoLike(Rq rq) {
+	private void getDoLike(Rq rq) {
 		String relTypeCode = rq.getParam("relTypeCode", "");
 
 		if (relTypeCode.length() == 0) {
-			rq.historyBack("관련데이터 코드를 입력해주세요.");
 			return;
 		}
 
 		int relId = rq.getIntParam("relId", 0);
 
 		if (relId == 0) {
-			rq.historyBack("관련데이터 번호를 입력해주세요.");
 			return;
 		}
 

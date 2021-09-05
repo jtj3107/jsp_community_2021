@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageTitle" value="게시물 수정" />
@@ -30,31 +29,34 @@
 
 							return;
 						}
-
-						if (form.body.value.length == 0) {
+						
+						const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+						const body = editor.getMarkdown().trim();
+						
+						if (body.length == 0) {
 							alert('내용을 입력해주세요.');
-							form.body.focus();
+							body.focus();
 
 							return;
 						}
+						
+						form.body.value = body;
 
 						form.submit();
 						ArticleModify__submitDone = true;
 					}
 				</script>
-				<form action="../article/doModify" method="POST"
-					onsubmit="ArticleModify__submit(this); return false;">
-					<input type="hidden" name="id"
-						value="${article.id}" />
-					<input type="hidden" name="redirectUri"
-						value="../article/detail?id=${article.id}" />
+				<form action="../article/doModify" method="POST" onsubmit="ArticleModify__submit(this); return false;">
+					<input type="hidden" name="id" value="${article.id}" />
+					<input type="hidden" name="body" />
+					<input type="hidden" name="redirectUri" value="../article/detail?id=${article.id}" />
 					<div class="form-control">
 						<label class="label">
 							<span class="label-text">제목</span>
 						</label>
 						<div>
-							<input class="input input-bordered w-full" maxlength="100"
-								name="title" type="text" placeholder="제목을 입력해주세요." value="${article.title}" />
+							<input class="input input-bordered w-full" maxlength="100" name="title" type="text" placeholder="제목을 입력해주세요."
+								value="${article.title}" />
 						</div>
 					</div>
 
@@ -62,8 +64,9 @@
 						<label class="label">
 							<span class="label-text">내용</span>
 						</label>
-						<textarea maxlength="2000" class="textarea textarea-bordered h-60"
-							placeholder="내용을 입력해주세요." name="body">${article.body}</textarea>
+						<div class="toast-ui-editor">
+							<script type="text/x-template">${article.body}</script>
+						</div>
 					</div>
 
 					<div class="btns">

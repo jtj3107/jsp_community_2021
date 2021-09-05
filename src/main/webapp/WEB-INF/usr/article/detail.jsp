@@ -6,7 +6,6 @@
 
 <section class="section section-article-detail px-4">
 	<div class="container mx-auto">
-
 		<div class="card bordered shadow-lg">
 			<div class="card-title">
 				<a href="javascript:history.back();" class="cursor-pointer">
@@ -58,19 +57,19 @@
 							<span class="badge badge-secondary">싫어요</span>
 							<span>${article.extra__dislikeOnlyPoint}</span>
 						</div>
-						<div class="block mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3 f">
+						<div class="block mt-3 col-span-1 sm:col-span-2 xl:col-span-3 f">
 							<span class="badge badge-outline">본문</span>
-
-							<div class="mt-2">
-								<img class="rounded" src="https://picsum.photos/id/237/300/300" alt="" />
-							</div>
-
-							<div>${article.bodySummaryForPrint}</div>
+						</div>
+						<div class="toast-ui-viewer">
+							<script type="text/x-template">
+								${article.bodySummaryForPrint}
+							</script>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 </section>
 <section class="section section-article-detail px-4 mt-4">
 	<c:if test="${rq.notLogined}">
@@ -139,19 +138,19 @@
 	</div>
 	<script type="text/javascript">
 		var relTypeCode = 'article';
-		var relId = ${article.id}
-	
+		var relId = ${article.id};
+
 		var data = '';
 		data += "relTypeCode=" + relTypeCode;
 		data += "&relId=" + relId;
-		$("#likeUpDown").click(function() {		
+		$("#likeUpDown").click(function() {
 			$.ajax({
 				type : "GET",
 				url : "../like/doLike",
 				data : data,
 				dataType : "html",
 				success : function(html) {
-					commentLoad();
+					location.reload();
 				},
 
 				error : function(xhr) {
@@ -159,7 +158,7 @@
 				}
 			});
 		});
-		
+
 		$("#dislikeUpDown").click(function() {
 			$.ajax({
 				type : "GET",
@@ -167,7 +166,7 @@
 				data : data,
 				dataType : "html",
 				success : function(html) {
-					commentLoad();
+					location.reload();
 				},
 
 				error : function(xhr) {
@@ -175,9 +174,6 @@
 				}
 			});
 		});
-		function commentLoad() {
-			location.replace(location.href);
-		}
 	</script>
 </section>
 
@@ -192,30 +188,7 @@
 				<div class="p-3">
 
 					<div>
-						<script>
-							let Reply__DoWriteForm__submited = false;
-
-							// 폼 발송전 체크
-							function Reply__DoWriteForm__submit(form) {
-								if (Reply__DoWriteForm__submited) {
-									alert('처리중 입니다.');
-									return;
-								}
-
-								form.reply.value = form.reply.value.trim();
-
-								if (form.reply.value.length == 0) {
-									alert('댓글을 입력해주세요.');
-									form.reply.focus();
-
-									return;
-								}
-
-								form.submit();
-								Reply__DoWriteForm__submited = true;
-							}
-						</script>
-						<form action="../reply/doWrite" method="POST" onsubmit="Reply__DoWriteForm__submit(this); return false;">
+						<form method="POST">
 							<input id="relId" type="hidden" name="relId" value="${article.id}" />
 
 							<div class="form-control">
@@ -228,8 +201,15 @@
 							<script type="text/javascript">
 								// jQuery는 JavaScript함수 사용가능 >> 그러나, jQuery메소드를 사용하는것을 권장!
 								// [$] : jQuery, [#] : 아이디선택자, [.] : 클래스선택자
-								$("#btn").click(
+								$("#btn").click(								
 										function() {
+											let Reply__DoWriteForm__submited = false;
+											
+											if (Reply__DoWriteForm__submited) {
+												alert('처리중 입니다.');
+												return;
+											}
+											
 											var reply = $("#reply").val()
 													.trim();
 											var relId = $("#relId").val()
@@ -259,7 +239,9 @@
 												// 1. 정상적인 응답결과를 제공받아 처리하는 함수를 설정
 												//     => 응답결과가 자동으로 함수의 매개변수에 전달되어 저장
 												success : function(html) {
-													commentLoad();
+													Reply__DoWriteForm__submited = true;
+													location.reload();
+
 												},
 												// 2. 비정상적인 응답결과를 제공받아 처리하는 함수를 설정
 												//    => XMLHttpRequest객체가 자동으로 함수의 매개변수에 전달되어 저장
@@ -270,11 +252,7 @@
 											});
 
 										});
-								function commentLoad() {
-									location.replace(location.href);
-								}
 							</script>
-
 						</form>
 					</div>
 				</div>
@@ -282,7 +260,7 @@
 		</div>
 	</c:if>
 	<div>
-		<div class="container mx-auto p-2">
+		<div class="container mx-auto p-2" id="contents">
 			<span class="badge badge-primary">댓글</span>
 			<span>${totalRepliesCount}개</span>
 		</div>

@@ -32,7 +32,7 @@ public class UsrReplyController extends Controller{
 		
 		// 비정상적으로 접근시 메세지 출력후 뒤로가기
 		if(relId == 0) {
-			rq.historyBack("articleId를 입력해주세요.");
+			rq.historyBack("relId를 입력해주세요.");
 			return;
 		}
 		
@@ -49,6 +49,10 @@ public class UsrReplyController extends Controller{
 			rq.historyBack(writeRd.getMsg());
 			return;
 		}
+		
+		int newReplyId = (int)writeRd.getBody().get("newReplyId");
+		
+		rq.setAttr("newReplyId", newReplyId);
 
 	}
 

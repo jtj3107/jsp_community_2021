@@ -25,10 +25,10 @@ public class ReplyService implements ContainerComponent {
 		int memberId = actor.getId();
 		
 		// 댓글을 등록하는 함수
-		replyRepository.write(memberId, articleId, reply);
+		int newReplyId = replyRepository.write(memberId, articleId, reply);
 		
 		// S-1, 메세지 저장후 리턴
-		return ResultData.from("S-1", "등록되었습니다.");
+		return ResultData.from("S-1", "등록되었습니다.", "newReplyId", newReplyId);
 	}
 
 	// 댓글 리스트를 리턴하는 함수

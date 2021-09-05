@@ -21,9 +21,9 @@
 					function ArticleWrite__submit(form) {
 						if (ArticleWrite__submitDone) {
 							return;
-						
+
 						}
-						
+
 						if (form.boardId.value == 0) {
 							alert('게시판을 선택해주세요.');
 							form.boardId.focus();
@@ -32,29 +32,33 @@
 						}
 
 						form.title.value = form.title.value.trim();
-						
+
 						if (form.title.value.length == 0) {
 							alert('제목을 입력해주세요.');
 							form.title.focus();
 
 							return;
 						}
-						
-						form.body.value = form.body.value.trim();
 
-						if (form.body.value.length == 0) {
+						const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');				
+						const body = editor.getMarkdown().trim();
+						
+						if (body.length == 0) {
 							alert('내용을 입력해주세요.');
-							form.body.focus();
+							editor.focus();
 
 							return;
 						}
 						
+						form.body.value = body;
+
 						form.submit();
 						ArticleWrite__submitDone = true;
 					}
 				</script>
 				<form action="../article/doWrite" method="POST" onsubmit="ArticleWrite__submit(this); return false;">
 					<input type="hidden" name="redirectUri" value="../article/detail?id=[NEW_ID]" />
+					<input type="hidden" name="body" />
 
 					<div class="form-control">
 						<select name="boardId" class="select select-bordered select-primary w-full max-w-md">
@@ -76,7 +80,9 @@
 						<label class="label">
 							<span class="label-text">내용</span>
 						</label>
-						<textarea maxlength="2000" class="textarea textarea-bordered h-60" placeholder="내용을 입력해주세요." name="body"></textarea>
+						<div class="toast-ui-editor">
+							<script type="text/x-template"></script>
+						</div>
 					</div>
 
 					<div class="btns">
