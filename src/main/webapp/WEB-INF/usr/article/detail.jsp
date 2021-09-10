@@ -136,10 +136,7 @@
   </div>
   <script type="text/javascript">
 			var relTypeCode = 'article';
-			var relId = $
-			{
-				article.id
-			};
+			var relId = ${article.id};
 
 			var data = '';
 			data += "relTypeCode=" + relTypeCode;
