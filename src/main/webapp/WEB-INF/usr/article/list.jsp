@@ -47,7 +47,7 @@
             <div class="grid gap-3" style="grid-template-columns: 100px 1fr;">
               <a href="${detailUri}" class="hover:underline cursor-pointer">
                 <span class="badge badge-outline">제목</span>
-                <div class="line-clamp-3">${article.titleForPrint}</div>
+                <div>${article.titleForPrint}</div>
               </a>
             </div>
 
@@ -73,14 +73,6 @@
                 <span class="text-gray-600 text-light">${article.updateDate}</span>
               </a>
             </div>
-            <a href="${detailUri}" class="block mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
-              <span class="badge badge-outline">본문</span>
-              <div class="toast-ui-viewer">
-                <script type="text/x-template">
-                ${article.bodySummaryForPrint}
-              </script>
-              </div>
-            </a>
           </div>
 
           <div class="btns mt-3">

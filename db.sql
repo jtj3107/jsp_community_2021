@@ -111,14 +111,19 @@ CREATE TABLE reply(
     `body` TEXT NOT NULL
 );
 
-CREATE TABLE islike(
-    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY(id),
+# 좋아요 테이블 추가
+CREATE TABLE islike (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
-    articleId INT(10) UNSIGNED NOT NULL,
+    updateDate DATETIME NOT NULL,
+    relTypeCode CHAR(30) NOT NULL,
+    relId INT(10) UNSIGNED NOT NULL,
     memberId INT(10) UNSIGNED NOT NULL,
-    islike TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+    `point` SMALLINT(1) NOT NULL
 );
+
+# 좋아요 인덱스
+ALTER TABLE `jspCommunity`.`like` ADD INDEX (`relTypeCode` , `relId` , `memberId`); 
 
 # 기존 게시물을 2번 회원이 쓴 자유게시물로 지정
 UPDATE article
@@ -161,3 +166,5 @@ ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
 
 # attr에 만료날짜 추가
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
+
+SELECT * FROM `reply`
