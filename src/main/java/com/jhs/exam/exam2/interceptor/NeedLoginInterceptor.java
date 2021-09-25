@@ -1,5 +1,6 @@
 package com.jhs.exam.exam2.interceptor;
 
+import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.http.Rq;
 
 public class NeedLoginInterceptor extends Interceptor {
@@ -38,7 +39,12 @@ public class NeedLoginInterceptor extends Interceptor {
 
 		// 로그인 요구 메세지 출력후 로그인 페이지 이동 + 로그인페이지로 이동전 페이지 정보를 담아 이동하는 메서드
 		if (rq.isNotLogined()) {
-			rq.replace("로그인 후 이용해주세요.", "../member/login?afterLoginUri=" + rq.getEncodedAfterLoginUri());
+			if(rq.isAjax()) {
+				rq.json(ResultData.from("F-A", "로그인 후 이용해주세요."));
+			}
+			else {
+				rq.replace("로그인 후 이용해주세요.", "../member/login?afterLoginUri=" + rq.getEncodedAfterLoginUri());				
+			}
 
 			return false;
 		}

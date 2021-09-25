@@ -27,6 +27,7 @@
 		}
 
 		$.get("../member/getLoginIdDup", {
+			ajax: "Y",
 			loginId : form.loginId.value
 		}, function(data) {
 			if (data.success) {
