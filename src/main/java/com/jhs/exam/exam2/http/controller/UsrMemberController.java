@@ -54,7 +54,7 @@ public class UsrMemberController extends Controller {
 			actionDoMemberModify(rq);
 			break;
 		case "getLoginIdDup":
-			getLoginIdDup(rq);
+			actionGetLoginIdDup(rq);
 			break;
 		// 없을시 메세지 출력후 break;
 		default:
@@ -63,7 +63,7 @@ public class UsrMemberController extends Controller {
 		}
 	}
 
-	private void getLoginIdDup(Rq rq) {
+	private void actionGetLoginIdDup(Rq rq) {
 		String loginId = rq.getParam("loginId", "");
 
 		if (loginId.length() == 0) {
@@ -73,7 +73,13 @@ public class UsrMemberController extends Controller {
 
 		ResultData MemberRd = memberService.getMemberRdByLoginId(loginId);
 
-		rq.jsp(json(rq, MemberRd));
+		if(MemberRd.isFail()) {
+			rq.json(MemberRd);
+			return;
+		}
+		
+		rq.json(MemberRd);
+		return;
 	}
 
 	// 재구현 완료[2021-08-04], [2021-08-16]

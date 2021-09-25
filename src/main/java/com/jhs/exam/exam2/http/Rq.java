@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.jhs.exam.exam2.app.App;
 import com.jhs.exam.exam2.container.Container;
 import com.jhs.exam.exam2.dto.Member;
+import com.jhs.exam.exam2.dto.ResultData;
 import com.jhs.exam.exam2.util.Ut;
 
 import lombok.Getter;
@@ -342,5 +343,9 @@ public class Rq {
 	// 관리자 인지 아닌지 확인하는 메서드
 	public boolean isNotAdmin() {
 		return !isAdmin;
+	}
+
+	public void json(Object obj) {
+		print(Ut.toJson(obj, "{}"));
 	}
 }
