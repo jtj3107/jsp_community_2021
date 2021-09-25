@@ -11,7 +11,7 @@
         <a>
           <i class="fas fa-home-left"></i>
         </a>
-        <span>홈</span>
+        <span>최신게시물</span>
       </div>
 
       <div class="px-4 py-4">
