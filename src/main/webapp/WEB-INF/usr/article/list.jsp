@@ -45,6 +45,9 @@
 
           <div class="py-4">
             <div class="grid gap-3" style="grid-template-columns: 100px 1fr;">
+              <a href="${detailUri}">
+                <img class="rounded-full w-full" src="${article.writerProfileImgUri}" alt="">
+              </a>
               <a href="${detailUri}" class="hover:underline cursor-pointer">
                 <span class="badge badge-outline">제목</span>
                 <div>${article.titleForPrint}</div>

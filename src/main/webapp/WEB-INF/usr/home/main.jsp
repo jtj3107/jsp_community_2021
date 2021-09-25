@@ -15,21 +15,7 @@
       </div>
 
       <div class="px-4 py-4">
-        <div class="flex items-center w-full px-4 py-10 bg-cover card bg-base-200"
-          style="background-image: url(&quot;https://picsum.photos/id/180/1000/300&quot;);">
-          <div class="card glass lg:card-side text-neutral-content">
-            <figure class="p-6">
-              <img src="https://picsum.photos/id/160/300/200" class="rounded-lg shadow-lg">
-            </figure>
-            <div class="max-w-md card-body">
-              <h2 class="card-title_1">Cho</h2>
-              <p>이 웹 사이트는 JSP로 간단한 로직을 이용하여 만든 웹 사이트로 개인 공부를 위해 만들어진 사이트 입니다.</p>
-              <div class="card-actions">
-                <button class="btn glass rounded-full">Get Started</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <h1>최신 게시물</h1>
       </div>
     </div>
   </div>

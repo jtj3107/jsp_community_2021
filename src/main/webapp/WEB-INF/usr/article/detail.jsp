@@ -18,7 +18,9 @@
 
         <div class="py-4">
           <div class="grid gap-3" style="grid-template-columns: 100px 1fr;">
-
+            <div>
+              <img class="rounded-full w-full" src="${article.writerProfileImgUri}" alt="">
+            </div>
             <div>
               <span class="badge badge-outline">제목</span>
               <div>${article.titleForPrint}</div>
@@ -61,7 +63,7 @@
           </div>
           <div class="toast-ui-viewer">
             <script type="text/x-template">
-                ${article.bodySummaryForPrint}
+                ${article.bodySummaryForPrintNlToBr}
               </script>
           </div>
         </div>
@@ -136,7 +138,10 @@
   </div>
   <script type="text/javascript">
 			var relTypeCode = 'article';
-			var relId = ${article.id};
+			var relId = $
+			{
+				article.id
+			};
 
 			var data = '';
 			data += "relTypeCode=" + relTypeCode;

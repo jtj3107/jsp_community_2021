@@ -17,7 +17,7 @@ public class Article {
 	private int dislikeCount;
 	private int likeCount;
 	private int hitCount;
-	
+
 	private String extra__writerName;
 	private String extra_boardName;
 	private Boolean extra__actorCanModify;
@@ -27,16 +27,24 @@ public class Article {
 	private Boolean extra__actorCanCancelLike;
 	private Boolean extra__actorCanDisLike;
 	private Boolean extra__actorCanCancelDisLike;
-	
+
 	private int extra__likePoint;
 	private int extra__likeOnlyPoint;
 	private int extra__dislikeOnlyPoint;
-	
+
 	public String getTitleForPrint() {
 		return title;
 	}
-	
+
 	public String getBodySummaryForPrint() {
 		return body;
+	}
+	
+	public String getBodySummaryForPrintNlToBr() {
+		return body.replaceAll("\n", "<br>");
+	}
+
+	public String getWriterProfileImgUri() {
+		return "https://i.pravatar.cc/200?img=" + (memberId % 1000 + 1);
 	}
 }
