@@ -1,16 +1,27 @@
 package com.jhs.exam.exam2.http.controller;
 
+import java.util.List;
+
 import com.jhs.exam.exam2.app.App;
 import com.jhs.exam.exam2.container.Container;
+import com.jhs.exam.exam2.dto.Article;
+import com.jhs.exam.exam2.dto.Member;
 import com.jhs.exam.exam2.http.Rq;
+import com.jhs.exam.exam2.service.ArticleService;
 import com.jhs.exam.exam2.service.EmailService;
+import com.jhs.exam.exam2.service.MemberService;
 import com.jhs.exam.exam2.util.Ut;
+
 
 public class UsrHomeController extends Controller {
 	private EmailService emailService;
+	private ArticleService articleService;
+	private MemberService memberService;
 
 	public void init() {
 		emailService = Container.emailService;
+		articleService = Container.articleService;
+		memberService = Container.memberService;
 	}
 	
 	@Override
@@ -31,6 +42,11 @@ public class UsrHomeController extends Controller {
 		}
 	}
 
+	// 해당 페이지로 이동하는 메서드
+	private void actionShowMain(Rq rq) {
+		rq.jsp("usr/home/main");
+	}
+	
 	private void actionDoEmailCertification(Rq rq) {
 		String generationCode = rq.getSessionAttr("bodyJson", "");
 		String inputCode = rq.getParam("certificationNumber", "");
@@ -50,11 +66,6 @@ public class UsrHomeController extends Controller {
 			return;
 		}
 		
-	}
-
-	// 해당 페이지로 이동하는 메서드
-	private void actionShowMain(Rq rq) {
-		rq.jsp("usr/home/main");
 	}
 
 	// 메일발송하는 메서드

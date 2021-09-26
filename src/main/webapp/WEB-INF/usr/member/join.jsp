@@ -22,25 +22,28 @@
 		}
 
 		if (form.loginId.value == MemberJoin__checkedLoginId) {
-			$(form).find('.input-loginId-alert.alert-success').removeClass('display-none');
+			$(form).find('.input-loginId-alert.alert-success').removeClass(
+					'display-none');
 			return;
 		}
 
 		$.get("../member/getLoginIdDup", {
-			ajax: "Y",
+			ajax : "Y",
 			loginId : form.loginId.value
 		}, function(data) {
 			if (data.success) {
 				MemberJoin__checkedLoginId = data.body.loginId;
-				$(form).find('.input-loginId-alert.alert-success label').text(data.msg);
-				$(form).find('.input-loginId-alert.alert-success').removeClass('display-none');
-			} 
-			else {
-				$(form).find('.input-loginId-alert.alert-error label').text(data.msg);
-				$(form).find('.input-loginId-alert.alert-error').removeClass('display-none');
+				$(form).find('.input-loginId-alert.alert-success label').text(
+						data.msg);
+				$(form).find('.input-loginId-alert.alert-success').removeClass(
+						'display-none');
+			} else {
+				$(form).find('.input-loginId-alert.alert-error label').text(
+						data.msg);
+				$(form).find('.input-loginId-alert.alert-error').removeClass(
+						'display-none');
 			}
-		}, 
-		"json");
+		}, "json");
 	}
 	function MemberJoin__submit(form) {
 		if (MemberJoin__submitDone) {
@@ -195,8 +198,9 @@
               <span class="label-text">로그인 아이디</span>
             </label>
             <div>
-              <input autocomplete="off" class="input input-bordered w-full" maxlength="100" name="loginId" type="text" placeholder="사용하실 로그인아이디를 입력해주세요."
-                onchange="MemberJoin__checkLoginIdDup(this);" onkeyup="MemberJoin__checkLoginIdDup(this);"/>
+              <input autocomplete="off" class="input input-bordered w-full" maxlength="100" name="loginId" type="text"
+                placeholder="사용하실 로그인아이디를 입력해주세요." onchange="MemberJoin__checkLoginIdDup(this);"
+                onkeyup="MemberJoin__checkLoginIdDup(this);" />
               <div class="alert display-none input-loginId-alert alert-success mt-2">
                 <div class="flex-1">
                   <span>
@@ -261,27 +265,7 @@
             <div>
               <input class="input input-bordered w-full" id="emailText" maxlength="100" name="email" type="email" placeholder="이메일을 입력해주세요." />
             </div>
-            <!-- 
-						<div>
-							<button type="button" onclick="emailSend()">인증번호 받기</button>
-						</div>
-						-->
           </div>
-
-          <!-- 
-					<div class="form-control">
-						<label class="label">
-							<span class="label-text">인증번호</span>
-						</label>
-						<div>
-							<input class="input input-bordered w-full" id="certificationNumber" maxlength="100" name="certificationNumber" type="text" placeholder="이메일을 인증번호를 입력해주세요." />
-						</div>
-						<div>
-							<button type="button" onclick="emailCertification()">인증하기</button>
-							<input type="hidden" name="certificationYN" value="false"/>
-						</div>
-					</div>
- 					-->
           <div class="form-control">
             <label class="label">
               <span class="label-text">전화번호</span>

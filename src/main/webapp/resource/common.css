@@ -1477,8 +1477,27 @@ html{
   outline-offset: 2px;
 }
 
+.card-body{
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: var(--padding-card,2rem);
+}
+
 .card figure,.card figure>*{
   width: 100%;
+}
+
+.card-actions{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-left: -.25rem;
+  margin-right: -.25rem;
+}
+
+.card-actions>*{
+  margin: .25rem;
 }
 
 .card.image-full{
@@ -2033,6 +2052,14 @@ html{
   margin-bottom: .75rem;
 }
 
+.card-actions:first-child{
+  margin-bottom: .5rem;
+}
+
+.card-actions:last-child{
+  margin-top: 1.5rem;
+}
+
 .checkbox{
   --chkbg: var(--bc);
   --chkfg: var(--b1);
@@ -2100,6 +2127,10 @@ html{
 
 .drawer-toggle:focus-visible~.drawer-content .drawer-button.btn-primary{
   box-shadow: 0 0 0 2px hsl(var(--b1)),0 0 0 4px hsl(var(--p));
+}
+
+.drawer-toggle:focus-visible~.drawer-content .drawer-button.glass{
+  box-shadow: 0 0 0 2px currentColor;
 }
 
 .drawer-toggle:focus-visible~.drawer-content .drawer-button.btn-link{
@@ -2607,13 +2638,26 @@ html{
   border-radius: 9999px;
 }
 
+.rounded-lg{
+  border-radius: 0.5rem;
+}
+
 .border-t{
   border-top-width: 1px;
+}
+
+.bg-base-200{
+  --tw-bg-opacity: 1;
+  background-color: hsla(var(--b2) / var(--tw-bg-opacity));
 }
 
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+}
+
+.bg-cover{
+  background-size: cover;
 }
 
 .p-3{
@@ -2624,6 +2668,10 @@ html{
   padding: 0.5rem;
 }
 
+.p-6{
+  padding: 1.5rem;
+}
+
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
@@ -2632,6 +2680,11 @@ html{
 .py-4{
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-10{
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .px-6{
@@ -2664,6 +2717,11 @@ html{
 .text-red-500{
   --tw-text-opacity: 1;
   color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
+.text-neutral-content{
+  --tw-text-opacity: 1;
+  color: hsla(var(--nc) / var(--tw-text-opacity));
 }
 
 .shadow-lg{
@@ -2899,6 +2957,22 @@ body {
 }
 
 @media (min-width: 1024px){
+  .lg\:card-side{
+    align-items: stretch;
+    flex-direction: row;
+  }
+
+  .lg\:card-side>figure{
+    height: 100%;
+    max-width: none;
+    width: auto;
+  }
+
+  .lg\:card-side>figure>*{
+    width: auto;
+    max-width: none;
+  }
+
   .lg\:block{
     display: block;
   }

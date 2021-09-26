@@ -11,11 +11,24 @@
         <a>
           <i class="fas fa-home-left"></i>
         </a>
-        <span>최신게시물</span>
+        <span>홈</span>
       </div>
 
       <div class="px-4 py-4">
-        <h1>최신 게시물</h1>
+        <div class="flex items-center w-full px-4 py-10 bg-cover card bg-base-200"
+          style="background-image: url(&quot;https://picsum.photos/id/180/1000/300&quot;);">
+          <div class="card glass lg:card-side text-neutral-content">
+            <figure class="p-6">
+              <img src="https://picsum.photos/id/160/300/200" class="rounded-lg shadow-lg">
+            </figure>
+            <div class="max-w-md card-body">
+              <h2 class="card-title_1">Cho</h2>
+              <p>이 웹 사이트는 순수 JSP, 서블릿을 사용하여 유사 스프링 구조를 구현하였습니다.</p>
+              <div class="card-actions">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
